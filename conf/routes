@@ -1,0 +1,16 @@
+GET         /                         controllers.Application.index
+
+POST        /api/players                  controllers.PlayersController.create
+GET         /api/players                  controllers.PlayersController.all
+GET         /api/players/:id              controllers.PlayersController.get(id: Long)
+PUT         /api/players/:id              controllers.PlayersController.update(id: Long)
+
+GET         /api/players/:id/games        controllers.GamesController.gamesByPlayer(id:Long)
+
+GET         /api/games                    controllers.GamesController.recentGames
+
+
+
+
+
+    
