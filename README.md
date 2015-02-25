@@ -6,6 +6,7 @@
 [ScalaTest](http://scalatest.org/plus/play)
 
 ### Zero to hero ###
+ - Install [Activator](https://www.playframework.com/documentation/2.3.x/Installing)
  - If using idea, make sure you have the scala plugin installed.
  - Open the directory using auto-import
 
