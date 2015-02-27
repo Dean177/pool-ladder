@@ -11,7 +11,9 @@ object GamesController extends Controller {
 
   def create = DBAction(parse.json) { implicit request =>
     val game = request.body.as[Game]
-    Ok(Json.toJson(Games.find(Games.create(game))))
+    val createdGame = Games.find(Games.create(game))
+    EloRatings.createForGame(createdGame)
+    Ok(Json.toJson(createdGame))
   }
 
   def gamesByPlayer(id: Long) = DBAction { implicit session =>
