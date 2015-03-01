@@ -7,7 +7,7 @@ import play.api.libs.json.Json
 
 import scala.slick.lifted.Tag
 
-case class Game(id: Option[Long] = None, winner: Long, loser: Long, playedOn: Date)
+case class Game(id: Option[Long] = None, winnerId: Long, loserId: Long, playedOn: Date)
 
 object Game {
   implicit val gameFormat = Json.format[Game]
