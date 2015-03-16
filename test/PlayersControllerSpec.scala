@@ -1,25 +1,28 @@
+import models.Player
 import org.junit.runner._
-import org.specs2.mutable._
-import org.specs2.runner._
+import org.scalatest.Matchers._
+import org.scalatestplus.play._
+import org.scalatest.junit.JUnitRunner
 import play.api.test.Helpers._
 import play.api.test._
 
 @RunWith(classOf[JUnitRunner])
-class PlayersControllerSpec extends Specification {
+class PlayersControllerSpec extends PlaySpec {
 
   "PlayersController" should {
 
     "send 404 on a bad request" in new WithApplication {
-      route(FakeRequest(GET, "/boum")) must beNone
+      route(FakeRequest(GET, "/boum")) mustBe None
     }
 
     "Return an array of players" in new WithApplication {
-      val players = route(FakeRequest(GET, "/players")).get
+      val Some(result) = route(FakeRequest(GET, "/api/players"))
 
-      status(players) must equalTo(OK)
-      contentType(players) must beSome.which(_ == "application/json")
+      status(result) mustBe OK
+      contentType(result) mustBe Some("application/json")
 
-      // TODO test this has some players in it!
+      val players = contentAsJson(result).as[List[Player]]
+      players should not be empty
     }
   }
 }
