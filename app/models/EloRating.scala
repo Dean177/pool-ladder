@@ -22,6 +22,9 @@ class EloRatings(tag: Tag) extends Table[EloRating](tag, "EloRating") {
   def newRating = column[Int]("newRating")
   def date = column[Date]("date")
 
+  def player = foreignKey("playerForeignKey", playerId, Players.players)(_.id)
+  def game = foreignKey("gameForeignKey", gameId, Games.games)(_.id)
+
   def * = (id.?, gameId, playerId, change, newRating, date) <> ((EloRating.apply _).tupled, EloRating.unapply)
 }
 

@@ -19,6 +19,9 @@ class Games(tag: Tag) extends Table[Game](tag, "Game") {
   def loserId = column[Long]("loserId")
   def playedOn = column[Date]("playedOn")
 
+  def winner = foreignKey("winnerForeignKey", winnerId, Players.players)(_.id)
+  def loser = foreignKey("loserForeignKey", loserId, Players.players)(_.id)
+
   def * = (id.?, winnerId, loserId, playedOn) <> ((Game.apply _).tupled, Game.unapply)
 }
 
