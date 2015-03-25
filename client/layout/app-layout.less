@@ -1,0 +1,106 @@
+@import "../styles/variables";
+
+#wrapper {
+  padding-left: 0;
+  transition: all 0.5s ease;
+  &.toggled {
+    width: @sidebar-width;
+    padding-left: @sidebar-width;
+  }
+}
+
+#sidebar-wrapper {
+  position: fixed;
+  left: @sidebar-width;
+  width: 0;
+  height: 100%;
+  margin-left: -@sidebar-width;
+  overflow-y: auto;
+  background: @sidebar-color;
+  transition: all 0.5s ease;
+  &.toggled {
+    width: @sidebar-width;
+  }
+}
+
+#page-content-wrapper {
+  width: 100%;
+  position: absolute;
+}
+
+#wrapper.toggled #page-content-wrapper {
+  position: absolute;
+  margin-right: -@sidebar-width;
+}
+
+.sidebar-nav {
+  position: absolute;
+  top: 0;
+  width: @sidebar-width;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: @larger;
+
+  li {
+    a {
+      padding: 25px 30px;
+      display: block;
+      text-decoration: none;
+      color: white;
+
+      text-align: center;
+
+      i {
+        display: inline-block;
+        font-size: @large;
+      }
+
+      .label {
+        display: inline-block;
+        font-size: @smaller;
+      }
+
+      &:hover {
+        text-decoration: none;
+        color: white;
+        background: rgba(255,255,255,0.2);
+      }
+
+      &:focus &:active {
+        text-decoration: none;
+      }
+
+      &.active {
+        border-right: 6px solid rgba(255, 255, 255, 0.6);
+      }
+    }
+  }
+}
+
+@media(min-width:768px) {
+  #wrapper {
+    padding-left: @sidebar-width;
+  }
+
+  #wrapper.toggled {
+    padding-left: 0;
+  }
+
+  #sidebar-wrapper {
+    width: @sidebar-width;
+  }
+
+  #wrapper.toggled #sidebar-wrapper {
+    width: 0;
+  }
+
+  #page-content-wrapper {
+    position: relative;
+  }
+
+  #wrapper.toggled #page-content-wrapper {
+    position: relative;
+    margin-right: 0;
+  }
+}

@@ -6,7 +6,7 @@ class EloRatingSystem {
   val maxRatingChange: Int = 30
   
   def pointsExchanged(winnerRating: Int, loserRating: Int): Int = {
-    val outcome = 1
+    val outcome = 1 //
     round(maxRatingChange * (outcome - expectedOutcome(winnerRating, loserRating))).toInt
   }
 

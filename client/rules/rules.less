@@ -1,0 +1,28 @@
+@import "../styles/variables";
+@import "../styles/mixins";
+
+.rule-content {
+  background-color: @grey-200;
+}
+
+// Must be important, the mui css gets inserted before this file.
+.mui-tab-item-container {
+  background-color: @sidebar-color !important;
+}
+.mui-ink-bar {
+  background-color: @green-500 !important;
+}
+
+.rule-tabs {
+  margin: -@bootstrap-container-padding;
+  .rule-content {
+    padding: @bootstrap-container-padding;
+  }
+
+  .rack-image {
+    width: 300px;
+    display: block;
+    padding: @regular-gap;
+    .centered();
+  }
+}

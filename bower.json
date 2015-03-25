@@ -1,0 +1,22 @@
+{
+  "name": "pool-ladder-client",
+  "private": true,
+  "version": "0.0.0",
+  "homepage": "",
+  "authors": [],
+  "description": "",
+  "keywords": [
+    "gulp",
+    "node",
+    "bower",
+    "browserify",
+    "react",
+    "fb-flo"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "swfobject": "*",
+    "font-awesome": "~4.3.0",
+    "bootstrap": "~3.3.4"
+  }
+}

@@ -1,9 +1,7 @@
 import lib.EloRatingSystem
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
+
 import org.scalatestplus.play._
 
-@RunWith(classOf[JUnitRunner])
 class EloRatingSystemSpec extends PlaySpec {
 
   "EloRatingSystem" should {
