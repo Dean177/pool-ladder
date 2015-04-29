@@ -7,7 +7,7 @@ var NotFoundRoute = Router.NotFoundRoute;
 
 var App = require('./layout/app');
 
-var Players = require('./players/components/Players');
+var Players = require('./players/Players');
 var NewPlayer = require('./players/NewPlayer/NewPlayer');
 var PlayerDetail = require('./players/PlayerDetail/Detail');
 var PlayerSection = require('./players/Section');

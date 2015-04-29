@@ -8,10 +8,12 @@ var initialState = {
 };
 
 module.exports = Reflux.createStore({
-  listenables: PlayerActions,
+  listenables: [PlayerActions],
 
   init: function () {
-    // Fetch Players
+    this.player = {
+
+    }
   },
 
   getInitialState: function () {
@@ -19,22 +21,12 @@ module.exports = Reflux.createStore({
   },
 
   onUpdate: function (player) {
-
-  },
-
-  updatePlayer: function (player) {
-
+    if (player.id == this.player.id) {
+      // update this player
+    }
   },
 
   onCreate: function (player) {
-
-  },
-
-  createPlayer: function (player) {
-
-  },
-
-  updateList: function (list) {
 
   }
 });

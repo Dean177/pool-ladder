@@ -10,27 +10,11 @@ module.exports = Reflux.createStore({
 
   },
 
-  getInitialState: function () {
+  onUpdate: function (player) {
 
   },
 
-  onUpdate: function (game) {
-
-  },
-
-  updatePlayer: function (game) {
-
-  },
-
-  onCreate: function (game) {
-
-  },
-
-  createPlayer: function (game) {
-
-  },
-
-  updateList: function (list) {
+  onCreate: function (player) {
 
   }
 });
