@@ -1,4 +1,5 @@
 @import "../styles/variables";
+@import "../styles/colors";
 
 #wrapper {
   padding-left: 0;
@@ -16,7 +17,7 @@
   height: 100%;
   margin-left: -@sidebar-width;
   overflow-y: auto;
-  background: @sidebar-color;
+  background: @black;
   transition: all 0.5s ease;
   &.toggled {
     width: @sidebar-width;
@@ -53,12 +54,13 @@
 
       i {
         display: inline-block;
-        font-size: @large;
+        font-size: 36px;
+        margin-bottom: 5px;
       }
 
-      .label {
-        display: inline-block;
-        font-size: @smaller;
+      .nav-label {
+        display: block;
+        font-size: @small
       }
 
       &:hover {
@@ -72,7 +74,7 @@
       }
 
       &.active {
-        border-right: 6px solid rgba(255, 255, 255, 0.6);
+        border-right: 6px solid @green;
       }
     }
   }

@@ -22,3 +22,5 @@ playRunHooks <+= baseDirectory.map(base => Gulp(base))
 lazy val `pool-ladder` = project.in(file("."))
   .enablePlugins(PlayScala)
   .settings(commands ++= JsCommands.all)
+
+fork in run := false

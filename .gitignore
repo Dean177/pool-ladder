@@ -3,7 +3,10 @@ project/project
 target
 /.idea
 app/Global.scala
-app/public
 node_modules
 bower_components
 .history
+
+public/main.js
+public/main.css
+public/vendor

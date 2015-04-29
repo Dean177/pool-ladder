@@ -14,6 +14,6 @@ module.exports = {
     fonts: path.join(sources, 'fonts', '/**/*'),
     images: path.join(sources, 'images', '/**/*'),
     tests: path.join(rootDir, '**/*.spec.{js,jsx}'),
-    dest: path.join(rootDir, 'app', 'public')
+    dest: path.join(rootDir, 'public')
   }
 };

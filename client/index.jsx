@@ -22,8 +22,7 @@ var NotFound = require('./404');
 
 var routes = (
   <Route name="app" handler={App} path="/">
-    <DefaultRoute handler={Leaderboard} />
-    <Route name="leaderboard" handler={Leaderboard} />
+    <DefaultRoute name="leaderboard" handler={Leaderboard} />
     <Route name="games" handler={Games} />
     <Route name="rules" handler={Rules} />
     <Route name="graphs" handler={Graphs} />

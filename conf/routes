@@ -1,4 +1,4 @@
-GET         /                                    controllers.ApplicationController.index
+
 
 POST        /api/players                         controllers.PlayersController.create
 GET         /api/players                         controllers.PlayersController.all
@@ -14,9 +14,4 @@ GET         /api/games                           controllers.GamesController.rec
 GET         /favicon.ico                         controllers.Assets.at(path="/public", file="favicon.ico")
 GET         /assets/*file                        controllers.Assets.at(path="/public", file)
 
-
-
-
-
-
-    
+GET         /*any                                controllers.ApplicationController.index(any)
