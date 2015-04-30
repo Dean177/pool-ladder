@@ -1,10 +1,10 @@
-import React from 'react';
-import PlayerCard from './PlayerCard/PlayerCard';
-import PlayerListStore from '../PlayerListStore'
+var React = require('react');
+var PlayerCard = require('./PlayerCard/PlayerCard');
+var PlayerListStore = require('../PlayerListStore');
 
-const PlayerList = React.createClass({
+module.exports = React.createClass({
 
-  render() {
+  render: function() {
     var players = this.props.players || [];
     if (!players.length) {
       return <h2>No players</h2>;
@@ -20,5 +20,3 @@ const PlayerList = React.createClass({
   }
 
 });
-
-export default PlayerList

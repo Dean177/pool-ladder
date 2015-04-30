@@ -3,22 +3,22 @@ var $ = require('jquery');
 var PlayerActions = require('./PlayerActions');
 var UrlResolver = require('../mixins/UrlResolver');
 
-const PlayerListStore =  Reflux.createStore({
+module.exports =  Reflux.createStore({
   mixins: [UrlResolver],
-  listenables: PlayerActions,
+  listenables: [PlayerActions],
 
   isLoading: true,
-  players: new Map(),
+  players: {},
 
-  getInitialState() {
+  getInitialState: function () {
     return this.players;
   },
 
-  get(id) {
+  get: function(id) {
     if (this.players.has(id)) {
       return this.players.get(id);
     } else {
-
+      // TODO
     }
   },
 
@@ -31,18 +31,17 @@ const PlayerListStore =  Reflux.createStore({
         this.players = new Map(response.players)
       },
       error: function(jqXHR, textStatus, errorThrown) {
-
+        //TODO
       }
     });
   },
 
-  onUpdate (player) {
+  onUpdate: function(player) {
 
   },
 
-  onCreate (player) {
+
+  onLoadAll: function() {
 
   }
 });
-
-export default PlayerListStore;

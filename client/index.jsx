@@ -30,10 +30,9 @@ var routes = (
     <Route name="live" handler={Live} />
 
     <Route path="players" name="players" handler={PlayerSection}>
-        <Route path="new" name="newPlayer" handler={NewPlayer} />
-        <Route path=":playerID" name="player" handler={PlayerDetail} />
-
-        <DefaultRoute handler={Players} />
+      <DefaultRoute handler={Players} />
+      <Route path="new" name="newPlayer" handler={NewPlayer} />
+      <Route path=":playerID" name="player" handler={PlayerDetail} />
     </Route>
 
     <NotFoundRoute handler={NotFound} />

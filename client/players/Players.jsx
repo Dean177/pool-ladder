@@ -1,25 +1,25 @@
-import React from 'react';
-import { Navigation } from 'react-router';
-import { ListenerMixin } from 'reflux';
-import FontAwesome from '../shared/FontAwesome';
-import { FlatButton } from 'material-ui';
+var React = require('react');
+var Navigation = require('react-router').Navigation;
+var ListenerMixin = require('reflux').ListenerMixin ;
+var FontAwesome = require('../shared/FontAwesome');
+var FlatButton = require('material-ui').FlatButton;
 
-import PlayerList from './components/PlayerList';
-import PlayerListStore from './PlayerListStore';
+var PlayerList = require('./components/PlayerList');
+var PlayerListStore = require('./PlayerListStore');
 
 module.exports = React.createClass({
   mixins: [Navigation, ListenerMixin],
 
-  getInitialState() {
+  getInitialState: function() {
     return {
       isLoading: PlayerListStore.isLoading,
       players: PlayerListStore.getInitialState()
-    }
+    };
   },
 
-  navigateToAddPlayerSection() { this.transitionTo('newPlayer'); },
+  navigateToAddPlayerSection: function() { this.transitionTo('newPlayer'); },
 
-  render() {
+  render: function() {
     return (
       <div>
         <FlatButton

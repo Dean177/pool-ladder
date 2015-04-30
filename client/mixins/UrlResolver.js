@@ -1,3 +1,3 @@
 module.exports = {
-    AllPlayers: `${ global.getHost() }/api/players`
+    AllPlayers: `${ window.location.origin }/api/players`
 };

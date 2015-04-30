@@ -26,7 +26,15 @@ module.exports = Reflux.createStore({
     }
   },
 
-  onCreate: function (player) {
 
+  onCreate: function(player) {
+    // TODO
+    $.ajax({
+      type: 'POST',
+      url: UrlResolver.createPlayer,
+      dateType: 'json',
+      data: player,
+      onComplete: function() {}
+    });
   }
 });
