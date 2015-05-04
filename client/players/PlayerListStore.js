@@ -1,5 +1,5 @@
 var Reflux = require('reflux');
-var PlayerActions = require('./PlayerActions');
+var PlayerActions = require('./../actions/PlayerActions');
 var PlayerApi = require('../webapi/PlayersApi');
 
 module.exports =  Reflux.createStore({
@@ -21,7 +21,6 @@ module.exports =  Reflux.createStore({
   },
 
   onLoadAll: function() {
-    console.log("loadAll called");
     PlayerApi.getPlayers()
       .then(this.onLoadAllCompleted)
       .error(this.onLoadAllFailed)

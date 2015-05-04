@@ -6,7 +6,7 @@ var FlatButton = require('material-ui').FlatButton;
 
 var PlayerList = require('./components/PlayerList');
 var PlayerListStore = require('./PlayerListStore');
-var PlayerActions = require('./PlayerActions');
+var PlayerActions = require('./../actions/PlayerActions');
 
 module.exports = React.createClass({
   mixins: [Navigation, Reflux.connect(PlayerListStore, "players")],

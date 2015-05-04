@@ -4,7 +4,7 @@ var RaisedButton = require('material-ui').RaisedButton;
 var TextField = require('material-ui').TextField;
 
 var PhotoBooth = require('./PhotoBooth');
-var PlayerActions = require('../PlayerActions');
+var PlayerActions = require('../../actions/PlayerActions');
 
 module.exports = React.createClass({
   mixins: [Navigation],

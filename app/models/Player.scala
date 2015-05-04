@@ -29,7 +29,7 @@ object Players {
   val players = TableQuery[Players]
 
   def all()(implicit s: Session) = {
-    players.list
+    players.sortBy(_.name).list
   }
 
   def create(player: Player)(implicit s: Session) = {

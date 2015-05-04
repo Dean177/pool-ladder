@@ -1,8 +1,8 @@
 var Reflux = require('reflux');
-var PlayerActions = require('./PlayerActions');
+var PlayerActions = require('./../actions/PlayerActions');
 var $ = require('jquery');
 
-var UrlResolver = require('../mixins/UrlResolver');
+var UrlResolver = require('../webapi/UrlResolver');
 
 
 var initialState = {

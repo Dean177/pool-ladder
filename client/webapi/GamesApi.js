@@ -3,10 +3,10 @@ var Promise = require('bluebird');
 var UrlResolver = require('./UrlResolver');
 
 window.api = module.exports = {
-  getPlayers: function() {
+  getRecentGames: function() {
     return new Promise(function (resolve, reject) {
       request
-        .get(UrlResolver.players.all)
+        .get(UrlResolver.games.recent)
         .end(function (err, response) {
           if (err) { reject(err); }
           resolve(JSON.parse(response.text));
@@ -14,5 +14,5 @@ window.api = module.exports = {
     });
   },
 
-  createPlayer: function(player) { }
+  createGame: function(game) { }
 };

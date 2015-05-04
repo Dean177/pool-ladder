@@ -2,7 +2,7 @@ jest.dontMock('../players/PlayerListStore');
 jest.dontMock('../players/PlayerActions');
 
 var PlayerListStore = require('./../players/PlayerListStore');
-var PlayerActions = require('./../players/PlayerActions');
+var PlayerActions = require('./../actions/PlayerActions');
 
 describe('PlayerListStore', function() {
 
