@@ -26,7 +26,6 @@ module.exports = React.createClass({
     }
 
     PlayerActions.create({
-      id: 4,
       name: this.state.name,
       rank: 3,
       rating: 1000,

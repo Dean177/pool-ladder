@@ -7,9 +7,9 @@ window.api = module.exports = {
     return new Promise(function (resolve, reject) {
       request
         .get(UrlResolver.players.all)
-        .end(function (err, players) {
+        .end(function (err, response) {
           if (err) { reject(err); }
-          resolve(players);
+          resolve(JSON.parse(response.text));
         })
     });
   },

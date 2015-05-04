@@ -5,8 +5,4 @@ target
 app/Global.scala
 node_modules
 bower_components
-.history
-
-public/main.js
-public/main.css
-public/vendor
+public

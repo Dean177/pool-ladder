@@ -12,17 +12,11 @@ module.exports = React.createClass({
   mixins: [Navigation, Reflux.connect(PlayerListStore, "players")],
 
   getInitialState: function() {
-    return { currentPlayers: {} };
-  },
-
-  onLoadAllCompleted: function(players) {
-    console.log("players loaded!", players);
-    this.state({ currentPlayers: players })
+    return { players: {} };
   },
 
   componentDidMount: function() {
-    console.log("component mounted", this.state.players);
-    PlayerActions.loadAll("");
+    PlayerActions.loadAll();
   },
 
   navigateToAddPlayerSection: function() { this.transitionTo('newPlayer'); },
@@ -38,7 +32,7 @@ module.exports = React.createClass({
           <FontAwesome icon="user-plus"/> Add Player
         </FlatButton>
         <h1 className="page-header">Players</h1>
-        <PlayerList players={ this.state.currentPlayers }/>
+        <PlayerList players={ this.state.players }/>
       </div>
     );
   }
