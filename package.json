@@ -34,21 +34,29 @@
     "watchify": "^2.2.1"
   },
   "dependencies": {
-    "jquery": "^2.1.4",
+    "bluebird": "^2.9.25",
     "material-ui": "^0.7.5",
     "react": "^0.13.2",
     "react-bootstrap": "^0.21.0",
     "react-router": "^0.13.2",
     "react-webcam": "git://github.com/Dean177/react-webcam",
-    "reflux": "^0.2.5"
+    "reflux": "^0.2.5",
+    "superagent": "^1.2.0"
   },
   "engines": {
     "node": ">=0.12.0"
   },
   "jest": {
+    "rootDir": "client",
     "testDirectoryName": "__tests__",
-    "scriptPreprocessor": "<rootDir>/client/jest-preprocessor.js",
-    "moduleFileExtensions": ["js", "jsx"],
-    "unmockedModulePathPatterns": ["<rootDir>/node_modules/react", "<rootDir>/node_modules/reflux"]
+    "scriptPreprocessor": "jest-preprocessor.js",
+    "moduleFileExtensions": [
+      "js",
+      "jsx"
+    ],
+    "unmockedModulePathPatterns": [
+      "react",
+      "reflux"
+    ]
   }
 }

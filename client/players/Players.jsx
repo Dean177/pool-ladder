@@ -1,14 +1,29 @@
 var React = require('react');
-var Navigation = require('react-router').Navigation;
 var Reflux = require('reflux');
+var Navigation = require('react-router').Navigation;
 var FontAwesome = require('../shared/FontAwesome');
 var FlatButton = require('material-ui').FlatButton;
 
 var PlayerList = require('./components/PlayerList');
 var PlayerListStore = require('./PlayerListStore');
+var PlayerActions = require('./PlayerActions');
 
 module.exports = React.createClass({
   mixins: [Navigation, Reflux.connect(PlayerListStore, "players")],
+
+  getInitialState: function() {
+    return { currentPlayers: {} };
+  },
+
+  onLoadAllCompleted: function(players) {
+    console.log("players loaded!", players);
+    this.state({ currentPlayers: players })
+  },
+
+  componentDidMount: function() {
+    console.log("component mounted", this.state.players);
+    PlayerActions.loadAll("");
+  },
 
   navigateToAddPlayerSection: function() { this.transitionTo('newPlayer'); },
 
@@ -18,12 +33,12 @@ module.exports = React.createClass({
         <FlatButton
           className="pull-right"
           linkButton={true}
-          onClick={ this.navigateToAddPlayerSection }
+          onClick={ PlayerActions.loadAll }
           primary={ true }>
           <FontAwesome icon="user-plus"/> Add Player
         </FlatButton>
         <h1 className="page-header">Players</h1>
-        <PlayerList players={ this.state.players } />
+        <PlayerList players={ this.state.currentPlayers }/>
       </div>
     );
   }

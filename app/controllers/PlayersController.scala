@@ -1,13 +1,15 @@
 package controllers
 
-import models.{Players, Player}
-import play.api.mvc._
-import play.api.libs.json._
+import models.{Player, Players}
+import play.api.Logger
 import play.api.db.slick._
+import play.api.libs.json._
+import play.api.mvc._
 
 object PlayersController extends Controller {
 
   def all = DBAction { implicit session =>
+    Logger.debug("All players")
     Ok(Json.toJson(Players.all()))
   }
 

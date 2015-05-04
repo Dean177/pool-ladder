@@ -3,20 +3,18 @@ var PlayerCard = require('./PlayerCard/PlayerCard');
 var PlayerListStore = require('../PlayerListStore');
 
 module.exports = React.createClass({
-
   render: function() {
-    var players = this.props.players || [];
-    if (!players.length) {
-      console.log(players);
+    var playerList = this.props.players;
+    if (!playerList.length) {
       return <h2>No players</h2>;
     }
 
-    var playerList = players.map(function (player) {
+    var playerDetailCards = playerList.map(function (player) {
       return <PlayerCard key={player.id} player={player} />;
     });
 
     return (
-      <div className="playerList">{playerList}</div>
+      <div className="playerList">{playerDetailCards}</div>
     );
   }
 

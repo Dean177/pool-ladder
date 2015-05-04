@@ -1,39 +1,19 @@
 var Reflux = require('reflux');
-//var $ = require('jquery');
 var PlayerActions = require('./PlayerActions');
-var UrlResolver = require('../mixins/UrlResolver');
+var PlayerApi = require('../webapi/PlayersApi');
 
 module.exports =  Reflux.createStore({
-  // TODO once confident the below works, remove the init block as it can be replaced with the below.
-  // listenables: [PlayerActions],
-
-  isLoading: true,
-  //players: {},
 
   init: function() {
-    this.listenTo(PlayerActions.update, this.onUpdate);
-    this.listenTo(PlayerActions.loadAll, this.onLoadAll);
+    this.players = {};
+    //this.listenTo(PlayerActions.update, this.onUpdate);
+    this.listenTo(PlayerActions.loadAll, this.fetchPlayers);
     this.listenTo(PlayerActions.loadAllCompleted, this.onLoadAllCompleted);
-    this.listenTo(PlayerActions.loadAllFailed, this.onLoadAllFailed);
-  },
-
-  getInitialState: function () {
-    return this.players;
-  },
-
-  getAll: function() {
-    return this.players;
-  },
-
-  onUpdate: function(player) {
-    // TODO update the player, trigger the event.
-  },
-
-  onLoadAll: function() {
-    this.fetchPlayers();
+    //this.listenTo(PlayerActions.loadAllFailed, this.onLoadAllFailed);
   },
 
   onLoadAllCompleted: function(players) {
+    this.players = players;
     this.trigger(players);
   },
 
@@ -42,12 +22,9 @@ module.exports =  Reflux.createStore({
   },
 
   fetchPlayers: function() {
-    //$.ajax({
-    //  type: 'GET',
-    //  url: UrlResolver.players.all,
-    //  dataType: 'json',
-    //  success: PlayerActions.loadAllCompleted,
-    //  error: PlayerActions.loadAllFailed
-    //});
+    console.log("fetchplayers called");
+    PlayerApi.getPlayers()
+      .then(this.onLoadAllCompleted)
+      .error(this.onLoadAllFailed)
   }
 });
