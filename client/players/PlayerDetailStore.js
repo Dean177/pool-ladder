@@ -2,6 +2,9 @@ var Reflux = require('reflux');
 var PlayerActions = require('./PlayerActions');
 var $ = require('jquery');
 
+var UrlResolver = require('../mixins/UrlResolver');
+
+
 var initialState = {
   loading: false,
   players: []
@@ -26,15 +29,23 @@ module.exports = Reflux.createStore({
     }
   },
 
+  get: function(id) {
+    if (this.players.has(id)) {
+      return this.players.get(id);
+    } else {
+      // TODO
+    }
+  },
 
   onCreate: function(player) {
     // TODO
     $.ajax({
       type: 'POST',
-      url: UrlResolver.createPlayer,
+      url: UrlResolver.players.create,
       dateType: 'json',
       data: player,
-      onComplete: function() {}
+      success: PlayerActions.loadDetailCompleted,
+      error: PlayerActions.loadDetailFailed
     });
   }
 });

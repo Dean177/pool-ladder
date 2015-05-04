@@ -7,6 +7,7 @@ module.exports = React.createClass({
   render: function() {
     var players = this.props.players || [];
     if (!players.length) {
+      console.log(players);
       return <h2>No players</h2>;
     }
 
@@ -15,7 +16,7 @@ module.exports = React.createClass({
     });
 
     return (
-      <div>{playerList}</div>
+      <div className="playerList">{playerList}</div>
     );
   }
 

@@ -1,8 +1,9 @@
 var gulp = require('gulp');
+var util = require('gulp-util');
 var del = require('del');
 var browserify = require('browserify');
 var watchify = require('watchify');
-var es6ify = require('es6ify');
+var babelify = require('babelify');
 var reactify = require('reactify');
 var source = require('vinyl-source-stream');
 
@@ -22,29 +23,19 @@ gulp.task('watch-scripts', function () {
 });
 
 function compileScripts  (watchForChanges) {
-    es6ify.traceurOverrides = {experimental: true};
-    var bundler = browserify({
-        entries: ['./index.jsx'],
-        basedir: config.paths.sources,
-        extensions: ['.jsx'],
-        insertGlobals: true,
-        transforms: [],
-        debug: true,
-        cache: {}, packageCache: {}, fullPaths: true // Required for watchify
-    })
-        .on('error', handleError)
+    var bundler = browserify(browserifyConfig)
         .transform(reactify)
         .on('error', handleError)
-        .transform(es6ify.configure(/.jsx/))
-        .on('error', handleError);
+        .transform(babelify)
+      ;
 
     if (watchForChanges) {
-        console.log("[" + new Date() + "] Script watcher started.");
+        util.log("Script watcher started.");
         bundler = watchify(bundler);
     }
 
     var bundle = function() {
-        console.log("[" + new Date() + "] Bundling scripts");
+        util.log("Bundling scripts");
         return bundler
             .bundle()
             .on('error', handleError)
@@ -56,3 +47,13 @@ function compileScripts  (watchForChanges) {
 
     return bundle();
 }
+
+var browserifyConfig = {
+  entries: ['./index.jsx'],
+  basedir: config.paths.sources,
+  extensions: ['.jsx', 'js'],
+  insertGlobals: true,
+  transforms: [],
+  debug: true,
+  cache: {}, packageCache: {}, fullPaths: true // Required for watchify
+};

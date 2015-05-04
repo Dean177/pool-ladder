@@ -1,4 +1,6 @@
+var util = require('gulp-util');
+
 module.exports = function (err) {
-    console.error(err);
-    console.error(err.ERROR);
+  util.log(err.message);
+  this.emit("end");
 };
