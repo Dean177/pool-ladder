@@ -8,7 +8,6 @@ describe('PlayerListStore', function() {
 
   it('Initialises with no players', function() {
     var allPlayers = PlayerListStore.players;
-
     expect(allPlayers).toEqual({});
   });
 
