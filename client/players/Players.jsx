@@ -5,7 +5,7 @@ var FontAwesome = require('../shared/FontAwesome');
 var FlatButton = require('material-ui').FlatButton;
 
 var PlayerList = require('./components/PlayerList');
-var PlayerListStore = require('./PlayerListStore');
+var PlayerListStore = require('./../stores/PlayerListStore');
 var PlayerActions = require('./../actions/PlayerActions');
 
 module.exports = React.createClass({

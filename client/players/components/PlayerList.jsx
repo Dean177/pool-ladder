@@ -1,6 +1,6 @@
 var React = require('react');
 var PlayerCard = require('./PlayerCard/PlayerCard');
-var PlayerListStore = require('../PlayerListStore');
+var PlayerListStore = require('../../stores/PlayerListStore');
 
 module.exports = React.createClass({
   render: function() {
