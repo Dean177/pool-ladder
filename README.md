@@ -13,5 +13,5 @@
  - This will state that the database is empty ("Database 'default' needs evolution!") and offer some scripts to run; Click 'Apply this script now!'  
    
 ### Testing ###
-To run the client tests: `npm test` OR `jest`,
-To run the api tests `sbt test` // TODO make sure this isnt lies (by writing some tests)
+To run the client tests: `npm test`.
+To run the api tests `sbt test`.

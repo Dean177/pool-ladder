@@ -1,5 +1,4 @@
-"use strict";
-jest.dontMock('../mixins/UrlResolver');
+jest.dontMock('../webapi/UrlResolver');
 
 var UrlResolver = require('../webapi/UrlResolver');
 
