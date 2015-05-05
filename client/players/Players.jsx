@@ -27,7 +27,7 @@ module.exports = React.createClass({
         <FlatButton
           className="pull-right"
           linkButton={true}
-          onClick={ PlayerActions.loadAll }
+          onClick={ this.navigateToAddPlayerSection }
           primary={ true }>
           <FontAwesome icon="user-plus"/> Add Player
         </FlatButton>
