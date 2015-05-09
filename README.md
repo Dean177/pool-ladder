@@ -16,4 +16,5 @@
 To run the client tests: `npm test`.
 To run the api tests `sbt test`.
 
+http://react-bootstrap.github.io/components.html?#input
 https://github.com/jhudson8/react-chartjs
