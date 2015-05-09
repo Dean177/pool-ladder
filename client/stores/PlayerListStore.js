@@ -15,7 +15,6 @@ module.exports =  Reflux.createStore({
   },
 
   onLoadAllCompleted: function(players) {
-    console.log("players: ", players);
     this.players = players;
     this.trigger(players);
   },
