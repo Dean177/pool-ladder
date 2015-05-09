@@ -27,10 +27,7 @@ module.exports = React.createClass({
 
     PlayerActions.create({
       name: this.state.name,
-      rank: 3,
-      rating: 1000,
       image: '/images/players/badger.jpg',
-      creationDate: new Date(),
       isActive: true
     });
 

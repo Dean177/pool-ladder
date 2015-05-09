@@ -1,13 +1,46 @@
-var React = require('react');
+import React from 'react';
+import { Line as LineChart } from 'react-chartjs';
 
-module.exports = React.createClass({
-    render: function () {
-        return (
-            <div>
-                <h1 className="page-header">Graphs</h1>
-            </div>
-        );
-    }
+export default React.createClass({
+
+  render: function () {
+    let chartData = {
+      labels: ["January", "February", "March", "April", "May", "June", "July"],
+      datasets: [
+        {
+          label: "My First dataset",
+          fillColor: "rgba(220,220,220,0.2)",
+          strokeColor: "rgba(220,220,220,1)",
+          pointColor: "rgba(220,220,220,1)",
+          pointStrokeColor: "#fff",
+          pointHighlightFill: "#fff",
+          pointHighlightStroke: "rgba(220,220,220,1)",
+          data: [65, 59, 80, 81, 56, 55, 40]
+        },
+        {
+          label: "My Second dataset",
+          fillColor: "rgba(151,187,205,0.2)",
+          strokeColor: "rgba(151,187,205,1)",
+          pointColor: "rgba(151,187,205,1)",
+          pointStrokeColor: "#fff",
+          pointHighlightFill: "#fff",
+          pointHighlightStroke: "rgba(151,187,205,1)",
+          data: [28, 48, 40, 19, 86, 27, 90]
+        }
+      ]
+    };
+
+    let options = {};
+
+    return (
+      <div className="graphs-section">
+        <h1 className="page-header">Graphs</h1>
+        <LineChart data={ chartData } options={ options } width="600" height="250"/>
+      </div>
+    );
+  }
 });
+
+
 
 

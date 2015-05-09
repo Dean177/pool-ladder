@@ -35,16 +35,18 @@
   },
   "dependencies": {
     "bluebird": "^2.9.25",
+    "chart.js": "^1.0.2",
     "material-ui": "^0.7.5",
     "react": "^0.13.2",
     "react-bootstrap": "^0.21.0",
+    "react-chartjs": "^0.6.0",
     "react-router": "^0.13.2",
     "react-webcam": "git://github.com/Dean177/react-webcam",
     "reflux": "^0.2.5",
     "superagent": "^1.2.0"
   },
   "engines": {
-    "node": ">=0.12.0"
+    "node": "0.10.35"
   },
   "jest": {
     "rootDir": "client",
