@@ -1,24 +1,26 @@
-var React = require('react');
-var Link = require('react-router').Link;
-var Paper = require('material-ui').Paper;
+import React from 'react';
+import { Link } from 'react-router';
+import { Paper } from 'material-ui';
 
-var Component = React.createClass({
+export default React.createClass({
+
   render: function () {
     var player = this.props.player;
+    var playerImageUrl = player.image || "/assets/images/players/goat.jpg";
+
     return (
       <Paper zDepth={2} className="PlayerCard" innerClassName="PlayerCardContents">
         <Link to="player" className="image" params={{playerID: player.id}}>
-            <img src={player.image} />
+            <img src={ playerImageUrl } />
         </Link>
         <div className="details">
-            <div className="name">{player.name}</div>
-            <div className="rating">rating: {player.rating}</div>
+            <div className="name">{ player.name }</div>
+            <div className="rating">rating: { player.rating }</div>
             <div className="win-rate"><span>win rate: 75%</span></div>
         </div>
-        <div className="rank">{'#'} {player.rank}</div>
+        <div className="rank">{'#'} { player.rank }</div>
       </Paper>
     );
   }
 });
 
-module.exports = Component;

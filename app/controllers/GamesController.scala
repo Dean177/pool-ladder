@@ -13,6 +13,7 @@ object GamesController extends Controller {
     val game = request.body.as[Game]
     val createdGame = Games.find(Games.create(game))
     EloRatings.createForGame(createdGame)
+
     Ok(Json.toJson(createdGame))
   }
 

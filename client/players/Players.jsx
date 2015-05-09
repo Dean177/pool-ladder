@@ -1,19 +1,16 @@
-var React = require('react');
-var Reflux = require('reflux');
-var Navigation = require('react-router').Navigation;
-var FontAwesome = require('../shared/FontAwesome');
-var FlatButton = require('material-ui').FlatButton;
+import React from 'react';
+import Reflux from 'reflux';
+import { Navigation } from 'react-router';
+import { FlatButton } from 'material-ui';
 
-var PlayerList = require('./components/PlayerList');
-var PlayerListStore = require('./../stores/PlayerListStore');
-var PlayerActions = require('./../actions/PlayerActions');
+import FontAwesome from '../shared/FontAwesome';
 
-module.exports = React.createClass({
+import PlayerList from './components/PlayerList';
+import PlayerListStore from './../stores/PlayerListStore';
+import PlayerActions from './../actions/PlayerActions';
+
+export default React.createClass({
   mixins: [Navigation, Reflux.connect(PlayerListStore, "players")],
-
-  getInitialState: function() {
-    return { players: {} };
-  },
 
   componentDidMount: function() {
     PlayerActions.loadAll();
@@ -31,7 +28,7 @@ module.exports = React.createClass({
           primary={ true }>
           <FontAwesome icon="user-plus"/> Add Player
         </FlatButton>
-        <h1 className="page-header">Players</h1>
+        <h2 className="page-header">Players</h2>
         <PlayerList players={ this.state.players }/>
       </div>
     );

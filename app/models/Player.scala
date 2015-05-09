@@ -7,7 +7,7 @@ import play.api.libs.json.Json
 
 import scala.slick.lifted.Tag
 
-case class Player(id: Option[Long] = None, name: String, creationDate: Date)
+case class Player(id: Option[Long] = None, name: String, isActive: Boolean = true, creationDate: Date)
 
 object Player {
   implicit val playerFormat = Json.format[Player]
@@ -16,9 +16,10 @@ object Player {
 class Players(tag: Tag) extends Table[Player](tag, "Player") {
   def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
   def name = column[String]("name")
+  def isActive = column[Boolean]("isActive")
   def creationDate = column[Date]("creationDate")
 
-  def * = (id.?, name, creationDate) <> ((Player.apply _).tupled, Player.unapply)
+  def * = (id.?, name, isActive, creationDate) <> ((Player.apply _).tupled, Player.unapply)
 }
 
 object Players {
@@ -30,6 +31,10 @@ object Players {
 
   def all()(implicit s: Session) = {
     players.sortBy(_.name).list
+  }
+
+  def active()(implicit s: Session) = {
+    players.filter(_.isActive).sortBy(_.name).list
   }
 
   def create(player: Player)(implicit s: Session) = {

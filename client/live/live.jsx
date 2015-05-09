@@ -36,7 +36,7 @@ module.exports = React.createClass({
     render: function () {
         return (
             <div>
-                <h1 className="page-header">Live</h1>
+                <h2 className="page-header">Live</h2>
                 <div id="flashContent"></div>
             </div>
         );

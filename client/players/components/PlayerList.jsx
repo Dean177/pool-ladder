@@ -1,21 +1,22 @@
-var React = require('react');
-var PlayerCard = require('./PlayerCard/PlayerCard');
-var PlayerListStore = require('../../stores/PlayerListStore');
+import React from 'react';
+import PlayerCard from './PlayerCard/PlayerCard';
 
-module.exports = React.createClass({
-  render: function() {
-    var playerList = this.props.players;
-    if (!playerList.length) {
-      return <h2>No players</h2>;
-    }
+export default React.createClass({
+  propTypes: {
+    players: React.PropTypes.array
+  },
 
-    var playerDetailCards = playerList.map(function (player) {
+  render() {
+    var playerDetailCards = this.props.players.map(function (player) {
       return <PlayerCard key={player.id} player={player} />;
     });
 
-    return (
-      <div className="playerList">{playerDetailCards}</div>
-    );
+    if (!playerDetailCards.length) {
+      return <h2 className="text-muted">No players</h2>;
+    } else {
+      return (
+        <div className="playerList">{ playerDetailCards }</div>
+      );
+    }
   }
-
 });

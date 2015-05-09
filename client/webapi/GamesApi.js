@@ -1,18 +1,13 @@
-var request = require('superagent');
-var Promise = require('bluebird');
-var UrlResolver = require('./UrlResolver');
+import CrudApi from './CrudApi'
+import UrlResolver from './UrlResolver';
 
-window.api = module.exports = {
-  getRecentGames: function() {
-    return new Promise(function (resolve, reject) {
-      request
-        .get(UrlResolver.games.recent)
-        .end(function (err, response) {
-          if (err) { reject(err); }
-          resolve(JSON.parse(response.text));
-        })
-    });
+export default {
+  getRecentGames() {
+    return CrudApi.get(UrlResolver.games.recent);
   },
 
-  createGame: function(game) { }
+  createGame(game) {
+    return CrudApi.create(game, UrlResolver.games.create)
+  }
 };
+

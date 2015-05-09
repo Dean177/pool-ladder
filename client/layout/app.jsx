@@ -1,9 +1,9 @@
-var React = require('react');
-var Router = require('react-router');
-var RouteHandler = Router.RouteHandler;
-var Sidenav = require('./sidenav');
+import React from 'react';
+import { RouteHandler } from 'react-router';
 
-module.exports = React.createClass({
+import Sidenav from './sidenav';
+
+export default React.createClass({
   render: function () {
     return (
       <div id="wrapper">

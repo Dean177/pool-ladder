@@ -1,18 +1,12 @@
-var request = require('superagent');
-var Promise = require('bluebird');
-var UrlResolver = require('./UrlResolver');
+import CrudApi from './CrudApi';
+import UrlResolver from './UrlResolver';
 
-window.api = module.exports = {
-  getPlayers: function() {
-    return new Promise(function (resolve, reject) {
-      request
-        .get(UrlResolver.players.all)
-        .end(function (err, response) {
-          if (err) { reject(err); }
-          resolve(JSON.parse(response.text));
-        })
-    });
+export default {
+  getPlayers() {
+    return CrudApi.get(UrlResolver.players.all);
   },
 
-  createPlayer: function(player) { }
+  createPlayer(player) {
+    return CrudApi.create(player, UrlResolver.players.all);
+  }
 };

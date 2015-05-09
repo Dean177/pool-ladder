@@ -1,44 +1,55 @@
-var React = require('react');
-var Router = require('react-router');
-var Route = Router.Route;
-var RouteHandler = Router.RouteHandler;
-var DefaultRoute = Router.DefaultRoute;
-var NotFoundRoute = Router.NotFoundRoute;
+import React from 'react';
+import {
+  run as RunRouter,
+  Route,
+  RouteHandler,
+  DefaultRoute,
+  NotFoundRoute,
+  HistoryLocation
+} from 'react-router';
 
-var App = require('./layout/app');
+import App from './layout/app';
 
-var Players = require('./players/Players');
-var NewPlayer = require('./players/NewPlayer/NewPlayer');
-var PlayerDetail = require('./players/PlayerDetail/Detail');
-var PlayerSection = require('./players/Section');
+import PlayersSection from './players/PlayersSection';
+import Players from './players/Players';
+import NewPlayer from './players/NewPlayer';
+import PlayerDetail from './players/PlayerDetail';
 
-var Rules = require('./rules/rules');
-var Live = require('./live/live');
-var Graphs = require('./graphs/graphs');
-var Games = require('./games/RecentGames');
-var Records = require('./records/records');
-var Leaderboard = require('./leaderboard/leaderboard');
-var NotFound = require('./404');
+import GamesSection from './games/GamesSection';
+import RecentGames from './games/RecentGames';
+import NewGame from './games/NewGame';
 
-var routes = (
+import Leaderboard from './leaderboard/Leaderboard';
+import Rules from './rules/rules';
+import Live from './live/live';
+import Graphs from './graphs/graphs';
+import Records from './records/records';
+import NotFound from './404';
+
+let routes = (
   <Route name="app" handler={App} path="/">
     <DefaultRoute name="leaderboard" handler={Leaderboard} />
-    <Route name="games" handler={Games} />
-    <Route name="rules" handler={Rules} />
-    <Route name="graphs" handler={Graphs} />
-    <Route name="records" handler={Records} />
-    <Route name="live" handler={Live} />
 
-    <Route path="players" name="players" handler={PlayerSection}>
+    <Route path="players" name="players" handler={PlayersSection}>
       <DefaultRoute handler={Players} />
       <Route path="new" name="newPlayer" handler={NewPlayer} />
       <Route path=":playerID" name="player" handler={PlayerDetail} />
     </Route>
 
+    <Route name="games" path="games" handler={GamesSection}>
+      <DefaultRoute handler={RecentGames} />
+      <Route path="new" name="newGame" handler={NewGame} />
+    </Route>
+
+    <Route name="rules" handler={Rules}></Route>
+    <Route name="graphs" handler={Graphs} />
+    <Route name="records" handler={Records} />
+    <Route name="live" handler={Live} />
+
     <NotFoundRoute handler={NotFound} />
   </Route>
 );
 
-Router.run(routes, Router.HistoryLocation, function (Handler) {
+RunRouter(routes, HistoryLocation, (Handler) => {
   React.render(<Handler />, document.body);
 });

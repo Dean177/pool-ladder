@@ -6,8 +6,12 @@ module.exports =  Reflux.createStore({
   listenables: PlayerActions,
 
   init: function() {
-    this.players = {};
+    this.players = [];
     // TODO connect to the server to receive updates
+  },
+
+  getInitialState: function() {
+    return [];
   },
 
   onLoadAllCompleted: function(players) {

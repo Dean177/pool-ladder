@@ -34,7 +34,7 @@ export default React.createClass({
 
     return (
       <div className="graphs-section">
-        <h1 className="page-header">Graphs</h1>
+        <h2 className="page-header">Graphs</h2>
         <LineChart data={ chartData } options={ options } width="600" height="250"/>
       </div>
     );

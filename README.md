@@ -15,3 +15,5 @@
 ### Testing ###
 To run the client tests: `npm test`.
 To run the api tests `sbt test`.
+
+https://github.com/jhudson8/react-chartjs

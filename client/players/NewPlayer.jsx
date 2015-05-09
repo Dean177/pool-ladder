@@ -1,12 +1,10 @@
-var React = require('react');
-var Navigation = require('react-router').Navigation;
-var RaisedButton = require('material-ui').RaisedButton;
-var TextField = require('material-ui').TextField;
+import React from 'react';
+import { Navigation } from 'react-router';
+import { RaisedButton, TextField }from 'material-ui';
 
-var PhotoBooth = require('./PhotoBooth');
-var PlayerActions = require('../../actions/PlayerActions');
+import PlayerActions from '../actions/PlayerActions';
 
-module.exports = React.createClass({
+export default React.createClass({
   mixins: [Navigation],
   nameErrorMessage: "Please enter a name",
 
@@ -26,16 +24,14 @@ module.exports = React.createClass({
     }
 
     PlayerActions.create({
-      name: this.state.name,
-      image: '/images/players/badger.jpg',
-      isActive: true
+      name: this.state.name
     });
 
     this.clearForm();
     this.transitionTo('players');
   },
 
-  clearForm: function() { this.setState({name: "", nameError: "", image:""}); },
+  clearForm: function() { this.setState({ name: "" }); },
 
   isValid: function() { return this.isValidName(this.state.name) && this.isValidImage; },
   isValidName: function(name) { return name.trim().length > 0; },
@@ -59,14 +55,14 @@ module.exports = React.createClass({
   render: function () {
     return (
       <div>
-        <h1 className="page-header">Add a Player</h1>
+        <h2 className="page-header">Add a Player</h2>
         <form onSubmit={this.onSubmit}>
           <TextField
               value={this.state.name}
               errorText={this.state.nameError}
               floatingLabelText="Name"
               onChange={this._validateName} />
-            <PhotoBooth />
+
             <RaisedButton
               label="Save"
               secondary={true}

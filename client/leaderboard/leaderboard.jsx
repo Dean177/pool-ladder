@@ -4,7 +4,7 @@ module.exports = React.createClass({
     render: function () {
         return (
             <div>
-                <h1 className="page-header">Leaderboard</h1>
+                <h2 className="page-header">Leaderboard</h2>
                 <div className="leaderboard"></div>
             </div>
         );

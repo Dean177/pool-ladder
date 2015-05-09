@@ -11,6 +11,7 @@ gulp.task('bower', function() {
     gulp
         .src([
             path.join(config.paths.bowerComponents, 'bootstrap', 'dist', 'css', 'bootstrap.css'),
+            path.join(config.paths.bowerComponents, 'bootstrap', 'dist', 'css', 'bootstrap.css.map'),
             path.join(config.paths.bowerComponents, 'font-awesome', 'css', 'font-awesome.css'),
             path.join(config.paths.bowerComponents, 'swfobject', 'swfobject', 'src', 'swfobject.js')
         ])

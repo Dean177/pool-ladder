@@ -6,3 +6,6 @@ app/Global.scala
 node_modules
 bower_components
 public
+public/main.js
+public/main.css
+public/MediaPlayback.swf

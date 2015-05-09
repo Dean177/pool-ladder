@@ -1,11 +1,15 @@
-var React = require('react');
-var Reflux = require('reflux');
+import React from 'react';
+import Reflux from 'reflux';
+import { Navigation } from 'react-router';
+import { FlatButton } from 'material-ui';
 
-var GamesStore = require('../stores/GamesStore');
-var GameActions = require('../actions/GameActions');
+import FontAwesome from '../shared/FontAwesome';
 
-module.exports = React.createClass({
-  mixins: [Reflux.connect(GamesStore, "recentGames")],
+import GamesStore from '../stores/GamesStore';
+import GameActions from '../actions/GameActions';
+
+export default React.createClass({
+  mixins: [Navigation, Reflux.connect(GamesStore, "recentGames")],
 
   getInitialState: function() {
     return { recentGames: {} };
@@ -15,10 +19,20 @@ module.exports = React.createClass({
     GameActions.getRecent();
   },
 
-  render: function () {
+  goToNewGame: function() { this.transitionTo('newGame'); },
+
+  render: function() {
     return (
-      <div>
-        <h1 className="page-header">Recent Games</h1>
+      <div className="recentGames">
+        <FlatButton
+          className="pull-right"
+          linkButton={true}
+          onClick={ this.goToNewGame }
+          primary={ true }>
+          <FontAwesome icon="user-plus"/> New Game
+        </FlatButton>
+        <h2 className="page-header">Recent Games</h2>
+
         <pre>{ JSON.stringify(this.state.recentGames) }</pre>
       </div>
     );

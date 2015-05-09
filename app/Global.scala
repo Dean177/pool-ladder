@@ -16,10 +16,10 @@ object Global extends GlobalSettings {
       DB.withTransaction { implicit session: Session =>
         if (Players.count == 0) {
           Seq(
-            Player(Some(1), "Goat", new Date(1)),
-            Player(Some(2), "Badger", new Date(2)),
-            Player(Some(3), "Vole", new Date(3)),
-            Player(Some(4), "Pig", new Date(4))
+            Player(Some(1), "Goat", isActive = true, new Date(1)),
+            Player(Some(2), "Badger", isActive = true, new Date(2)),
+            Player(Some(3), "Vole", isActive = true, new Date(3)),
+            Player(Some(4), "Pig", isActive = true, new Date(4))
           ).foreach(Players.create)
 
           Seq(

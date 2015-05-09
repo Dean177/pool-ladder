@@ -9,6 +9,7 @@ GET         /api/players/:id/games               controllers.GamesController.gam
 GET         /api/players/:id/latestRating        controllers.EloRatingsController.latestRatingByPlayer(id: Long)
 GET         /api/players/:id/ratings             controllers.EloRatingsController.ratingsByPlayer(id: Long)
 
+POST        /api/games                           controllers.GamesController.create
 GET         /api/games                           controllers.GamesController.recentGames
 
 GET         /favicon.ico                         controllers.Assets.at(path="/public", file="favicon.ico")
