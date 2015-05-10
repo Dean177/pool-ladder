@@ -46,21 +46,23 @@ export default React.createClass({
         <form onSubmit={this.onSubmit}>
           <Row>
             <Col md={6}>
-              <p>Winner</p>
-              <PlayerPicker idStateLink={ this.linkState('winnerId')} players={ this.state.players } />
+              <PlayerPicker
+                idStateLink={ this.linkState('winnerId')}
+                label="Winner"
+                players={ this.state.players } />
             </Col>
             <Col md={6}>
-              <p>Loser</p>
-              <PlayerPicker idStateLink={ this.linkState('loserId')} players={ this.state.players } />
+              <PlayerPicker
+                idStateLink={ this.linkState('loserId')}
+                label="Loser"
+                players={ this.state.players } />
             </Col>
           </Row>
           <Row>
-            <RaisedButton label="Add Game" secondary={ true } />
-
-            <FlatButton
-              label="Cancel"
-              primary={ true }
-              />
+            <Col md={12}>
+              <RaisedButton label="Add Game" secondary={ true } />
+              <FlatButton label="Cancel" primary={ true } />
+            </Col>
           </Row>
         </form>
       </div>

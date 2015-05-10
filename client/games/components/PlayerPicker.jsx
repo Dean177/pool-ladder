@@ -1,11 +1,13 @@
 import React from 'react';
+import { Input } from 'react-bootstrap';
 
 export default React.createClass({
   mixins: [React.addons.LinkedStateMixin],
 
   propTypes: {
-    players: React.PropTypes.array,
-    idStateLink: React.PropTypes.any
+    idStateLink: React.PropTypes.any,
+    label: React.PropTypes.string,
+    players: React.PropTypes.array
   },
 
   render: function() {
@@ -21,7 +23,7 @@ export default React.createClass({
     });
 
     return (
-      <select valueLink={this.props.idStateLink}>{options}</select>
+      <Input type='select' label={this.props.label} valueLink={this.props.idStateLink}>{options}</Input>
     );
   }
 });
