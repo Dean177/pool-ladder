@@ -1,6 +1,6 @@
 package models
 
-import java.util.Date
+import java.sql.Date
 import play.api.libs.json.Json
 
 case class Player(id: Option[Long] = None, name: String, isActive: Boolean = true, creationDate: Date)

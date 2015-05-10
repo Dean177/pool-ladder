@@ -11,22 +11,6 @@ import play.api.db.slick.HasDatabaseConfig
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import slick.driver.JdbcProfile
 
-
-trait PlayersComponent { self: HasDatabaseConfig[JdbcProfile] =>
-  import driver.api._
-
-  class PlayersTable(tag: Tag) extends Table[Player](tag, "Player") {
-    implicit val dateColumnType = MappedColumnType.base[Date, Long](d => d.getTime, d => new Date(d))
-
-    def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
-    def name = column[String]("name")
-    def isActive = column[Boolean]("isActive")
-    def creationDate = column[Date]("creationDate")
-
-    def * = (id.?, name, isActive, creationDate) <> (Player.tupled, Player.unapply(_))
-  }
-}
-
 class PlayerDAO extends PlayersComponent with HasDatabaseConfig[JdbcProfile] {
   protected val dbConfig = DatabaseConfigProvider.get[JdbcProfile](Play.current)
 
@@ -46,7 +30,7 @@ class PlayerDAO extends PlayersComponent with HasDatabaseConfig[JdbcProfile] {
 
   def create(player: Player): Future[Unit] = db.run(Players += player).map { _ => ()}
 
-  def insert(players: Seq[Player]): Future[Unit] = db.run(Players ++= player).map { _ => ()}
+  def insert(players: Seq[Player]): Future[Unit] = db.run(Players ++= players).map { _ => ()}
 
   def update(player: Player): Future[Unit] = {
     db.run(Players.filter(_.id === player.id).update(player)).map(_ => ())

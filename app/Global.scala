@@ -1,8 +1,9 @@
-import java.util.Date
+import java.sql.Date
 
 import play.api._
 import models._
 import dao.PlayerDAO
+import play.api.libs.concurrent.Execution.Implicits.defaultContext
 
 object Global extends GlobalSettings {
 
@@ -10,23 +11,18 @@ object Global extends GlobalSettings {
     def playersDao = new PlayerDAO
 
     playersDao.count().map { count =>
-      if (!count. 0) {
+      if (count == 0) {
         val testPlayers = Seq(
-          Player(Some(1), "Goat", isActive = true, new Date()),
-          Player(Some(2), "Badger", isActive = true, new Date()),
-          Player(Some(3), "Vole", isActive = true, new Date()),
-          Player(Some(4), "Pig", isActive = true, new Date())
+          Player(Some(1), "Goat", isActive = true, new Date(1)),
+          Player(Some(2), "Badger", isActive = true, new Date(2)),
+          Player(Some(3), "Vole", isActive = true, new Date(3)),
+          Player(Some(4), "Pig", isActive = true, new Date(4))
         )
 
-
+        playersDao.insert(testPlayers)
       }
     }
-    TestData.insert()
   }
-
-  object TestData {
-    def insert(): Unit = {
-      if (Players.count == 0) {
 
 //          Seq(
 //            Game(Some(1), 1, 2, new Date(6)),
@@ -48,7 +44,4 @@ object Global extends GlobalSettings {
 //            EloRating(None, 4, 4, 14, 1014, new Date(9)),
 //            EloRating(None, 4, 2, -14, 970, new Date(9))
 //          ).foreach(EloRatings.create)
-      }
-    }
-  }
 }

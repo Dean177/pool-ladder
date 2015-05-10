@@ -1,18 +1,15 @@
 package controllers
 
-import models.EloRatings
 import play.api.mvc._
-import play.api.libs.json._
-import play.api.db.slick._
 
-object EloRatingsController extends Controller {
-  def ratingsByPlayer(id: Long) = Action {
+class EloRatingsController extends Controller {
+  def ratingsByPlayer(id: Long) = Action { implicit request =>
 //    Ok(Json.toJson(EloRatings.getRatingsByPlayer(id)))
-    Ok()
+    Ok("TODO")
   }
 
-  def latestRatingByPlayer(id: Long) = Action {
+  def latestRatingByPlayer(id: Long) = Action { implicit request =>
 //    Ok(Json.toJson(EloRatings.getLatestRating(id)))
-    Ok()
+    Ok("TODO")
   }
 }

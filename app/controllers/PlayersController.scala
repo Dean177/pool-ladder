@@ -17,20 +17,21 @@ class PlayersController @Inject() (playersDAO: PlayerDAO) extends Controller {
   }
 
   def get(id: Long) = Action.async {
-    playersDAO.find(id).map { _ =>
-      Ok(Json.toJson(_))
+    playersDAO.find(id).map {
+      case Some(player) => Ok(Json.toJson(player))
+      case None => Ok("TODO")
     }
   }
 
   def create = Action { implicit requestSession =>
 //    val newPlayer = requestSession.body.as[Player]
 //    Ok(Json.toJson(Players.find(Players.create(newPlayer))))
-    Ok()
+    Ok("TODO")
   }
 
   def update(id: Long) = Action(parse.json) { implicit request =>
 //    val player = request.body.as[Player]
 //    Ok(Json.toJson(Players.find(Players.update(player))))
-    Ok()
+    Ok("TODO")
   }
 }
