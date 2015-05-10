@@ -1,29 +1,40 @@
 package controllers
 
+import java.sql.Date
+
 import dao.GamesDAO
 import models.Game
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
-import play.api.mvc.{BodyParsers, Action, Controller}
+import play.api.mvc.{Action, Controller}
 
 import play.api.libs.json._
 
+case class NewGame(winnerId: Long, loserId: Long)
+object NewGame {
+  implicit val newGameFormat = Json.format[NewGame]
+}
+
 class GamesController extends Controller {
-  def gameDao = new GamesDAO
+  val gameDao = new GamesDAO
 
-  def create = Action(BodyParsers.parse.json) { implicit request =>
-    val game = request.body.as[Game]
-//    val createdGame = Games.find(Games.create(game))
+  def create = Action.async(parse.json) { request =>
+    val game: NewGame = request.body.as[NewGame]
+
+    gameDao.create(Game(None, game.winnerId, game.loserId, new Date(20))).map { game =>
+      Ok(Json.toJson(game))
+    }
 //    EloRatings.createForGame(createdGame)
-    Ok(Json.toJson(game))
   }
 
-  def gamesByPlayer(id: Long) = Action { implicit session =>
-//    Ok(Json.toJson(Games.withPlayer(id)))
-    Ok("TODO")
+  def gamesByPlayer(id: Long) = Action.async { session =>
+    gameDao.withPlayer(id).map { games: Seq[Game] =>
+      Ok(Json.toJson(games))
+    }
   }
 
-  def recentGames = Action { implicit session =>
-//    Ok(Json.toJson(Games.recent()))
-    Ok("TODO")
+  def recentGames = Action.async {
+    gameDao.recent().map { games: Seq[Game] =>
+      Ok(Json.toJson(games))
+    }
   }
 }

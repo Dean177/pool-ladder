@@ -9,12 +9,13 @@ scalaVersion := "2.11.6"
 
 resolvers += Resolver.sonatypeRepo("snapshots")
 
+resolvers += "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases"
+
 libraryDependencies ++= Seq(
   "org.slf4j" % "slf4j-nop" % "1.6.4",
-  "com.typesafe.play" %% "play-slick" % "1.0.0-2015-05-03-a1c424e-SNAPSHOT"
+  "com.typesafe.play" %% "play-slick" % "1.0.0-2015-05-03-a1c424e-SNAPSHOT",
+  specs2 % Test
 )
-
-unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )
 
 playRunHooks <+= baseDirectory.map(base => Gulp(base))
 

@@ -35,17 +35,21 @@ class GamesDAO extends GamesComponent with HasDatabaseConfig[JdbcProfile] {
     db.run(query.result)
   }
 
-  def create(game: Game): Future[Unit] = db.run(games += game).map { _ => () }
+  def create(game: Game): Future[Game] = {
+    db.run{
+      (games returning games.map(_.id)) into ((game, id) => game.copy(id=Some(id))) += game
+    }
+  }
 
   def insert(newGames: Seq[Game]): Future[Unit] = db.run(games ++= newGames).map { _ => ()}
 
-//  def find(id: Long): Future[Option[Game]] = {
-//    db.run(games.filter(_.id === id).result.headOption)
-//  }
-//
-//  def withPlayer(id: Long): Future[Seq[Game]] = {
-//    db.run(games.filter(game => game.winnerId === id || game.loserId === id).sortBy(_.playedOn.desc).result)
-//  }
+  def find(id: Long): Future[Option[Game]] = {
+    db.run(games.filter(_.id === id).result.headOption)
+  }
+
+  def withPlayer(id: Long): Future[Seq[Game]] = {
+    db.run(games.filter(game => game.winnerId === id || game.loserId === id).sortBy(_.playedOn.desc).result)
+  }
 }
 
 

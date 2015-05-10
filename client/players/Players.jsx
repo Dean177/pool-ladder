@@ -23,7 +23,7 @@ export default React.createClass({
       <div>
         <FlatButton
           className="pull-right"
-          linkButton={true}
+          linkButton={ true }
           onClick={ this.navigateToAddPlayerSection }
           primary={ true }>
           <FontAwesome icon="user-plus"/> Add Player

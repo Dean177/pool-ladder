@@ -16,24 +16,28 @@ class PlayerDAO extends PlayersComponent with HasDatabaseConfig[JdbcProfile] {
 
   import driver.api._
 
-  val Players = TableQuery[PlayersTable]
+  val players = TableQuery[PlayersTable]
 
-  def count(): Future[Int] = db.run(Players.length.result)
+  def count(): Future[Int] = db.run(players.length.result)
 
-  def all(): Future[Seq[Player]] = db.run(Players.sortBy(_.name).result)
+  def all(): Future[Seq[Player]] = db.run(players.sortBy(_.name).result)
 
-  def active(): Future[Seq[Player]] = db.run(Players.filter(_.isActive).result)
+  def active(): Future[Seq[Player]] = db.run(players.filter(_.isActive).result)
 
   def find(id: Long): Future[Option[Player]] = {
-    db.run(Players.filter(_.id === id).result.headOption)
+    db.run(players.filter(_.id === id).result.headOption)
   }
 
-  def create(player: Player): Future[Unit] = db.run(Players += player).map { _ => ()}
+  def create(player: Player): Future[Player] = {
+    db.run {
+      (players returning players.map(_.id)) into ((player, id) => player.copy(id=Some(id))) += player
+    }
+  }
 
-  def insert(players: Seq[Player]): Future[Unit] = db.run(Players ++= players).map { _ => ()}
+  def insert(newPlayers: Seq[Player]): Future[Unit] = db.run(players ++= newPlayers).map { _ => ()}
 
   def update(player: Player): Future[Unit] = {
-    db.run(Players.filter(_.id === player.id).update(player)).map(_ => ())
+    db.run(players.filter(_.id === player.id).update(player)).map(_ => ())
   }
 }
 

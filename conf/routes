@@ -1,17 +1,17 @@
-#POST        /api/players                         controllers.PlayersController.create
-GET         /api/players                         controllers.PlayersController.all
-GET         /api/players/:id                     controllers.PlayersController.get(id: Long)
-PUT         /api/players/:id                     controllers.PlayersController.update(id: Long)
+POST        /api/players                         @controllers.PlayersController.create
+GET         /api/players                         @controllers.PlayersController.all
+GET         /api/players/:id                     @controllers.PlayersController.get(id: Long)
+PUT         /api/players/:id                     @controllers.PlayersController.update(id: Long)
 
-GET         /api/players/:id/games               controllers.GamesController.gamesByPlayer(id: Long)
-GET         /api/players/:id/latestRating        controllers.EloRatingsController.latestRatingByPlayer(id: Long)
-GET         /api/players/:id/ratings             controllers.EloRatingsController.ratingsByPlayer(id: Long)
+GET         /api/players/:id/games               @controllers.GamesController.gamesByPlayer(id: Long)
+GET         /api/players/:id/latestRating        @controllers.EloRatingsController.latestRatingByPlayer(id: Long)
+GET         /api/players/:id/ratings             @controllers.EloRatingsController.ratingsByPlayer(id: Long)
 
-POST        /api/games                           controllers.GamesController.create
-GET         /api/games                           controllers.GamesController.recentGames
+POST        /api/games                           @controllers.GamesController.create
+GET         /api/games                           @controllers.GamesController.recentGames
 
 GET         /favicon.ico                         controllers.Assets.at(path="/public", file="favicon.ico")
 GET         /assets/*file                        controllers.Assets.at(path="/public", file)
 
-GET         /                                    controllers.ApplicationController.index(any: String ?= "")
-GET         /*any                                controllers.ApplicationController.index(any)
+GET         /                                    @controllers.ApplicationController.index(any: String ?= "")
+GET         /*any                                @controllers.ApplicationController.index(any)
