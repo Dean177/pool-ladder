@@ -1,6 +1,6 @@
 package dao
 
-import java.util.Date
+import java.sql.Date
 
 import scala.concurrent.Future
 
@@ -34,5 +34,18 @@ class PlayerDAO extends PlayersComponent with HasDatabaseConfig[JdbcProfile] {
 
   def update(player: Player): Future[Unit] = {
     db.run(Players.filter(_.id === player.id).update(player)).map(_ => ())
+  }
+}
+
+trait PlayersComponent { self: HasDatabaseConfig[JdbcProfile] =>
+  import driver.api._
+
+  class PlayersTable(tag: Tag) extends Table[Player](tag, "Player") {
+    def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
+    def name = column[String]("name")
+    def isActive = column[Boolean]("isActive")
+    def creationDate = column[Date]("creationDate")
+
+    def * = (id.?, name, isActive, creationDate) <> ((Player.apply _).tupled, Player.unapply)
   }
 }
