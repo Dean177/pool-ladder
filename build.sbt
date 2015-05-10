@@ -5,7 +5,7 @@ name := "pool-ladder"
 
 version := "0.1"
 
-scalaVersion := "2.11.5"
+scalaVersion := "2.11.6"
 
 libraryDependencies ++= Seq(
   jdbc ,
@@ -22,3 +22,5 @@ lazy val `pool-ladder` = project.in(file("."))
   .settings(commands ++= JsCommands.all)
 
 fork in run := false
+
+routesGenerator := InjectedRoutesGenerator

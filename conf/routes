@@ -1,5 +1,3 @@
-
-
 POST        /api/players                         controllers.PlayersController.create
 GET         /api/players                         controllers.PlayersController.all
 GET         /api/players/:id                     controllers.PlayersController.get(id: Long)
