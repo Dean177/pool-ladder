@@ -10,7 +10,7 @@ export default React.createClass({
 
     return (
       <Paper zDepth={2} className="PlayerCard" innerClassName="PlayerCardContents">
-        <Link to="player" className="image" params={{playerID: player.id}}>
+        <Link to="player" className="image" params={{playerId: player.id}}>
             <img src={ playerImageUrl } />
         </Link>
         <div className="details">

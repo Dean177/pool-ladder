@@ -26,10 +26,9 @@ export default React.createClass({
 
   onSubmit: function (e) {
     e.preventDefault();
-
     GameActions.create({
-      winnerId: this.state.winnerId,
-      loserId: this.state.loserId
+      winnerId: parseInt(this.state.winnerId),
+      loserId: parseInt(this.state.loserId)
     });
 
     this.transitionTo('leaderboard');
@@ -43,6 +42,7 @@ export default React.createClass({
     return (
       <div className="newGame">
         <h2 className="page-header">Add Game</h2>
+        <h3>{this.state.winnerId} {this.state.loserId}</h3>
         <form onSubmit={this.onSubmit}>
           <Row>
             <Col md={6}>

@@ -1,12 +1,16 @@
-import CrudApi from './CrudApi';
+import Http from './Http';
 import UrlResolver from './UrlResolver';
 
 export default {
   getPlayers() {
-    return CrudApi.get(UrlResolver.players.all);
+    return Http.get(UrlResolver.players.all);
+  },
+
+  getProfile(id) {
+    return Http.get(UrlResolver.players.byId(id))
   },
 
   createPlayer(player) {
-    return CrudApi.create(player, UrlResolver.players.all);
+    return Http.create(player, UrlResolver.players.all);
   }
 };

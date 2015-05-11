@@ -3,6 +3,7 @@ package controllers
 import java.sql.Date
 
 import dao.PlayerDAO
+import lib.DateTimeHelpers
 import models.Player
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import play.api.mvc.{Action, Controller}
@@ -26,13 +27,14 @@ class PlayersController extends Controller {
   def get(id: Long) = Action.async { request =>
     playerDao.find(id).map {
       case Some(player) => Ok(Json.toJson(player))
-      case None => Ok("TODO")
+      case None => Ok("") // TODO return a 404
     }
   }
 
   def create = Action.async(parse.json) { request =>
     val newPlayer = request.body.as[NewPlayer]
-    val playerToCreate = Player(None, newPlayer.name, isActive = true, new Date(10))
+    // TODO get the current date
+    val playerToCreate = Player(None, newPlayer.name, isActive = true, DateTimeHelpers.now)
     playerDao.create(playerToCreate).map { createdPlayer =>
       Ok(Json.toJson(createdPlayer))
     }

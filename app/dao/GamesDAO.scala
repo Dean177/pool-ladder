@@ -31,8 +31,7 @@ class GamesDAO extends GamesComponent with HasDatabaseConfig[JdbcProfile] {
   val games = TableQuery[GamesTable]
 
   def recent(): Future[Seq[Game]] = {
-    val query = games.sortBy(_.playedOn)
-    db.run(query.result)
+    db.run(games.sortBy(_.playedOn.desc).result)
   }
 
   def create(game: Game): Future[Game] = {

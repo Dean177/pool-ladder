@@ -1,7 +1,7 @@
 import request from 'superagent';
 import Promise from 'bluebird';
 
-class Http {
+export default {
   create(entity, url) {
     return new Promise(function (resolve, reject) {
       request
@@ -12,7 +12,7 @@ class Http {
           resolve(JSON.parse(response.text));
         })
     });
-  }
+  },
 
   get(url) {
     return new Promise(function (resolve, reject) {
@@ -26,6 +26,6 @@ class Http {
   }
 }
 
-export default new Http();
+
 
 

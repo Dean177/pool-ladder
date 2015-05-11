@@ -16,14 +16,17 @@ export default React.createClass({
       return (
         <option
           key={player.id}
-          value={player.id}>
+          value={player.id}
+          placeholder='...' >
           {player.name}
         </option>
       );
     });
 
     return (
-      <Input type='select' label={this.props.label} valueLink={this.props.idStateLink}>{options}</Input>
+      <Input type='select' label={this.props.label} valueLink={this.props.idStateLink}>
+        {options}
+      </Input>
     );
   }
 });

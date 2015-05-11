@@ -27,5 +27,20 @@ module.exports =  Reflux.createStore({
     PlayerApi.getPlayers()
       .then(this.onLoadAllCompleted)
       .error(this.onLoadAllFailed)
+  },
+
+  onCreate: function(player) {
+    PlayerApi.createPlayer(player)
+      .then(this.onCreateCompleted)
+      .error(this.onCreateFailed)
+  },
+
+  onCreateCompleted: function(newPlayer) {
+    this.players.push(newPlayer);
+    this.trigger();
+  },
+
+  onCreateFailed: (err) => {
+    console.log("loadAllFailed:", err);
   }
 });

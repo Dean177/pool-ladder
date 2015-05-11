@@ -13,7 +13,7 @@ import App from './layout/app';
 import PlayersSection from './players/PlayersSection';
 import Players from './players/Players';
 import NewPlayer from './players/NewPlayer';
-import PlayerDetail from './players/PlayerDetail';
+import PlayerDetail from './players/PlayerProfile';
 
 import GamesSection from './games/GamesSection';
 import RecentGames from './games/RecentGames';
@@ -33,7 +33,7 @@ let routes = (
     <Route path="players" name="players" handler={PlayersSection}>
       <DefaultRoute handler={Players} />
       <Route path="new" name="newPlayer" handler={NewPlayer} />
-      <Route path=":playerID" name="player" handler={PlayerDetail} />
+      <Route path=":playerId" name="player" handler={PlayerDetail} />
     </Route>
 
     <Route name="games" path="games" handler={GamesSection}>

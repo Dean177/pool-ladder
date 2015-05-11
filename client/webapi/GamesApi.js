@@ -1,13 +1,13 @@
-import CrudApi from './CrudApi'
+import Http from './Http'
 import UrlResolver from './UrlResolver';
 
 export default {
   getRecentGames() {
-    return CrudApi.get(UrlResolver.games.recent);
+    return Http.get(UrlResolver.games.recent);
   },
 
   createGame(game) {
-    return CrudApi.create(game, UrlResolver.games.create)
+    return Http.create(game, UrlResolver.games.create)
   }
 };
 

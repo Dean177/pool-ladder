@@ -2,7 +2,8 @@ package controllers
 
 import java.sql.Date
 
-import dao.GamesDAO
+import dao.{EloRatingsDAO, GamesDAO}
+import lib.DateTimeHelpers
 import models.Game
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import play.api.mvc.{Action, Controller}
@@ -16,14 +17,15 @@ object NewGame {
 
 class GamesController extends Controller {
   val gameDao = new GamesDAO
+  val eloRatingsDao = new EloRatingsDAO
 
   def create = Action.async(parse.json) { request =>
     val game: NewGame = request.body.as[NewGame]
 
-    gameDao.create(Game(None, game.winnerId, game.loserId, new Date(20))).map { game =>
+    gameDao.create(Game(None, game.winnerId, game.loserId, DateTimeHelpers.now)).map { game =>
       Ok(Json.toJson(game))
     }
-//    EloRatings.createForGame(createdGame)
+//    eloRatingsDao.createForGame(createdGame)
   }
 
   def gamesByPlayer(id: Long) = Action.async { session =>
