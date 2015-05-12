@@ -30,7 +30,7 @@ class PlayerDAO extends PlayersComponent with HasDatabaseConfig[JdbcProfile] {
 
   def create(player: Player): Future[Player] = {
     db.run {
-      (players returning players.map(_.id)) into ((player, id) => player.copy(id=Some(id))) += player
+      (players returning players.map(_.id)) into ((player: Player, id) => player.copy(id=Some(id))) += player
     }
   }
 
