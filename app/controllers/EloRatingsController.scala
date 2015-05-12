@@ -1,6 +1,7 @@
 package controllers
 
 import dao.EloRatingsDAO
+import models.EloRating
 import play.api.libs.json.Json
 import play.api.mvc._
 
@@ -16,6 +17,12 @@ class EloRatingsController extends Controller {
   def latestRatingByPlayer(id: Long) = Action.async {
     ratings.getLatestRating(id).map { rating =>
       Ok(Json.toJson(rating))
+    }
+  }
+
+  def latestRatings = Action.async {
+    ratings.latest().map { latestRatings: Seq[EloRating] =>
+      Ok(Json.toJson(EloRating))
     }
   }
 }

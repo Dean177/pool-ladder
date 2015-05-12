@@ -13,7 +13,6 @@ import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import slick.driver.JdbcProfile
 
 class EloRatingsDAO extends EloRatingsComponent with HasDatabaseConfig[JdbcProfile] {
-
   protected val dbConfig = DatabaseConfigProvider.get[JdbcProfile](Play.current)
   
   import driver.api._
@@ -58,14 +57,29 @@ class EloRatingsDAO extends EloRatingsComponent with HasDatabaseConfig[JdbcProfi
     }
   }
 
+  def latest(): Future[Seq[EloRating]] = {
+    ???
+//    val gamesGroupedByPlayerQuery = (for {
+//      rating <- ratings
+//      player <- rating.player
+//    } yeild (rating, player)).groupBy(_._2.id)
+//
+//    val latestRatingForPlayer = gamesGroupedByPlayerQuery.map { case(playerId, playerRatings) =>
+//        playerRatings.map(_.playedOn).max
+//    }
+//
+//    db.run(latestRatingsForPlayer.result)
+  }
+
   def getRatingsByPlayer(playerId: Long): Future[Seq[EloRating]] = {
     db.run(ratings.filter(_.playerId === playerId).result)
   }
 
 }
 
-trait EloRatingsComponent { self: HasDatabaseConfig[JdbcProfile] =>
+trait EloRatingsComponent extends PlayersComponent { self: HasDatabaseConfig[JdbcProfile] =>
   import driver.api._
+  val players = TableQuery[PlayersTable]
 
   class EloRatingsTable(tag: Tag) extends Table[EloRating](tag, "EloRating") {
     def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
@@ -75,18 +89,10 @@ trait EloRatingsComponent { self: HasDatabaseConfig[JdbcProfile] =>
     def newRating = column[Int]("newRating")
     def date = column[Date]("date")
 
+    def player = foreignKey("PLAYER_FK", playerId, players)(_.id, onUpdate=ForeignKeyAction.Restrict, onDelete=ForeignKeyAction.Cascade)
+
     def * = (id.?, gameId, playerId, change, newRating, date) <> ((EloRating.apply _).tupled, EloRating.unapply)
   }
 }
 
 
-//object EloRatings {
-//  val eloRatingSystem = new EloRatingSystem()
-//  val factor = 50
-//  val volatility = 400
-//
-//  def createForGame(game: Game)(implicit s: Session): Unit = {
-
-//
-
-//}

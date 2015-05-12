@@ -10,6 +10,8 @@ GET         /api/players/:id/ratings             @controllers.EloRatingsControll
 POST        /api/games                           @controllers.GamesController.create
 GET         /api/games                           @controllers.GamesController.recentGames
 
+GET         /api/ratings/latest                  @controllers.EloRatingsController.latestRatings
+
 GET         /favicon.ico                         controllers.Assets.at(path="/public", file="favicon.ico")
 GET         /assets/*file                        controllers.Assets.at(path="/public", file)
 

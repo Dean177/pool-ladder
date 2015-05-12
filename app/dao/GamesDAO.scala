@@ -10,14 +10,19 @@ import play.api.db.slick.HasDatabaseConfig
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import slick.driver.JdbcProfile
 
-trait GamesComponent { self: HasDatabaseConfig[JdbcProfile] =>
+trait GamesComponent extends PlayersComponent { self: HasDatabaseConfig[JdbcProfile] =>
   import driver.api._
+
+  val players = TableQuery[PlayersTable]
 
   class GamesTable(tag: Tag) extends Table[Game](tag, "Game") {
     def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
     def winnerId = column[Long]("winnerId")
     def loserId = column[Long]("loserId")
     def playedOn = column[Date]("playedOn")
+
+    def winner = foreignKey("WINNER_FK", winnerId, players)(_.id, onUpdate=ForeignKeyAction.Restrict, onDelete=ForeignKeyAction.Cascade)
+    def loser = foreignKey("LOSER_FK", winnerId, players)(_.id, onUpdate=ForeignKeyAction.Restrict, onDelete=ForeignKeyAction.Cascade)
 
     def * = (id.?, winnerId, loserId, playedOn) <> ((Game.apply _).tupled, Game.unapply)
   }
