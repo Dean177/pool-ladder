@@ -60,18 +60,17 @@ class EloRatingsDAO extends EloRatingsComponent with HasDatabaseConfig[JdbcProfi
     }
   }
 
-  def latest(): Future[Seq[EloRating]] = {
-    ???
-//    val gamesGroupedByPlayerQuery = (for {
-//      rating <- ratings
-//      player <- rating.player
-//    } yeild (rating, player)).groupBy(_._2.id)
-//
-//    val latestRatingForPlayer = gamesGroupedByPlayerQuery.map { case(playerId, playerRatings) =>
-//        playerRatings.map(_.playedOn).max
-//    }
-//
-//    db.run(latestRatingsForPlayer.result)
+  def latest(): Future[Seq[(Long, Option[Int])]] = {
+    val gamesGroupedByPlayerQuery = (for {
+      rating <- ratings
+      player <- rating.player
+    } yield (rating, player)).groupBy(_._2.id)
+
+    val latestRatingForPlayer = gamesGroupedByPlayerQuery.map { case (playerId, playerRatings) =>
+      (playerId, playerRatings.map(_._1.newRating).max)
+    }
+
+    db.run(latestRatingForPlayer.result)
   }
 
   def getRatingsByPlayer(playerId: Long): Future[Seq[EloRating]] = {
