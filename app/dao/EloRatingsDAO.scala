@@ -22,17 +22,20 @@ class EloRatingsDAO extends EloRatingsComponent with HasDatabaseConfig[JdbcProfi
   def defaultRating(playerId: Long) = EloRating(None, 0, playerId, 0, 1000, DateTimeHelpers.now())
 
   def createForGame(game: Game): Unit = {
-    for {
-      winnerRating <- getLatestRating(game.winnerId).map(_.newRating)
-      loserRating <- getLatestRating(game.loserId).map(_.newRating)
-      gameId <- game.id
-    } yield {
-      val scoreChange = ratingSystem.pointsExchanged(winnerRating, loserRating)
-      val winnerEloRating = new EloRating(None, gameId, game.winnerId, scoreChange, winnerRating + scoreChange, game.playedOn)
-      val loserEloRating = new EloRating(None, gameId, game.loserId, -scoreChange, loserRating - scoreChange, game.playedOn)
-
-      insert(Seq(winnerEloRating,loserEloRating))
-    }
+    ???
+//    val scoreChange = for {
+//      winnerRating <- getLatestRating(game.winnerId).map(_.newRating)
+//      loserRating <- getLatestRating(game.loserId).map(_.newRating)
+//    } yield {
+//      ratingSystem.pointsExchanged(winnerRating, loserRating)
+//    }
+//
+//    scoreChange.map { pointsExchanged =>
+//      val winnerEloRating = new EloRating(None, game.Id, game.winnerId, scoreChange, winnerRating + scoreChange, game.playedOn)
+//      val loserEloRating = new EloRating(None, gameId, game.loserId, -scoreChange, loserRating - scoreChange, game.playedOn)
+//
+//      insert(winnerEloRating, loserEloRating)
+//    }
   }
   
   def create(rating: EloRating): Future[EloRating] = {

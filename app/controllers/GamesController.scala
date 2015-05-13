@@ -1,7 +1,5 @@
 package controllers
 
-import java.sql.Date
-
 import dao.{EloRatingsDAO, GamesDAO}
 import lib.DateTimeHelpers
 import models.Game
