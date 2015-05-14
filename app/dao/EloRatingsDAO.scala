@@ -73,6 +73,11 @@ class EloRatingsDAO extends EloRatingsComponent with HasDatabaseConfig[JdbcProfi
     db.run(latestRatingForPlayer.result)
   }
 
+  def lowestRatingEver(): Future[Option[EloRating]] = {
+    db.run(ratings.sortBy(_.newRating).result.headOption)
+  }
+
+
   def getRatingsByPlayer(playerId: Long): Future[Seq[EloRating]] = {
     db.run(ratings.filter(_.playerId === playerId).result)
   }
