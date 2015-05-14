@@ -20,3 +20,7 @@ dependencies:
     - chmod u+x $HOME/bin/sbt
     - which sbt
     - sbt sbt-version
+    - npm install gulp-cli bower
+
+  override:
+    - npm install
