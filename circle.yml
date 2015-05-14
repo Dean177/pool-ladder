@@ -24,3 +24,8 @@ dependencies:
 
   override:
     - npm install
+
+test:
+  override:
+    - sbt test
+    - npm test
