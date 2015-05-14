@@ -26,5 +26,8 @@ dependencies:
 
 test:
   override:
-    - sbt test
-    - npm test
+    - bundle exec rspec:
+      parallel: true
+        files:
+          - sbt test
+          - npm test
