@@ -2,7 +2,7 @@ machine:
   node:
     version: 0.10.35
   java:
-    version: openjdk8
+    version: oraclejdk8
 
   environment:
     SBT_VERSION: 0.13.8
