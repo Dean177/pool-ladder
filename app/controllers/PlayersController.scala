@@ -1,7 +1,5 @@
 package controllers
 
-import java.sql.Date
-
 import dao.PlayerDAO
 import lib.DateTimeHelpers
 import models.Player
@@ -33,7 +31,6 @@ class PlayersController extends Controller {
 
   def create = Action.async(parse.json) { request =>
     val newPlayer = request.body.as[NewPlayer]
-    // TODO get the current date
     val playerToCreate = Player(None, newPlayer.name, isActive = true, DateTimeHelpers.now)
     playerDao.create(playerToCreate).map { createdPlayer =>
       Ok(Json.toJson(createdPlayer))

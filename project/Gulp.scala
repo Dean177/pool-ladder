@@ -1,6 +1,6 @@
 import java.net.InetSocketAddress
 
-import play.PlayRunHook
+import play.sbt.PlayRunHook
 import sbt._
 
 trait EnvironmentSpecific {
@@ -37,7 +37,7 @@ object Gulp extends EnvironmentSpecific {
   }
 }
 
-// Allows these to be run inside the Activator console.
+// Allows these to be run inside the sbt console.
 object JsCommands extends EnvironmentSpecific {
   def npm: Command = Command.args("npm", "<task>") { (state, args) =>
     (envCommand("npm ") + args.mkString(" ")).!

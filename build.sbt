@@ -9,6 +9,7 @@ scalaVersion := "2.11.6"
 
 resolvers += Resolver.sonatypeRepo("snapshots")
 
+// Required for the specs2 dependency which is not available in the main repo.
 resolvers += "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases"
 
 libraryDependencies ++= Seq(

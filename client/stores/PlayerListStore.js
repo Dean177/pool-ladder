@@ -40,7 +40,7 @@ module.exports =  Reflux.createStore({
     this.trigger();
   },
 
-  onCreateFailed: (err) => {
+  onCreateFailed: function(err) {
     console.log("loadAllFailed:", err);
   }
 });

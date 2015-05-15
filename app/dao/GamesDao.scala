@@ -28,7 +28,7 @@ trait GamesComponent extends PlayersComponent { self: HasDatabaseConfig[JdbcProf
   }
 }
 
-class GamesDAO extends GamesComponent with HasDatabaseConfig[JdbcProfile] {
+class GamesDao extends GamesComponent with HasDatabaseConfig[JdbcProfile] {
   protected val dbConfig = DatabaseConfigProvider.get[JdbcProfile](Play.current)
 
   import driver.api._
@@ -52,7 +52,8 @@ class GamesDAO extends GamesComponent with HasDatabaseConfig[JdbcProfile] {
   }
 
   def withPlayer(id: Long): Future[Seq[Game]] = {
-    db.run(games.filter(game => game.winnerId === id || game.loserId === id).sortBy(_.playedOn.desc).result)
+    db.run(games.filter(game =>
+      game.winnerId === id || game.loserId === id).sortBy(_.playedOn.desc).result)
   }
 }
 
