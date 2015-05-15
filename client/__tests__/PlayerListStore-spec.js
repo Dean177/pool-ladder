@@ -1,10 +1,15 @@
-jest.dontMock('../players/PlayerListStore');
-jest.dontMock('../players/PlayerActions');
+jest.dontMock('../stores/PlayerListStore');
+jest.dontMock('../actions/PlayerActions');
 
-var PlayerListStore = require('./../stores/PlayerListStore');
-var PlayerActions = require('./../actions/PlayerActions');
 
 describe('PlayerListStore', function() {
+  var PlayerListStore;
+  var PlayerActions;
+
+  beforeEach(function() {
+    PlayerListStore = require('../stores/PlayerListStore');
+    PlayerActions = require('../actions/PlayerActions');
+  });
 
   it('Initialises with no players', function() {
     var allPlayers = PlayerListStore.players;
@@ -12,9 +17,14 @@ describe('PlayerListStore', function() {
   });
 
   it('Should attempt to fetch the players when the loadAll action is called', function() {
-    var onLoadAll = PlayerListStore.onLoadAll.mock;
-    PlayerActions.loadAll("now!");
+    var playerApi = require('../webapi/PlayersApi');
+    PlayerActions.loadAll();
+    playerApi.getPlayers()
 
-    expect(onLoadAll.calls.length).toBe(1);
+
+
+    console.log("players", playerApi)
+
+    expect(playerApi.getPlayers).toBeCalled()
   });
 });
