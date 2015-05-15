@@ -1,6 +1,6 @@
 package controllers
 
-import dao.{EloRatingsDAO, GamesDAO}
+import dao.{EloRatingsDao, GamesDao}
 import lib.DateTimeHelpers
 import models.Game
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
@@ -14,8 +14,8 @@ object NewGame {
 }
 
 class GamesController extends Controller {
-  val gameDao = new GamesDAO
-  val eloRatingsDao = new EloRatingsDAO
+  val gameDao = new GamesDao
+  val eloRatingsDao = new EloRatingsDao
 
   def create = Action.async(parse.json) { request =>
     val game: NewGame = request.body.as[NewGame]
