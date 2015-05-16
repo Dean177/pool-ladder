@@ -1,24 +1,19 @@
 package controllers
 
-import dao.TestGlobal
 import models.Player
-import org.specs2.mutable.Specification
 import play.api.libs.json.{JsValue, Json}
 import play.api.test.Helpers._
 import play.api.test._
 
-class PlayersControllerSpec extends Specification {
-
+class PlayersControllerSpec extends ControllerSpec {
   "PlayersController" should {
-    val fakeApp = FakeApplication(withGlobal = Some(new TestGlobal()))
-
-    "Return an array of players" in new WithApplication(fakeApp) {
+    "Return an array of players" in new WithApplication(WithTestData) {
       val Some(result) = route(FakeRequest(GET, "/api/players"))
 
       status(result) mustEqual OK
       contentType(result) mustEqual Some("application/json")
 
-      val players = contentAsJson(result).as[List[Player]]
+      val players = contentAsJson(result).as[Seq[Player]]
       players should not be empty
     }
 

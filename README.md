@@ -1,5 +1,5 @@
 # README #
-* Quick summary
+
 
 
 ### Zero to hero ###

@@ -5,7 +5,7 @@ import java.sql.Date
 import lib.{DateTimeHelpers, EloRatingSystem}
 
 import scala.concurrent.Future
-import models.{Game, EloRating}
+import models.{Player, Game, EloRating}
 import play.api.Play
 import play.api.db.slick.DatabaseConfigProvider
 import play.api.db.slick.HasDatabaseConfig
@@ -18,31 +18,40 @@ class EloRatingsDao extends EloRatingsComponent with HasDatabaseConfig[JdbcProfi
   import driver.api._
 
   val ratingSystem = new EloRatingSystem
-  val ratings = TableQuery[EloRatingsTable]
+
   def defaultRating(playerId: Long) = EloRating(None, 0, playerId, 0, 1000, DateTimeHelpers.now())
 
-  def createForGame(game: Game): Unit = {
-    ???
-//    val scoreChange = for {
+//  def createForGame(game: Game): Future[Unit] = {
+//    for {
 //      winnerRating <- getLatestRating(game.winnerId).map(_.newRating)
 //      loserRating <- getLatestRating(game.loserId).map(_.newRating)
 //    } yield {
-//      ratingSystem.pointsExchanged(winnerRating, loserRating)
-//    }
+//      val Some(gameId) = game.id
+//      val points = ratingSystem.pointsExchanged(winnerRating, loserRating)
+//      val winnerEloRating = EloRating(None, gameId, game.winnerId, points, winnerRating + points, game.playedOn)
+//      val loserEloRating = EloRating(None, gameId, game.loserId, 0 - points, loserRating - points, game.playedOn)
 //
-//    scoreChange.map { pointsExchanged =>
-//      val winnerEloRating = new EloRating(None, game.Id, game.winnerId, scoreChange, winnerRating + scoreChange, game.playedOn)
-//      val loserEloRating = new EloRating(None, gameId, game.loserId, -scoreChange, loserRating - scoreChange, game.playedOn)
-//
-//      insert(winnerEloRating, loserEloRating)
+//      insert(Seq(winnerEloRating, loserEloRating))
 //    }
-  }
+//  }
   
   def create(rating: EloRating): Future[EloRating] = {
     db.run {
       (ratings returning ratings.map(_.id)) into ((rating: EloRating, id) => rating.copy(id=Some(id))) += rating
     }
   }
+
+//  def latest(): Future[(Player, EloRating)] = {
+//    implicit class PlayerExtensions[C[_]](q: Query[PlayersTable, Player, C]){
+//      def withRatings = q.join(ratings).on(_.id === _.playerId)
+//    }
+//
+//    val playersWithTopRating = for {
+//      (player, ratings) <- players.withRatings
+//    } yeild (player, ratings.sortBy(_date).head)
+//
+//    db.run(playersWithTopRating)
+//  }
 
   def insert(newRatings: Seq[EloRating]): Future[Unit] = {
     db.run(ratings ++= newRatings).map(_ => {})
@@ -60,7 +69,7 @@ class EloRatingsDao extends EloRatingsComponent with HasDatabaseConfig[JdbcProfi
     }
   }
 
-  def latest(): Future[Seq[(Long, Option[Int])]] = {
+  def maximumRatingsForAll(): Future[Seq[(Long, Option[Int])]] = {
     val gamesGroupedByPlayerQuery = (for {
       rating <- ratings
       player <- rating.player
@@ -73,20 +82,16 @@ class EloRatingsDao extends EloRatingsComponent with HasDatabaseConfig[JdbcProfi
     db.run(latestRatingForPlayer.result)
   }
 
-  def lowestRatingEver(): Future[Option[EloRating]] = {
-    db.run(ratings.sortBy(_.newRating).result.headOption)
-  }
-
-
   def getRatingsByPlayer(playerId: Long): Future[Seq[EloRating]] = {
     db.run(ratings.filter(_.playerId === playerId).result)
   }
 
 }
 
-trait EloRatingsComponent extends PlayersComponent { self: HasDatabaseConfig[JdbcProfile] =>
+trait EloRatingsComponent extends GamesComponent { self: HasDatabaseConfig[JdbcProfile] =>
   import driver.api._
-  val players = TableQuery[PlayersTable]
+
+  val ratings = TableQuery[EloRatingsTable]
 
   class EloRatingsTable(tag: Tag) extends Table[EloRating](tag, "EloRating") {
     def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
@@ -96,7 +101,8 @@ trait EloRatingsComponent extends PlayersComponent { self: HasDatabaseConfig[Jdb
     def newRating = column[Int]("newRating")
     def date = column[Date]("date")
 
-    def player = foreignKey("PLAYER_FK", playerId, players)(_.id, onUpdate=ForeignKeyAction.Restrict, onDelete=ForeignKeyAction.Cascade)
+    def player = foreignKey("PLAYER_FK", playerId, players)(_.id)
+    def game = foreignKey("GAME_RATING_FK", gameId, games)(_.id)
 
     def * = (id.?, gameId, playerId, change, newRating, date) <> ((EloRating.apply _).tupled, EloRating.unapply)
   }

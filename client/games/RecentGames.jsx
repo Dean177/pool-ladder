@@ -28,7 +28,7 @@ export default React.createClass({
       return (
         <tr key={game.id}>
           <td><Link to="player" params={{playerId: game.winnerId}}>{game.winnerId}</Link></td>
-          <td>{game.loserId}</td>
+          <td><Link to="player" params={{playerId: game.loserId}}>{game.loserId}</Link></td>
           <td>{game.playedOn}</td>
         </tr>
       );

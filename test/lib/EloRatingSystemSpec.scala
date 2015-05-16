@@ -1,6 +1,5 @@
-package controllers
+package lib
 
-import lib.EloRatingSystem
 import org.specs2.mutable._
 
 class EloRatingSystemSpec extends Specification {

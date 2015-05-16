@@ -39,10 +39,10 @@ export default React.createClass({
   },
 
   render: function() {
+    // TODO add a default option for these selects
     return (
       <div className="newGame">
         <h2 className="page-header">Add Game</h2>
-        <h3>{this.state.winnerId} {this.state.loserId}</h3>
         <form onSubmit={this.onSubmit}>
           <Row>
             <Col md={6}>

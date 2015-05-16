@@ -16,8 +16,6 @@ class PlayerDAO extends PlayersComponent with HasDatabaseConfig[JdbcProfile] {
 
   import driver.api._
 
-  val players = TableQuery[PlayersTable]
-
   def count(): Future[Int] = db.run(players.length.result)
 
   def all(): Future[Seq[Player]] = db.run(players.sortBy(_.name).result)
@@ -43,6 +41,8 @@ class PlayerDAO extends PlayersComponent with HasDatabaseConfig[JdbcProfile] {
 
 trait PlayersComponent { self: HasDatabaseConfig[JdbcProfile] =>
   import driver.api._
+
+  val players = TableQuery[PlayersTable]
 
   class PlayersTable(tag: Tag) extends Table[Player](tag, "Player") {
     def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
