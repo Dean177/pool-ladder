@@ -1,6 +1,8 @@
 package dao
 
-import java.sql.Date
+import java.sql.Timestamp
+
+import org.joda.time.DateTime
 
 import scala.concurrent.Future
 import models.{Player, Game}
@@ -9,7 +11,6 @@ import play.api.db.slick.DatabaseConfigProvider
 import play.api.db.slick.HasDatabaseConfig
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import slick.driver.JdbcProfile
-
 
 class GamesDao extends GamesComponent with HasDatabaseConfig[JdbcProfile] {
   protected val dbConfig = DatabaseConfigProvider.get[JdbcProfile](Play.current)
@@ -55,7 +56,7 @@ trait GamesComponent extends PlayersComponent { self: HasDatabaseConfig[JdbcProf
     def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
     def winnerId = column[Long]("winnerId")
     def loserId = column[Long]("loserId")
-    def playedOn = column[Date]("playedOn")
+    def playedOn = column[Timestamp]("playedOn")
 
     def winner = foreignKey("WINNER_FK", winnerId, players)(_.id)
     def loser = foreignKey("LOSER_FK", winnerId, players)(_.id)

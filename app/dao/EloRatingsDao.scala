@@ -1,11 +1,10 @@
 package dao
 
-import java.sql.Date
+import java.sql.Timestamp
 
 import lib.{DateTimeHelpers, EloRatingSystem}
-
 import scala.concurrent.Future
-import models.{Player, Game, EloRating}
+import models.EloRating
 import play.api.Play
 import play.api.db.slick.DatabaseConfigProvider
 import play.api.db.slick.HasDatabaseConfig
@@ -41,17 +40,24 @@ class EloRatingsDao extends EloRatingsComponent with HasDatabaseConfig[JdbcProfi
     }
   }
 
-//  def latest(): Future[(Player, EloRating)] = {
-//    implicit class PlayerExtensions[C[_]](q: Query[PlayersTable, Player, C]){
-//      def withRatings = q.join(ratings).on(_.id === _.playerId)
-//    }
-//
-//    val playersWithTopRating = for {
-//      (player, ratings) <- players.withRatings
-//    } yeild (player, ratings.sortBy(_date).head)
-//
-//    db.run(playersWithTopRating)
-//  }
+  def latest(): Future[Seq[(EloRating)]] = {
+    val latestRatingDateByPlayer = ratings.groupBy(_.playerId).map { case (playerId, eloRatings: Query[EloRatingsTable, EloRating, Seq]) =>
+      playerId -> eloRatings.map(_.date).max
+    }
+
+    val latestRating = for {
+      rating <- ratings
+      max <- latestRatingDateByPlayer
+      if rating.playerId === max._1 && rating.date === max._2
+    } yield rating
+
+    val latestRatingWithPlayer = for {
+      rating <- latestRating
+      player <- rating.player
+    } yield (player, rating)
+
+    db.run(latestRating.result)
+  }
 
   def insert(newRatings: Seq[EloRating]): Future[Unit] = {
     db.run(ratings ++= newRatings).map(_ => {})
@@ -99,7 +105,7 @@ trait EloRatingsComponent extends GamesComponent { self: HasDatabaseConfig[JdbcP
     def playerId = column[Long]("playerId")
     def change = column[Int]("change")
     def newRating = column[Int]("newRating")
-    def date = column[Date]("date")
+    def date = column[Timestamp]("date")
 
     def player = foreignKey("PLAYER_FK", playerId, players)(_.id)
     def game = foreignKey("GAME_RATING_FK", gameId, games)(_.id)

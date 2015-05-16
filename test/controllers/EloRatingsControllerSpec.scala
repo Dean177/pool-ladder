@@ -1,10 +1,11 @@
 package controllers
 
+import helpers.WithDataBaseSpecification
 import models.EloRating
 import play.api.test.Helpers._
 import play.api.test._
 
-class EloRatingsControllerSpec extends ControllerSpec {
+class EloRatingsControllerSpec extends WithDataBaseSpecification {
 
   "EloRatingsController" should {
 //    "Retrieve the current rating for all players" in new WithApplication(fakeApp//) {

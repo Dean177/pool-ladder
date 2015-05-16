@@ -1,10 +1,11 @@
 package models
 
-import java.sql.Date
+import java.sql.Timestamp
 import play.api.libs.json.Json
 
-case class EloRating(id: Option[Long] = None, gameId: Long, playerId: Long, change: Int, newRating: Int, date: Date)
+case class EloRating(id: Option[Long] = None, gameId: Long, playerId: Long, change: Int, newRating: Int, date: Timestamp)
 
-object EloRating {
+object EloRating extends TimestampFormat {
   implicit val ratingFormat = Json.format[EloRating]
 }
+

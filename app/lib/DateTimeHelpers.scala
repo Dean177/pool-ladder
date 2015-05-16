@@ -1,8 +1,7 @@
 package lib
 
-import java.sql.Date
+import java.sql.Timestamp
 
 object DateTimeHelpers {
-  def now(): Date = new Date(currentMilliseconds())
-  def currentMilliseconds(): Long = System.currentTimeMillis / 1000
+  def now(): Timestamp = new Timestamp(System.currentTimeMillis())
 }

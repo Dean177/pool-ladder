@@ -1,11 +1,12 @@
 package controllers
 
+import helpers.WithDataBaseSpecification
 import models.Player
 import play.api.libs.json.{JsValue, Json}
 import play.api.test.Helpers._
 import play.api.test._
 
-class PlayersControllerSpec extends ControllerSpec {
+class PlayersControllerSpec extends WithDataBaseSpecification {
   "PlayersController" should {
     "Return an array of players" in new WithApplication(WithTestData) {
       val Some(result) = route(FakeRequest(GET, "/api/players"))

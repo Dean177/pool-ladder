@@ -1,10 +1,11 @@
 package models
 
-import java.sql.Date
+import java.sql.Timestamp
+
 import play.api.libs.json.Json
 
-case class Player(id: Option[Long] = None, name: String, isActive: Boolean = true, creationDate: Date)
+case class Player(id: Option[Long] = None, name: String, isActive: Boolean = true, creationDate: Timestamp)
 
-object Player {
+object Player extends TimestampFormat {
   implicit val playerFormat = Json.format[Player]
 }

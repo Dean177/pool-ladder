@@ -1,7 +1,6 @@
 package dao
 
-import java.sql.Date
-
+import java.sql.Timestamp
 import scala.concurrent.Future
 
 import models.Player
@@ -48,7 +47,7 @@ trait PlayersComponent { self: HasDatabaseConfig[JdbcProfile] =>
     def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
     def name = column[String]("name")
     def isActive = column[Boolean]("isActive")
-    def creationDate = column[Date]("creationDate")
+    def creationDate = column[Timestamp]("creationDate")
 
     def * = (id.?, name, isActive, creationDate) <> ((Player.apply _).tupled, Player.unapply)
   }

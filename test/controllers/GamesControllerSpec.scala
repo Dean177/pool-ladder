@@ -1,11 +1,12 @@
 package controllers
 
+import helpers.WithDataBaseSpecification
 import models.Game
 import play.api.libs.json.Json
 import play.api.test.Helpers._
 import play.api.test._
 
-class GamesControllerSpec extends ControllerSpec {
+class GamesControllerSpec extends WithDataBaseSpecification {
   "GamesController" should {
 
     "Be able to create a game" in new WithApplication(WithTestData) {
