@@ -5,7 +5,10 @@ import { Paper } from 'material-ui';
 export default React.createClass({
 
   render: function () {
-    var player = this.props.player;
+    var { player, rating } = this.props;
+
+    rating = rating || { newRating: 1000, change: 0};
+
     var playerImageUrl = player.image || "/assets/images/players/goat.jpg";
 
     return (
@@ -15,10 +18,10 @@ export default React.createClass({
         </Link>
         <div className="details">
             <div className="name">{ player.name }</div>
-            <div className="rating">rating: { player.rating }</div>
-            <div className="win-rate"><span>win rate: 75%</span></div>
+            <div className="rating">rating: { rating.newRating }</div>
+            <div className="win-rate">win rate: {rating.change}</div>
         </div>
-        <div className="rank">{'#'} { player.rank }</div>
+        <div className="rank">{'#'} 2</div>
       </Paper>
     );
   }

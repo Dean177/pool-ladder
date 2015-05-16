@@ -42,7 +42,7 @@ trait PlayersComponent { self: HasDatabaseConfig[JdbcProfile] =>
   import driver.api._
 
   val players = TableQuery[PlayersTable]
-
+  type PlayersQuery = Query[PlayersTable, Player, Seq]
   class PlayersTable(tag: Tag) extends Table[Player](tag, "Player") {
     def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
     def name = column[String]("name")

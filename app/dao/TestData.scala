@@ -1,15 +1,16 @@
 package dao
 
+import java.sql.Timestamp
+
 import lib.DateTimeHelpers
 import models.{EloRating, Game, Player}
 import scala.concurrent.Await
 import scala.concurrent.duration._
-import play.api.libs.concurrent.Execution.Implicits._
 
 object TestData {
 
   val testPlayers = Seq(
-    Player(Some(1), "Goat", isActive = true, DateTimeHelpers.now()),
+    Player(Some(1), "Goat", isActive = true, new Timestamp(1431799802051l)),
     Player(Some(2), "Badger", isActive = true, DateTimeHelpers.now()),
     Player(Some(3), "Vole", isActive = true, DateTimeHelpers.now()),
     Player(Some(4), "Pig", isActive = true, DateTimeHelpers.now()),
@@ -22,17 +23,17 @@ object TestData {
     Game(Some(4), 4, 2, DateTimeHelpers.now())
   )
   val testRatings = Seq(
-    EloRating(None, 1, 1, 15, 1015, DateTimeHelpers.now()),
-    EloRating(None, 1, 2, -15, 985, DateTimeHelpers.now()),
+    EloRating(None, 1, 1, 15, 1015, new Timestamp(1431799802051l)),
+    EloRating(None, 1, 2, -15, 985, new Timestamp(1431799802051l)),
 
-    EloRating(None, 2, 2, 16, 1001, DateTimeHelpers.now()),
-    EloRating(None, 2, 3, -16, 984, DateTimeHelpers.now()),
+    EloRating(None, 2, 2, 16, 1001, new Timestamp(1431799802031l)),
+    EloRating(None, 2, 3, -16, 984, new Timestamp(1431799802031l)),
 
-    EloRating(None, 3, 1, 13, 1028, DateTimeHelpers.now()),
-    EloRating(None, 3, 3, -13, 987, DateTimeHelpers.now()),
+    EloRating(None, 3, 1, 13, 1028, new Timestamp(1431799702031l)),
+    EloRating(None, 3, 3, -13, 987, new Timestamp(1431799702031l)),
 
-    EloRating(None, 4, 4, 14, 1014, DateTimeHelpers.now()),
-    EloRating(None, 4, 2, -14, 970, DateTimeHelpers.now())
+    EloRating(None, 4, 4, 14, 1014, new Timestamp(1431799602031l)),
+    EloRating(None, 4, 2, -14, 970, new Timestamp(1431799602031l))
   )
 
   def insertTestDataIfNotPresent() = {

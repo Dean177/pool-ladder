@@ -1,5 +1,5 @@
 import React from 'react';
-import PlayerCard from './PlayerCard/PlayerCard';
+import PlayerCard from '../../shared/PlayerCard/PlayerCard';
 
 export default React.createClass({
   propTypes: {

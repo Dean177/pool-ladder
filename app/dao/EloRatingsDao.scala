@@ -4,7 +4,7 @@ import java.sql.Timestamp
 
 import lib.{DateTimeHelpers, EloRatingSystem}
 import scala.concurrent.Future
-import models.EloRating
+import models.{Player, EloRating}
 import play.api.Play
 import play.api.db.slick.DatabaseConfigProvider
 import play.api.db.slick.HasDatabaseConfig
@@ -40,15 +40,16 @@ class EloRatingsDao extends EloRatingsComponent with HasDatabaseConfig[JdbcProfi
     }
   }
 
-  def latest(): Future[Seq[(EloRating)]] = {
-    val latestRatingDateByPlayer = ratings.groupBy(_.playerId).map { case (playerId, eloRatings: Query[EloRatingsTable, EloRating, Seq]) =>
+  def latest(): Future[Seq[(Player, EloRating)]] = {
+    val innerQuery = ratings.groupBy(_.playerId).map { case (playerId, eloRatings: Query[EloRatingsTable, EloRating, Seq]) =>
       playerId -> eloRatings.map(_.date).max
     }
 
+    // Surely there is a better way of doing this, currently this is only working if the two ratings for the same player arent created in the same milisecond!
     val latestRating = for {
       rating <- ratings
-      max <- latestRatingDateByPlayer
-      if rating.playerId === max._1 && rating.date === max._2
+      (playerId, lastRatingDate) <- innerQuery
+      if rating.playerId === playerId && rating.date === lastRatingDate
     } yield rating
 
     val latestRatingWithPlayer = for {
@@ -56,7 +57,7 @@ class EloRatingsDao extends EloRatingsComponent with HasDatabaseConfig[JdbcProfi
       player <- rating.player
     } yield (player, rating)
 
-    db.run(latestRating.result)
+    db.run(latestRatingWithPlayer.result)
   }
 
   def insert(newRatings: Seq[EloRating]): Future[Unit] = {
@@ -76,13 +77,10 @@ class EloRatingsDao extends EloRatingsComponent with HasDatabaseConfig[JdbcProfi
   }
 
   def maximumRatingsForAll(): Future[Seq[(Long, Option[Int])]] = {
-    val gamesGroupedByPlayerQuery = (for {
-      rating <- ratings
-      player <- rating.player
-    } yield (rating, player)).groupBy(_._2.id)
+    val ratingsByPlayerId = ratings.groupBy(_.playerId)
 
-    val latestRatingForPlayer = gamesGroupedByPlayerQuery.map { case (playerId, playerRatings) =>
-      (playerId, playerRatings.map(_._1.newRating).max)
+    val latestRatingForPlayer = ratingsByPlayerId.map { case (playerId, playerRatings) =>
+      (playerId, playerRatings.map(_.newRating).max)
     }
 
     db.run(latestRatingForPlayer.result)
@@ -98,6 +96,8 @@ trait EloRatingsComponent extends GamesComponent { self: HasDatabaseConfig[JdbcP
   import driver.api._
 
   val ratings = TableQuery[EloRatingsTable]
+
+  type EloRatingsQuery = Query[EloRatingsTable, EloRating, Seq]
 
   class EloRatingsTable(tag: Tag) extends Table[EloRating](tag, "EloRating") {
     def id = column[Long]("id", O.PrimaryKey, O.AutoInc)

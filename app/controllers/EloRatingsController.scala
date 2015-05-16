@@ -1,6 +1,7 @@
 package controllers
 
 import dao.EloRatingsDao
+import models.{EloRating, Player}
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
@@ -21,11 +22,16 @@ class EloRatingsController extends Controller {
     }
   }
 
-//  def latestRatings = Action.async {
-//    ratings.latest().map { playerRatings =>
-//      Ok(Json.toJson(""))
-//    }
-//  }
+  def latestRatings = Action.async {
+    ratings.latest().map { playerRatings =>
+      implicit val writer: Writes[(Player, EloRating)] = (
+        (JsPath \ "player").write[Player] and
+          (JsPath \ "rating").write[EloRating]
+          tupled
+        )
+      Ok(Json.toJson(playerRatings))
+    }
+  }
 
   def maxRatings = Action.async {
     ratings.maximumRatingsForAll().map { latestRatings: Seq[(Long, Option[Int])] =>

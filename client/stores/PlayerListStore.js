@@ -1,8 +1,9 @@
-var Reflux = require('reflux');
-var PlayerActions = require('./../actions/PlayerActions');
-var PlayerApi = require('../webapi/PlayersApi');
+import Reflux from 'reflux';
+import PlayerActions from './../actions/PlayerActions';
+import PlayerApi from '../webapi/PlayersApi';
 
-module.exports =  Reflux.createStore({
+
+export default Reflux.createStore({
   listenables: PlayerActions,
 
   init: function() {
@@ -20,7 +21,7 @@ module.exports =  Reflux.createStore({
   },
 
   onLoadAllFailed: function(err) {
-    console.log("loadAllFailed:", err);
+    console.error("loadAllFailed:", err);
   },
 
   onLoadAll: function() {
@@ -41,6 +42,6 @@ module.exports =  Reflux.createStore({
   },
 
   onCreateFailed: function(err) {
-    console.log("loadAllFailed:", err);
+    console.error("loadAllFailed:", err);
   }
 });
