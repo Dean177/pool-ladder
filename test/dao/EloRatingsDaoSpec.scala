@@ -12,9 +12,11 @@ class EloRatingsDaoSpec extends WithDataBaseSpecification {
       val eloRatingsDao = new EloRatingsDao
       eloRatingsDao.latest().map { playerRatings: Seq[(Player, EloRating)] =>
         playerRatings should not be empty
-        val playerIds = playerRatings.map( (player: Player, rating: EloRating) => player.id)
+//        val playerIds: Seq[Option[Long]] = playerRatings.map((player: Player, rating: EloRating) => player.id)
+//        val idLength = playerIds.flatten
 
-        playerIds.count shouldEqual playerIds.distinct.count
+//        idLength.length shouldEqual idLength.distinct.length
+        playerRatings.length shouldEqual 4
       }
     }
   }
