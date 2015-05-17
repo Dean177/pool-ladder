@@ -2,24 +2,22 @@
 @import "../styles/colors";
 @import "../styles/mixins";
 
-.rule-content {
-  background-color: @grey-200;
-}
-
-// Must be important, the mui css gets inserted before this file.
+// Must be important, the mui css gets inserted after this file.
 .mui-tab-item-container {
-  background-color: @black !important;
+  background-color: @blue !important;
 }
 .mui-ink-bar {
-  background-color: @green !important;
+  background-color: @orange !important;
+  height: 5px !important;
+  margin-top: -5px !important;
 }
 
 .rule-tabs {
   margin: -@bootstrap-container-padding;
   .rule-content {
     padding: @bootstrap-container-padding;
+    background-color: @grey-200;
   }
-
   .rack-image {
     width: 300px;
     display: block;

@@ -1,7 +1,7 @@
 {
   "name": "pool-ladder",
   "version": "0.0.1",
-  "description": "",
+  "description": "Scala, Play, Slick, React, ES6",
   "repository": "git@github.com:Dean177/pool-ladder.git",
   "scripts": {
     "build": "./node_modules/gulp/bin/gulp.js build",
@@ -42,6 +42,7 @@
     "react-bootstrap": "^0.21.2",
     "react-chartjs": "^0.6.0",
     "react-router": "^0.13.2",
+    "react-tap-event-plugin": "^0.1.6",
     "react-webcam": "git://github.com/Dean177/react-webcam",
     "reflux": "^0.2.5",
     "superagent": "^1.2.0",

@@ -22,9 +22,15 @@ import NewGame from './games/NewGame';
 import Leaderboard from './leaderboard/Leaderboard';
 import Rules from './rules/rules';
 import Live from './live/live';
-import Graphs from './graphs/graphs';
 import Records from './records/records';
 import NotFound from './404';
+
+//Needed for onTouchTap
+//Can go away when react 1.0 release
+//Check this repo:
+//https://github.com/zilverline/react-tap-event-plugin
+import injectTapEventPlugin from "react-tap-event-plugin";
+injectTapEventPlugin();
 
 let routes = (
   <Route name="app" handler={App} path="/">
@@ -42,7 +48,6 @@ let routes = (
     </Route>
 
     <Route name="rules" handler={Rules}></Route>
-    <Route name="graphs" handler={Graphs} />
     <Route name="records" handler={Records} />
     <Route name="live" handler={Live} />
 

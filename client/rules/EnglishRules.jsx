@@ -64,7 +64,7 @@ module.exports = React.createClass({
 
                     <RuleCard>
                         <h2>Playing from Baulk</h2>
-                        <img className="rack-image" src="/images/balls/english-rack.png" />
+                        <img className="rack-image" src="/assets/images/balls/english-rack.png" />
                         <ol type="1">
                             <li>Baulk is the rectangular area of the table that is bordered by the Baulk Line and the three cushions at that end of the table.</li>
                             <li>When playing from Baulk:-

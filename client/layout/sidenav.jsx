@@ -23,10 +23,6 @@ module.exports = React.createClass({
           <FontAwesome icon="trophy" />
           <div className="nav-label">Records</div>
         </NavTab>
-        <NavTab to="graphs">
-          <FontAwesome icon="line-chart" />
-          <div className="nav-label">Graphs</div>
-        </NavTab>
         <NavTab to="rules">
           <FontAwesome icon="book" />
           <div className="nav-label">Rules</div>
