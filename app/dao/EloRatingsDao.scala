@@ -4,7 +4,7 @@ import java.sql.Timestamp
 
 import lib.{DateTimeHelpers, EloRatingSystem}
 import scala.concurrent.Future
-import models.{Player, EloRating}
+import models.{Game, Player, EloRating}
 import play.api.Play
 import play.api.db.slick.DatabaseConfigProvider
 import play.api.db.slick.HasDatabaseConfig
@@ -20,19 +20,28 @@ class EloRatingsDao extends EloRatingsComponent with HasDatabaseConfig[JdbcProfi
 
   def defaultRating(playerId: Long) = EloRating(None, 0, playerId, 0, 1000, DateTimeHelpers.now())
 
-//  def createForGame(game: Game): Future[Unit] = {
-//    for {
-//      winnerRating <- getLatestRating(game.winnerId).map(_.newRating)
-//      loserRating <- getLatestRating(game.loserId).map(_.newRating)
-//    } yield {
-//      val Some(gameId) = game.id
-//      val points = ratingSystem.pointsExchanged(winnerRating, loserRating)
-//      val winnerEloRating = EloRating(None, gameId, game.winnerId, points, winnerRating + points, game.playedOn)
-//      val loserEloRating = EloRating(None, gameId, game.loserId, 0 - points, loserRating - points, game.playedOn)
-//
-//      insert(Seq(winnerEloRating, loserEloRating))
-//    }
-//  }
+  def createForGame(game: Game): Future[Seq[EloRating]] = {
+    val winnerCurrentRating: Future[EloRating] = getLatestRating(game.winnerId)
+    val loserCurrentRating: Future[EloRating] = getLatestRating(game.loserId)
+
+    val newRatings: Future[Seq[EloRating]] = for {
+      winnerRating <- winnerCurrentRating
+      loserRating <- loserCurrentRating
+    } yield eloRatingsForGame(game, winnerRating.newRating, loserRating.newRating)
+
+    newRatings.flatMap { newRatings: Seq[EloRating] =>
+      Future.traverse(newRatings){ newRating => create(newRating) }
+    }
+  }
+
+  private def eloRatingsForGame(game: Game, winnerRating: Int, loserRating: Int): Seq[EloRating] = {
+    val points = ratingSystem.pointsExchanged(winnerRating, loserRating)
+    val Some(gameId) = game.id
+    Seq(
+      EloRating(None, gameId, game.winnerId, points, winnerRating + points, game.playedOn),
+      EloRating(None, gameId, game.loserId, 0 - points, loserRating - points, game.playedOn)
+    )
+  }
   
   def create(rating: EloRating): Future[EloRating] = {
     db.run {

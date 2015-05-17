@@ -26,4 +26,8 @@ Continuous integration is run at (https://circleci.com/gh/Dean177/pool-ladder)
 [Reflux](https://github.com/spoike/refluxjs)
 [React-Bootstrap](http://react-bootstrap.github.io/components.html)
 [React-ChartJs](https://github.com/jhudson8/react-chartjs)
+
+
 [Jest](https://facebook.github.io/jest/docs/tutorial.html#content)
+Jest runs unacceptably slow (more than 4 seconds for that many tests)
+At some point this could be migrated to: https://github.com/adjavaherian/mocha-react

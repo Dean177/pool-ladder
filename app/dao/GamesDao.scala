@@ -2,8 +2,6 @@ package dao
 
 import java.sql.Timestamp
 
-import org.joda.time.DateTime
-
 import scala.concurrent.Future
 import models.{Player, Game}
 import play.api.Play
