@@ -24,7 +24,7 @@ object Gulp extends EnvironmentSpecific {
       }
 
       override def afterStarted(address: InetSocketAddress): Unit = {
-//        process = Some(Process(envCommand("gulp watch"), base).run())
+        process = Some(Process(envCommand("gulp watch"), base).run())
       }
 
       override def afterStopped(): Unit = {

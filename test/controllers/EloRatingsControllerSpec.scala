@@ -23,13 +23,5 @@ class EloRatingsControllerSpec extends WithDataBaseSpecification {
       status(result) mustEqual OK
       ratings should not be empty
     }
-
-    "Get a players current rating" in new WithApplication(WithTestData){
-      val Some(result) = route(FakeRequest(GET, s"/api/players/$playerId/latestRating"))
-      val rating = contentAsJson(result).as[EloRating]
-
-      status(result) mustEqual OK
-      rating.change should be > 0
-    }
   }
 }

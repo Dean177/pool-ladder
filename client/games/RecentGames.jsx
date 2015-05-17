@@ -29,7 +29,7 @@ export default React.createClass({
         <tr key={game.id}>
           <td><Link to="player" params={{playerId: game.winnerId}}>{game.winnerName}</Link></td>
           <td><Link to="player" params={{playerId: game.loserId}}>{game.loserName}</Link></td>
-          <td>{game.playedOn}</td>
+          <td>{new Date(game.playedOn).toDateString()}</td>
         </tr>
       );
     });

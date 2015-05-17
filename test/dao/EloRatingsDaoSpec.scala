@@ -3,7 +3,8 @@ package dao
 import helpers.WithDataBaseSpecification
 import lib.DateTimeHelpers
 import models.{Game, Player, EloRating}
-import play.api.test.WithApplication
+import play.api.test.Helpers._
+import play.api.test.{FakeRequest, WithApplication}
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 
 
@@ -28,6 +29,21 @@ class EloRatingsDaoSpec extends WithDataBaseSpecification {
 
         playerRatings should not be empty
         playerIds.length shouldEqual playerIds.distinct.length
+      }
+    }
+
+    "Get a players current rating" in new WithApplication(WithTestData){
+      val eloRatingsDao = new EloRatingsDao
+      eloRatingsDao.getLatestRating(1).map { rating =>
+        rating.change should be > 0
+      }
+    }
+
+    "Return the default rating when getting the current rating for an unrated player" in new WithApplication(WithTestData){
+      val eloRatingsDao = new EloRatingsDao
+      eloRatingsDao.getLatestRating(5).map { rating =>
+        rating.change shouldEqual 0
+        rating.newRating shouldEqual 1000
       }
     }
 
