@@ -26,9 +26,8 @@ class PlayerDAO extends PlayersComponent with HasDatabaseConfig[JdbcProfile] {
   }
 
   def create(player: Player): Future[Player] = {
-    db.run {
-      (players returning players.map(_.id)) into ((player: Player, id) => player.copy(id=Some(id))) += player
-    }
+    val playersReturningId = (players returning players.map(_.id)) into ((player, newId) => player.copy(id = newId))
+    db.run(playersReturningId += player)
   }
 
   def insert(newPlayers: Seq[Player]): Future[Unit] = db.run(players ++= newPlayers).map { _ => ()}
@@ -49,6 +48,6 @@ trait PlayersComponent { self: HasDatabaseConfig[JdbcProfile] =>
     def isActive = column[Boolean]("isActive")
     def creationDate = column[Timestamp]("creationDate")
 
-    def * = (id.?, name, isActive, creationDate) <> ((Player.apply _).tupled, Player.unapply)
+    def * = (id, name, isActive, creationDate) <> ((Player.apply _).tupled, Player.unapply)
   }
 }

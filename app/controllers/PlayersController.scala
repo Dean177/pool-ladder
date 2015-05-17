@@ -31,11 +31,9 @@ class PlayersController extends Controller {
 
   def create = Action.async(parse.json) { request =>
     val newPlayer = request.body.as[NewPlayer]
-    val playerToCreate = Player(None, newPlayer.name, isActive = true, DateTimeHelpers.now)
+    val playerToCreate = Player(0, newPlayer.name, isActive = true, DateTimeHelpers.now())
     playerDao.create(playerToCreate).map { createdPlayer =>
       Ok(Json.toJson(createdPlayer))
     }
   }
-
-  def update(id: Long) = TODO
 }

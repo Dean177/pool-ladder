@@ -27,8 +27,8 @@ export default React.createClass({
     var tableRows = this.state.recentGames.map(function(game) {
       return (
         <tr key={game.id}>
-          <td><Link to="player" params={{playerId: game.winnerId}}>{game.winnerId}</Link></td>
-          <td><Link to="player" params={{playerId: game.loserId}}>{game.loserId}</Link></td>
+          <td><Link to="player" params={{playerId: game.winnerId}}>{game.winnerName}</Link></td>
+          <td><Link to="player" params={{playerId: game.loserId}}>{game.loserName}</Link></td>
           <td>{game.playedOn}</td>
         </tr>
       );

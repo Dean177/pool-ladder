@@ -18,7 +18,7 @@ class EloRatingsDao extends EloRatingsComponent with HasDatabaseConfig[JdbcProfi
 
   val ratingSystem = new EloRatingSystem
 
-  def defaultRating(playerId: Long) = EloRating(None, 0, playerId, 0, 1000, DateTimeHelpers.now())
+  def defaultRating(playerId: Long) = EloRating(0, 0, playerId, 0, 1000, DateTimeHelpers.now())
 
   def createForGame(game: Game): Future[Seq[EloRating]] = {
     val winnerCurrentRating: Future[EloRating] = getLatestRating(game.winnerId)
@@ -36,17 +36,15 @@ class EloRatingsDao extends EloRatingsComponent with HasDatabaseConfig[JdbcProfi
 
   private def eloRatingsForGame(game: Game, winnerRating: Int, loserRating: Int): Seq[EloRating] = {
     val points = ratingSystem.pointsExchanged(winnerRating, loserRating)
-    val Some(gameId) = game.id
     Seq(
-      EloRating(None, gameId, game.winnerId, points, winnerRating + points, game.playedOn),
-      EloRating(None, gameId, game.loserId, 0 - points, loserRating - points, game.playedOn)
+      EloRating(0, game.id, game.winnerId, points, winnerRating + points, game.playedOn),
+      EloRating(0, game.id, game.loserId, 0 - points, loserRating - points, game.playedOn)
     )
   }
   
   def create(rating: EloRating): Future[EloRating] = {
-    db.run {
-      (ratings returning ratings.map(_.id)) into ((rating: EloRating, id) => rating.copy(id=Some(id))) += rating
-    }
+    val ratingsReturningId = (ratings returning ratings.map(_.id)) into ((rating, newId) => rating.copy(id =newId))
+    db.run(ratingsReturningId += rating)
   }
 
   def latest(): Future[Seq[(Player, EloRating)]] = {
@@ -54,7 +52,7 @@ class EloRatingsDao extends EloRatingsComponent with HasDatabaseConfig[JdbcProfi
       playerId -> eloRatings.map(_.date).max
     }
 
-    // Surely there is a better way of doing this, currently this is only working if the two ratings for the same player arent created in the same milisecond!
+    // Surely there is a better way of doing this, currently this is only working if the two ratings for the same player arent created in the same millisecond
     val latestRating = for {
       rating <- ratings
       (playerId, lastRatingDate) <- innerQuery
@@ -119,7 +117,7 @@ trait EloRatingsComponent extends GamesComponent { self: HasDatabaseConfig[JdbcP
     def player = foreignKey("PLAYER_FK", playerId, players)(_.id)
     def game = foreignKey("GAME_RATING_FK", gameId, games)(_.id)
 
-    def * = (id.?, gameId, playerId, change, newRating, date) <> ((EloRating.apply _).tupled, EloRating.unapply)
+    def * = (id, gameId, playerId, change, newRating, date) <> ((EloRating.apply _).tupled, EloRating.unapply)
   }
 }
 

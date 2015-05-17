@@ -12,7 +12,7 @@ class EloRatingsDaoSpec extends WithDataBaseSpecification {
     "Return the eloRatings created for a new game" in new WithApplication(WithTestData) {
       val winnerId = 1
       val loserId = 2
-      val game = Game(Some(3), winnerId, loserId, DateTimeHelpers.now())
+      val game = Game(3, winnerId, loserId, DateTimeHelpers.now())
       val eloRatingsDao = new EloRatingsDao
 
       eloRatingsDao.createForGame(game).map { eloRatings =>
@@ -24,10 +24,9 @@ class EloRatingsDaoSpec extends WithDataBaseSpecification {
     "List the players and ratings" in new WithApplication(WithTestData) {
       val eloRatingsDao = new EloRatingsDao
       eloRatingsDao.latest().map { playerRatings: Seq[(Player, EloRating)] =>
-        val playerIds: Seq[Long] = playerRatings.flatMap { case (player, rating) => player.id }
+        val playerIds: Seq[Long] = playerRatings.map { case (player, rating) => player.id }
 
         playerRatings should not be empty
-        // Each player should only have one entry
         playerIds.length shouldEqual playerIds.distinct.length
       }
     }

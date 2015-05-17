@@ -1,7 +1,7 @@
 package controllers
 
 import helpers.WithDataBaseSpecification
-import models.Game
+import models.{GameWithPlayers, Game}
 import play.api.libs.json.Json
 import play.api.test.Helpers._
 import play.api.test._
@@ -17,7 +17,7 @@ class GamesControllerSpec extends WithDataBaseSpecification {
       contentType(result) mustEqual Some("application/json")
 
       val responseGame = contentAsJson(result).as[Game]
-      responseGame.id mustNotEqual None
+      responseGame.id shouldNotEqual None
     }
 
     "Retrieve all games by a player" in new WithApplication(WithTestData) {
@@ -31,10 +31,9 @@ class GamesControllerSpec extends WithDataBaseSpecification {
 
     "Get all recently played games" in new WithApplication(WithTestData) {
       val Some(gameJson) = route(FakeRequest(GET, "/api/games"))
-      val games = contentAsJson(gameJson).as[Seq[Game]]
+      val games = contentAsJson(gameJson).as[Seq[GameWithPlayers]]
 
       games should not be empty
-      // TODO Dates are in descending order
     }
   }
 }
