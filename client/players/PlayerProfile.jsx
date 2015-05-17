@@ -1,16 +1,28 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
-import PlayerActions from './../actions/PlayerActions';
-import CurrentPlayerDetailStore from './../stores/PlayerDetailStore';
-
 var { State, Navigation } = Router;
 
-var Player = React.createClass({
-  mixins: [State, Navigation, Reflux.connect(CurrentPlayerDetailStore, "player")],
+import PlayerActions from './../actions/PlayerActions';
+import ProfileStore from './../stores/PlayerProfileStore';
+import RatingsStore from './../stores/PlayerRatingsStore';
+import GamesStore from './../stores/PlayerGamesStore';
+
+export default React.createClass({
+  mixins: [
+    State,
+    Navigation,
+    Reflux.connect(ProfileStore, "player"),
+    Reflux.connect(RatingsStore, "ratings"),
+    Reflux.connect(GamesStore, "games")
+  ],
 
   getInitialState: function() {
-    return { player: {} };
+    return {
+      player: {},
+      ratings: [],
+      games: []
+    };
   },
 
   componentDidMount: function() {
@@ -20,10 +32,10 @@ var Player = React.createClass({
   render: function () {
     return (
       <div>
-        <h1>{this.state.player.name}</h1>
+        <h1 className="page-header">{this.state.player.name}</h1>
+        <pre>{JSON.stringify(this.state.ratings)}</pre>
+        <pre>{JSON.stringify(this.state.games)}</pre>
       </div>
     );
   }
 });
-
-module.exports = Player;
