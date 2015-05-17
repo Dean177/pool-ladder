@@ -44,7 +44,8 @@
     "react-router": "^0.13.2",
     "react-webcam": "git://github.com/Dean177/react-webcam",
     "reflux": "^0.2.5",
-    "superagent": "^1.2.0"
+    "superagent": "^1.2.0",
+    "tinycolor2": "^1.1.2"
   },
   "engines": {
     "node": "0.10.35"

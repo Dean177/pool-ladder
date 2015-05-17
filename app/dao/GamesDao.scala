@@ -16,12 +16,18 @@ class GamesDao extends GamesComponent with HasDatabaseConfig[JdbcProfile] {
 
   def recent(): Future[Seq[GameWithPlayers]] = {
     val gameWithWinnerAndLoser = for {
-      game <- games.sortBy(_.playedOn.desc)
-      winner <- game.winner
-      loser <- game.loser
+      (game, winner, loser) <- withWinnerAndLoser
     } yield (game.id, winner.id, winner.name, loser.id, loser.name, game.playedOn)
 
     db.run(gameWithWinnerAndLoser.result).map { _.map { (GameWithPlayers.apply _) tupled _ } }
+  }
+
+  def withWinnerAndLoser = {
+    for {
+      game <- games.sortBy(_.playedOn.desc)
+      winner <- game.winner
+      loser <- game.loser
+    } yield (game, winner, loser)
   }
 
   def create(game: Game): Future[Game] = {
@@ -31,15 +37,12 @@ class GamesDao extends GamesComponent with HasDatabaseConfig[JdbcProfile] {
 
   def insert(newGames: Seq[Game]): Future[Unit] = db.run(games ++= newGames).map { _ => ()}
 
-  def find(id: Long): Future[Option[Game]] = {
-    db.run(games.filter(_.id === id).result.headOption)
-  }
+  def withPlayer(id: Long): Future[Seq[GameWithPlayers]] = {
+    val query = for {
+      (game, winner, loser) <- withWinnerAndLoser if game.winnerId === id || game.loserId === id
+    } yield (game.id, winner.id, winner.name, loser.id, loser.name, game.playedOn)
 
-  def withPlayer(id: Long): Future[Seq[Game]] = {
-    db.run(games
-      .filter(game => game.winnerId === id || game.loserId === id)
-      .sortBy(_.playedOn.desc)
-      .result)
+    db.run(query.result).map { _.map { GameWithPlayers.apply _ tupled _ } }
   }
 }
 

@@ -1,0 +1,12 @@
+@import "../../styles/variables";
+
+.game-list {
+  list-style: none;
+  li {
+    font-size: @regular;
+    padding: @small-gap;
+    &:nth-child(odd) {
+      background-color: @grey;
+    }
+  }
+}

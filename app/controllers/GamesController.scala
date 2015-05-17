@@ -29,7 +29,7 @@ class GamesController extends Controller {
   }
 
   def gamesByPlayer(id: Long) = Action.async { session =>
-    gameDao.withPlayer(id).map { games: Seq[Game] =>
+    gameDao.withPlayer(id).map { games: Seq[GameWithPlayers] =>
       Ok(Json.toJson(games))
     }
   }
