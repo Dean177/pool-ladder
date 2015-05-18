@@ -21,10 +21,6 @@ describe('PlayerListStore', function() {
     PlayerActions.loadAll();
     playerApi.getPlayers()
 
-
-
-    console.log("players", playerApi)
-
     expect(playerApi.getPlayers).toBeCalled()
   });
 });
