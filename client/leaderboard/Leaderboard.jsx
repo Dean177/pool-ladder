@@ -14,9 +14,20 @@ export default React.createClass({
 
   render: function () {
 
-    var leaderboardRows = this.state.playerRatings.map(function({ player, rating }) {
+    var orderedPlayerRatings = this.state.playerRatings;
+    orderedPlayerRatings.sort(function(playerRatingA, playerRatingB) {
+      if (playerRatingA.rating.newRating < playerRatingB.rating.newRating) {
+        return 1
+      } else if (playerRatingA.rating.newRating > playerRatingB.rating.newRating) {
+        return -1;
+      } else {
+        return 0;
+      }
+    });
+
+    var leaderboardRows = orderedPlayerRatings.map(function({ player, rating }) {
       return (
-        <PlayerCard player={player} rating={rating} />
+        <PlayerCard key={player.id} player={player} rating={rating} />
       );
     });
 
