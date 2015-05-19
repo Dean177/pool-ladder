@@ -19,7 +19,7 @@ export default React.createClass({
         <div className="details">
             <div className="name">{ player.name }</div>
             <div className="rating">rating: { rating.newRating }</div>
-            <div className="win-rate">win rate: {rating.change}</div>
+            <div className="last-change">last change: { rating.change }</div>
         </div>
         <div className="rank">{'#'} 2</div>
       </Paper>
