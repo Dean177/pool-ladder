@@ -34,6 +34,11 @@ export default React.createClass({
     this.transitionTo('leaderboard');
   },
 
+  onCancel: function (e) {
+    e.preventDefault();
+    this.transitionTo('leaderboard');
+  },
+
   componentDidMount: function() {
     PlayerActions.loadAll();
   },
@@ -60,8 +65,8 @@ export default React.createClass({
           </Row>
           <Row>
             <Col md={12}>
-              <RaisedButton label="Add Game" secondary={ true } />
-              <FlatButton label="Cancel" primary={ true } />
+              <RaisedButton label="Add Game" type="submit" secondary={ true } />
+              <FlatButton label="Cancel" onClick={this.onCancel} primary={ true } />
             </Col>
           </Row>
         </form>

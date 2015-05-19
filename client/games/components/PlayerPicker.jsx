@@ -16,8 +16,7 @@ export default React.createClass({
       return (
         <option
           key={player.id}
-          value={player.id}
-          placeholder='...' >
+          value={player.id}>
           {player.name}
         </option>
       );
@@ -25,6 +24,7 @@ export default React.createClass({
 
     return (
       <Input type='select' label={this.props.label} valueLink={this.props.idStateLink}>
+        <option>...</option>
         {options}
       </Input>
     );

@@ -41,7 +41,7 @@ export default React.createClass({
           linkButton={true}
           onClick={ this.goToNewGame }
           primary={ true }>
-          <FontAwesome icon="user-plus"/> New Game
+          <FontAwesome icon="plus"/> New Game
         </FlatButton>
         <h2 className="page-header">Recent Games</h2>
 
