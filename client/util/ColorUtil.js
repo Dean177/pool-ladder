@@ -10,7 +10,6 @@ export default {
       rgbColors.push(TinyColor({ h: i, s: sat -5 + (Math.random() * 10), l: lum -5 + (Math.random() * 10) }).toHexString());
     }
 
-    console.log("colrs: ", rgbColors);
     return rgbColors;
   }
 };

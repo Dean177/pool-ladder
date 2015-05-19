@@ -4,8 +4,15 @@ import { Paper } from 'material-ui';
 
 export default React.createClass({
 
+  propTypes: {
+    player: React.PropTypes.object,
+    rating: React.PropTypes.object,
+    rank: React.PropTypes.number
+  },
+
   render: function () {
-    var { player, rating } = this.props;
+
+    var { player, rating, rank } = this.props;
 
     rating = rating || { newRating: 1000, change: 0};
 
@@ -21,7 +28,7 @@ export default React.createClass({
             <div className="rating">rating: { rating.newRating }</div>
             <div className="win-rate">win rate: {rating.change}</div>
         </div>
-        <div className="rank">{'#'} 2</div>
+        <div className="rank">{'#'} {rank}</div>
       </Paper>
     );
   }

@@ -25,9 +25,9 @@ export default React.createClass({
       }
     });
 
-    var leaderboardRows = orderedPlayerRatings.map(function({ player, rating }) {
+    var leaderboardRows = orderedPlayerRatings.map(function({ player, rating }, index) {
       return (
-        <PlayerCard key={player.id} player={player} rating={rating} />
+        <PlayerCard key={player.id} player={player} rating={rating} rank={index + 1}/>
       );
     });
 
