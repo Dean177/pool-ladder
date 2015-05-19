@@ -30,5 +30,10 @@ class PlayersControllerSpec extends WithDataBaseSpecification {
       responsePlayer.name mustEqual "Dave"
       responsePlayer.isActive mustEqual true
     }
+
+    "An invalid player returns a not found error" in new WithApplication {
+      val Some(result) = route(FakeRequest(GET, "/api/players/-1"))
+      status(result) mustEqual NOT_FOUND
+    }
   }
 }
