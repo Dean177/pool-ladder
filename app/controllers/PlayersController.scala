@@ -25,7 +25,7 @@ class PlayersController extends Controller {
   def get(id: Long) = Action.async { request =>
     playerDao.find(id).map {
       case Some(player) => Ok(Json.toJson(player))
-      case None => Ok("") // TODO return a 404
+      case None => NotFound("")
     }
   }
 
