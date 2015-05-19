@@ -11,14 +11,11 @@
   "devDependencies": {
     "babel-jest": "^5.0.1",
     "babelify": "^6.0.2",
-    "bower": "^1.4.1",
     "browserify": "^8.0.2",
     "console-browserify": "^1.1.0",
     "del": "^1.1.1",
     "fb-flo": "^0.4.0",
     "gulp": "^3.8.10",
-    "gulp-cli": "^0.2.0",
-    "gulp-bower": "0.0.10",
     "gulp-concat-css": "^2.1.0",
     "gulp-less": "^3.0.0",
     "gulp-open": "^0.3.1",
@@ -36,7 +33,9 @@
   },
   "dependencies": {
     "bluebird": "^2.9.25",
+    "bootstrap": "^3.3.4",
     "chart.js": "^1.0.2",
+    "font-awesome": "^4.3.0",
     "material-ui": "^0.7.5",
     "react": "^0.13.2",
     "react-bootstrap": "^0.21.2",
@@ -46,6 +45,7 @@
     "react-webcam": "git://github.com/Dean177/react-webcam",
     "reflux": "^0.2.5",
     "superagent": "^1.2.0",
+    "swfobject": "^2.2.1",
     "tinycolor2": "^1.1.2"
   },
   "engines": {
