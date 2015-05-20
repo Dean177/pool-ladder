@@ -19,7 +19,6 @@ object Gulp extends EnvironmentSpecific {
 
       override def beforeStarted(): Unit = {
         Process(envCommand("npm install"), base).run()
-        Process(envCommand("bower install"), base).run()
         Process(envCommand("gulp build"), base).run()
       }
 
@@ -48,11 +47,4 @@ object JsCommands extends EnvironmentSpecific {
     (envCommand("gulp ") + args.mkString(" ")).!
     state
   }
-
-  def bower: Command = Command.args("bower", "<task>") { (state, args) =>
-    (envCommand("bower ") + args.mkString(" ")).!
-    state
-  }
-
-  def all: Seq[Command] = Seq(npm, gulp, bower)
 }

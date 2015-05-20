@@ -7,7 +7,7 @@ var config = require('../config');
 
 gulp.task('fb-flo', function (done) {
   flo(
-    config.paths.dest, // Watch directory
+    config.dest, // Watch directory
     {
       port: 8888,
       host: 'localhost',
@@ -22,7 +22,7 @@ gulp.task('fb-flo', function (done) {
 });
 
 function resolver(filepath, callback) { 
-  var file = path.join(config.paths.dest, filepath);
+  var file = path.join(config.dest, filepath);
 
   callback({
     resourceURL: filepath,

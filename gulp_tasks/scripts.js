@@ -11,7 +11,7 @@ var config = require('../config');
 var handleError = require('./handle-error');
 
 gulp.task('clean-scripts', function (done) {
-  del([config.paths.dest + '/**/*.js'], done);
+  del([config.dest + '/**/*.js'], done);
 });
 
 gulp.task('scripts', function() {
@@ -40,7 +40,7 @@ function compileScripts  (watchForChanges) {
             .bundle()
             .on('error', handleError)
             .pipe(source('main.js'))
-            .pipe(gulp.dest(config.paths.dest));
+            .pipe(gulp.dest(config.dest));
     };
 
     bundler.on('update', bundle);
@@ -50,7 +50,7 @@ function compileScripts  (watchForChanges) {
 
 var browserifyConfig = {
   entries: ['./index.jsx'],
-  basedir: config.paths.sources,
+  basedir: config.sources,
   extensions: ['.jsx', 'js'],
   insertGlobals: true,
   transforms: [],
