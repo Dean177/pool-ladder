@@ -34,6 +34,11 @@ export default React.createClass({
     PlayerActions.loadDetail(this.getParams().playerId);
   },
 
+  // https://github.com/rackt/react-router/blob/master/docs/guides/overview.md#important-note-about-dynamic-segments
+  componentWillReceiveProps: function() {
+    PlayerActions.loadDetail(this.getParams().playerId);
+  },
+
   render: function () {
     let currentPlayer = this.getParams().playerId;
     let peakRating = this.state.ratings.reduce(function(lastRating, currentRating) {
