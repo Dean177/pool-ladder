@@ -28,6 +28,19 @@ class GamesController extends Controller {
     }
   }
 
+  def removeGame(gameId: Long) = Action.async {
+    gameDao.isMostRecent(gameId).map {
+      case true =>
+        Seq(
+          eloRatingsDao.deleteRatingsForGame(gameId),
+          gameDao.delete(gameId)
+        )
+        Ok("games deleted")
+      case false =>
+        Conflict("Can only delete the most recently added game")
+    }
+  }
+
   def gamesByPlayer(id: Long) = Action.async { session =>
     gameDao.withPlayer(id).map { games: Seq[GameWithPlayers] =>
       Ok(Json.toJson(games))

@@ -34,6 +34,10 @@ class EloRatingsDao extends EloRatingsComponent with HasDatabaseConfig[JdbcProfi
     }
   }
 
+  def deleteRatingsForGame(gameId: Long): Future[Int] = {
+    db.run(ratings.filter(_.gameId === gameId).delete) // Returns the number of affected rows.
+  }
+
   private def eloRatingsForGame(game: Game, winnerRating: Int, loserRating: Int): Seq[EloRating] = {
     val points = ratingSystem.pointsExchanged(winnerRating, loserRating)
     Seq(
@@ -48,12 +52,12 @@ class EloRatingsDao extends EloRatingsComponent with HasDatabaseConfig[JdbcProfi
   }
 
   def latest(): Future[Seq[(Player, EloRating)]] = {
-    val innerQuery = ratings.groupBy(_.playerId).map { case (playerId, eloRatings: Query[EloRatingsTable, EloRating, Seq]) =>
+    val innerQuery = ratings.groupBy(_.playerId).map { case (playerId, eloRatings: EloRatingsQuery) =>
       playerId -> eloRatings.map(_.date).max
     }
 
     // Surely there is a better way of doing this, currently this is only working if the two ratings for the same player arent created in the same millisecond
-    val latestRating = for {
+    val latestRating: EloRatingsQuery = for {
       rating <- ratings
       (playerId, lastRatingDate) <- innerQuery
       if rating.playerId === playerId && rating.date === lastRatingDate
