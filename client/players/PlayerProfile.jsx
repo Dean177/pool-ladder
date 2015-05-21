@@ -57,7 +57,7 @@ export default React.createClass({
       return resultCount;
     }, {wins: 0 , losses:0});
 
-    let winLossRatio = 100 * (winLoss.wins / (winLoss.wins + winLoss.losses));
+    let winLossRatio = (100 * (winLoss.wins / (winLoss.wins + winLoss.losses))).toFixed(2);
 
     return (
       <div>
