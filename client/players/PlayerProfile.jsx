@@ -48,6 +48,17 @@ export default React.createClass({
       return lastRating.newRating < currentRating.newRating ? lastRating : currentRating;
     });
 
+    let winLoss = this.state.games.reduce(function(resultCount, game) {
+      if(game.winnerId == currentPlayer) {
+        resultCount.wins += 1;
+      } else {
+        resultCount.losses += 1;
+      }
+      return resultCount;
+    }, {wins: 0 , losses:0});
+
+    let winLossRatio = 100 * (winLoss.wins / (winLoss.wins + winLoss.losses));
+
     return (
       <div>
         <h1 className="page-header">{this.state.player.name}</h1>
@@ -61,7 +72,7 @@ export default React.createClass({
             <Row>
               <Col md={12}>
                 <dl className="dl-horizontal">
-                  <dt>Win Rate</dt><dd>???</dd>
+                  <dt>Win Rate</dt><dd>{winLossRatio} % ({winLoss.wins} / {winLoss.losses})</dd>
                   <dt>Total Games Played</dt><dd>{this.state.games.length}</dd>
                   <dt>Highest Rating</dt><dd>{peakRating.newRating}</dd>
                   <dt>Lowest Rating</dt><dd>{lowestRating.newRating}</dd>
