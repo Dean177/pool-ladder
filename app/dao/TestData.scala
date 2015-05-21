@@ -41,11 +41,11 @@ object TestData {
     def gamesDao = new GamesDao
     def eloRatingDao = new EloRatingsDao
 
-    val insertedPlayers = Await.result(playersDao.count(), 1 seconds)
+    val insertedPlayers = Await.result(playersDao.count(), 3 seconds)
     if (insertedPlayers == 0) {
-      Await.result(playersDao.insert(testPlayers), 1 seconds)
-      Await.result(gamesDao.insert(testGames), 1 seconds)
-      Await.result(eloRatingDao.insert(testRatings), 1 seconds)
+      Await.result(playersDao.insert(testPlayers), 3 seconds)
+      Await.result(gamesDao.insert(testGames), 3 seconds)
+      Await.result(eloRatingDao.insert(testRatings), 3 seconds)
     }
   }
 }
