@@ -2,7 +2,8 @@ import java.sql.Timestamp
 import java.text.SimpleDateFormat
 
 import dao.TestData
-import models.{Game, Player}
+import lib.EloRatingSystem
+import models.{EloRating, Game, Player}
 import play.api.Logger
 import play.api.{Application, GlobalSettings}
 
@@ -14,15 +15,23 @@ object Global extends GlobalSettings {
 
   override def onStart(app: Application) = {
     TestData.insertTestDataIfNotPresent()
+  }
 
+  def parseTextFiles(): (Seq[Player], Seq[Game], Seq[EloRating]) = {
     try {
-      val playersByName = getPlayersFromFile("/home/pool/workspace/pool-ladder/Players.txt")
-        .groupBy(_.name).map { case (name: String, players: List[Player]) => (name, players.head) }
+      val players = getPlayersFromFile("/home/pool/workspace/pool-ladder/Players.txt")
 
+      val playersByName = players.groupBy(_.name).map { case (name: String, players: List[Player]) => (name, players.head) }
       val games: List[Game] = getGamesFromFile("/home/pool/workspace/pool-ladder/Games.txt", playersByName)
 
+      val playerIdRatings = players.groupBy(_.id).map { case (id: Long, players) => (id, ) }
+      val eloRatings: Seq[EloRating] = games.map(ratingsForGame(_)).flatten
+
+      (players, games, eloRatings)
     } catch {
-      case ex: Exception => Logger.error(ex.getMessage)
+      case ex: Exception =>
+        Logger.error(ex.getMessage)
+        (Nil, Nil, Nil)
     }
   }
 
@@ -64,5 +73,18 @@ object Global extends GlobalSettings {
 
           Game(index, winner.id, loser.id, time)
     }
+  }
+
+  def ratingsForGame(game: Game): Seq[EloRating] = {
+    val winnerCurrentRating = 1000
+    val loserCurrentRating = 1000
+
+    val eloRatingSystem = new EloRatingSystem
+    val ratingChange = eloRatingSystem.pointsExchanged(winnerCurrentRating, loserCurrentRating)
+
+    val winnerRating = EloRating(game.id * 2, game.id, game.winnerId, ratingChange, winnerCurrentRating + ratingChange, game.playedOn)
+    val loserRating = EloRating((game.id * 2) -1, game.id, game.loserId, 0 - ratingChange, loserCurrentRating - ratingChange, game.playedOn)
+
+    Seq(winnerRating, loserRating)
   }
 }
