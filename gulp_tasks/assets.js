@@ -11,6 +11,9 @@ gulp.task('assets', function() {
     ])
     .pipe(gulp.dest(path.join(config.dest, 'vendor')));
 
+  gulp.src([path.join(config.nodeModules, 'font-awesome', 'fonts', '*')])
+    .pipe(gulp.dest(path.join(config.dest, 'fonts')));
+
   gulp.src([
       config.fonts,
       config.images,
