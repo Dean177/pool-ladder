@@ -14,7 +14,9 @@ resolvers += "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases"
 
 libraryDependencies ++= Seq(
   "org.slf4j" % "slf4j-nop" % "1.6.4",
-  "com.typesafe.play" %% "play-slick" % "1.0.0-2015-05-03-a1c424e-SNAPSHOT",
+  "com.typesafe.play" %% "play-slick" % "1.0.0",
+  "com.typesafe.play" %% "play-slick-evolutions" % "1.0.0",
+  "com.h2database" % "h2" % "1.3.176",
   specs2 % Test
 )
 
