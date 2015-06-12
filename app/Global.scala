@@ -1,5 +1,6 @@
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
+import java.util
 
 import dao.TestData
 import lib.EloRatingSystem
@@ -12,6 +13,8 @@ import scala.io.Source
 
 object Global extends GlobalSettings {
   val dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+  type Id = Long
+  type RatingVal = Int
 
   override def onStart(app: Application) = {
     TestData.insertTestDataIfNotPresent()
@@ -24,8 +27,10 @@ object Global extends GlobalSettings {
       val playersByName = players.groupBy(_.name).map { case (name: String, players: List[Player]) => (name, players.head) }
       val games: List[Game] = getGamesFromFile("/home/pool/workspace/pool-ladder/Games.txt", playersByName)
 
-      val playerIdRatings = players.groupBy(_.id).map { case (id: Long, playerList) => (id, playerList) }
-      val eloRatings: Seq[EloRating] = games.flatMap(ratingsForGame)
+      val playerIdRatings: util.HashMap[Id, RatingVal]  = new util.HashMap[Id, RatingVal]
+      players.foreach(player => playerIdRatings.put(player.id, 1000))
+
+      val eloRatings: Seq[EloRating] = games.flatMap(ratingsForGame(_, playerIdRatings))
 
       (players, games, eloRatings)
     } catch {
@@ -75,15 +80,18 @@ object Global extends GlobalSettings {
     }
   }
 
-  def ratingsForGame(game: Game): Seq[EloRating] = {
-    val winnerCurrentRating = 1000
-    val loserCurrentRating = 1000
+  def ratingsForGame(game: Game, playerIdRatings: util.HashMap[Id, RatingVal]): Seq[EloRating] = {
+    val winnerCurrentRating = playerIdRatings.get(game.winnerId)
+    val loserCurrentRating = playerIdRatings.get(game.loserId)
 
     val eloRatingSystem = new EloRatingSystem
     val ratingChange = eloRatingSystem.pointsExchanged(winnerCurrentRating, loserCurrentRating)
 
     val winnerRating = EloRating(game.id * 2, game.id, game.winnerId, ratingChange, winnerCurrentRating + ratingChange, game.playedOn)
     val loserRating = EloRating((game.id * 2) -1, game.id, game.loserId, 0 - ratingChange, loserCurrentRating - ratingChange, game.playedOn)
+
+    playerIdRatings.put(game.winnerId, winnerRating.newRating)
+    playerIdRatings.put(game.loserId, loserRating.newRating)
 
     Seq(winnerRating, loserRating)
   }
