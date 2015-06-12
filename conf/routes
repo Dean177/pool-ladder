@@ -7,6 +7,7 @@ GET         /api/players/:id/ratings        @controllers.EloRatingsController.ra
 
 POST        /api/games                      @controllers.GamesController.create
 GET         /api/games                      @controllers.GamesController.recentGames
+DELETE      /api/games/:id                  @controllers.GamesController.removeGame(id: Long)
 
 GET         /api/ratings/latest             @controllers.EloRatingsController.latestRatings
 
