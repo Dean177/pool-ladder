@@ -24,8 +24,8 @@ object Global extends GlobalSettings {
       val playersByName = players.groupBy(_.name).map { case (name: String, players: List[Player]) => (name, players.head) }
       val games: List[Game] = getGamesFromFile("/home/pool/workspace/pool-ladder/Games.txt", playersByName)
 
-      val playerIdRatings = players.groupBy(_.id).map { case (id: Long, players) => (id, ) }
-      val eloRatings: Seq[EloRating] = games.map(ratingsForGame(_)).flatten
+      val playerIdRatings = players.groupBy(_.id).map { case (id: Long, playerList) => (id, playerList) }
+      val eloRatings: Seq[EloRating] = games.flatMap(ratingsForGame)
 
       (players, games, eloRatings)
     } catch {
