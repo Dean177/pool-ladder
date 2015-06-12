@@ -3,8 +3,7 @@ package dao
 import helpers.WithDataBaseSpecification
 import lib.DateTimeHelpers
 import models.{Game, Player, EloRating}
-import play.api.test.Helpers._
-import play.api.test.{FakeRequest, WithApplication}
+import play.api.test.WithApplication
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 
 

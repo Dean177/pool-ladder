@@ -1,7 +1,7 @@
 import  React from 'react';
 import { Navigation } from 'react-router';
 import Reflux from 'reflux';
-import { FlatButton } from 'material-ui';
+import { Button } from 'react-bootstrap';
 
 import FontAwesome from '../shared/FontAwesome';
 import LatestRatingStore from '../stores/LatestRatingStore';
@@ -39,13 +39,13 @@ export default React.createClass({
 
     return (
       <div>
-        <FlatButton
+        <Button
           className="pull-right"
           linkButton={true}
           onClick={ this.goToNewGame }
           primary={ true }>
           <FontAwesome icon="plus"/> New Game
-        </FlatButton>
+        </Button>
         <h2 className="page-header">Leaderboard</h2>
         <div className="leaderboard">
           {leaderboardRows}

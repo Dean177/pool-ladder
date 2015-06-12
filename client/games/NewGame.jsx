@@ -1,8 +1,7 @@
 import React from 'react/addons';
 import Reflux from 'reflux';
 import { Navigation } from 'react-router';
-import { RaisedButton, FlatButton } from 'material-ui';
-import { Row, Col } from 'react-bootstrap';
+import { Button, Row, Col } from 'react-bootstrap';
 
 import GameActions from '../actions/GameActions';
 import PlayerActions from '../actions/PlayerActions';
@@ -65,8 +64,8 @@ export default React.createClass({
           </Row>
           <Row>
             <Col md={12}>
-              <RaisedButton label="Add Game" type="submit" secondary={ true } />
-              <FlatButton label="Cancel" onClick={this.onCancel} primary={ true } />
+              <Button type="submit">Add Game</Button>
+              <Button onClick={this.onCancel}>Cancel</Button>
             </Col>
           </Row>
         </form>

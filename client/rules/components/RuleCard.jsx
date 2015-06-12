@@ -1,12 +1,12 @@
-var React = require('react');
-var Paper = require('material-ui').Paper;
+import React from 'react';
 
-module.exports = React.createClass({
-    render: function () {
+
+export default React.createClass({
+    render() {
         return(
-            <Paper zDepth={2} className="RuleCard" innerClassName="RuleCardContents">
+            <div className="RuleCard">
                 {this.props.children}
-            </Paper>
+            </div>
         );
     }
 });

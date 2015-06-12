@@ -1,6 +1,5 @@
 var React = require('react');
-var RaisedButton = require('material-ui').RaisedButton;
-
+var Button = require('react-bootstrap').Button;
 var Webcam = require('react-webcam');
 
 module.exports = React.createClass({
@@ -26,7 +25,7 @@ module.exports = React.createClass({
     return (
       <div className="photo-booth">
         <Webcam ref="webcam" />
-        <RaisedButton
+        <Button
           label="Take Photo"
           primary={true}
           onClick={this.takePhoto}/>

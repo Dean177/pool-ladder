@@ -2,8 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import { Link } from 'react-router';
 import { Navigation } from 'react-router';
-import { FlatButton } from 'material-ui';
-import { Table } from 'react-bootstrap';
+import { Button, Table } from 'react-bootstrap';
 
 import FontAwesome from '../shared/FontAwesome';
 
@@ -36,13 +35,13 @@ export default React.createClass({
 
     return (
       <div className="recentGames">
-        <FlatButton
+        <Button
           className="pull-right"
           linkButton={true}
           onClick={ this.goToNewGame }
           primary={ true }>
           <FontAwesome icon="plus"/> New Game
-        </FlatButton>
+        </Button>
         <h2 className="page-header">Recent Games</h2>
 
         <Table striped responsive>

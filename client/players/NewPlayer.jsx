@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navigation } from 'react-router';
-import { RaisedButton, TextField }from 'material-ui';
+import { Button, Input } from 'react-bootstrap';
 
 import PlayerActions from '../actions/PlayerActions';
 
@@ -57,16 +57,14 @@ export default React.createClass({
       <div>
         <h2 className="page-header">Add a Player</h2>
         <form onSubmit={this.onSubmit}>
-          <TextField
+          <Input
+              type="text"
               value={this.state.name}
               errorText={this.state.nameError}
               floatingLabelText="Name"
               onChange={this._validateName} />
 
-            <RaisedButton
-              label="Save"
-              secondary={true}
-              onClick={this.onSubmit}/>
+            <Button onClick={this.onSubmit}>Save</Button>
         </form>
       </div>
     );
