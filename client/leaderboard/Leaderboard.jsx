@@ -40,10 +40,9 @@ export default React.createClass({
     return (
       <div>
         <Button
+          bsStyle='default'
           className="pull-right"
-          linkButton={true}
-          onClick={ this.goToNewGame }
-          primary={ true }>
+          onClick={ this.goToNewGame }>
           <FontAwesome icon="plus"/> New Game
         </Button>
         <h2 className="page-header">Leaderboard</h2>

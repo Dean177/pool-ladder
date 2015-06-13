@@ -69,13 +69,14 @@ export default React.createClass({
         <h2 className="page-header">Add a Player</h2>
         <form onSubmit={this.onSubmit}>
           <Input
+              label="Name"
               type="text"
               value={this.state.name}
               errorText={this.state.nameError}
               floatingLabelText="Name"
               onChange={this._validateName} />
 
-            <Button onClick={this.onSubmit}>Save</Button>
+            <Button bsStyle="primary" onClick={this.onSubmit}>Save</Button>
         </form>
       </div>
     );

@@ -3,10 +3,4 @@ project/project
 target
 /.idea
 node_modules
-
-public/main.js
-public/main.css
-public/fonts
-public/images
-public/vendor
-public/MediaPlayback.swf
+public

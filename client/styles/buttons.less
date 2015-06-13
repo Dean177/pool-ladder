@@ -1,0 +1,57 @@
+@import 'colors';
+
+.bordered-btn(@color, @darker) {
+  color: @color;
+  border: solid @color 3px;
+  border-radius: 5px;
+  background-color: white;
+
+  &:hover {
+    color: white;
+    border: solid @color 3px;
+    background-color: @color;
+  }
+
+  &:active {
+    color: white;
+    border: solid @color 3px;
+    background-color: @darker;
+  }
+
+  &:focus {
+    outline: none;
+    outline-offset: -2px;
+    color: @color;
+    border: solid @color 3px;
+    background-color: white;
+  }
+}
+
+.btn {
+  color: @black;
+  background-color: white;
+}
+
+.btn-default {
+  .bordered-btn(@black, @blue-dark);
+}
+
+.btn-primary {
+  .bordered-btn(@blue, @blue-dark);
+}
+
+.btn-success {
+  .bordered-btn(@green, @blue-dark);
+}
+
+.btn-info {
+  .bordered-btn(@yellow, @blue-dark);
+}
+
+.btn-warning {
+  .bordered-btn(@orange, @blue-dark);
+}
+
+.btn-danger {
+  .bordered-btn(@red, @blue-dark);
+}

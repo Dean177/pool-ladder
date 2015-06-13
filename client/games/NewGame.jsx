@@ -1,7 +1,7 @@
 import React from 'react/addons';
 import Reflux from 'reflux';
 import { Navigation } from 'react-router';
-import { Button, Row, Col } from 'react-bootstrap';
+import { Button, ButtonToolbar, Row, Col } from 'react-bootstrap';
 
 import GameActions from '../actions/GameActions';
 import PlayerActions from '../actions/PlayerActions';
@@ -120,8 +120,10 @@ export default React.createClass({
           </Row>
           <Row>
             <Col md={12}>
-              <Button type="submit">Add Game</Button>
-              <Button onClick={this.onCancel}>Cancel</Button>
+              <ButtonToolbar>
+                <Button bsStyle='primary' type="submit">Add Game</Button>
+                <Button onClick={this.onCancel}>Cancel</Button>
+              </ButtonToolbar>
             </Col>
           </Row>
         </form>
