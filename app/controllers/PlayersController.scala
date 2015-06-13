@@ -18,7 +18,9 @@ class PlayersController extends Controller {
 
   def all = Action.async { request =>
     playerDao.all().map { players: Seq[Player] =>
-      Ok(Json.toJson(players))
+      val playersById: Map[String, Player] = players.groupBy(_.id).map { case(id, playerSeq) => (id.toString, playerSeq.head) }
+
+      Ok(Json.toJson(playersById))
     }
   }
 
