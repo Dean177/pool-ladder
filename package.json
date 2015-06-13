@@ -42,7 +42,7 @@
     "react-chartjs": "^0.6.0",
     "react-router": "^0.13.2",
     "react-tap-event-plugin": "^0.1.6",
-    "react-toastr": "^1.4.0",
+    "react-toastr": "LiquidLabsGmbH/react-toastr#allow-handleonclick-override-at-the-message-level",
     "react-webcam": "git://github.com/Dean177/react-webcam",
     "reflux": "^0.2.5",
     "superagent": "^1.2.0",

@@ -59,7 +59,8 @@ export default React.createClass({
       options: {
         closeButton: true,
         timeOut: 50000,
-        extendedTimeOut: 2000
+        extendedTimeOut: 2000,
+        handleOnClick: function() { console.log("Undo!"); }
       }
     });
 
