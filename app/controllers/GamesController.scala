@@ -35,7 +35,7 @@ class GamesController extends Controller {
           eloRatingsDao.deleteRatingsForGame(gameId),
           gameDao.delete(gameId)
         )
-        Ok("games deleted")
+        Ok(gameId.toString)
       case false =>
         Conflict("Can only delete the most recently added game")
     }

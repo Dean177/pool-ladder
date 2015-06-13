@@ -8,6 +8,10 @@ export default {
 
   createGame(game) {
     return Http.create(game, UrlResolver.games.create)
+  },
+
+  deleteGame(game) {
+    return Http.delete(UrlResolver.games.delete(game))
   }
 };
 

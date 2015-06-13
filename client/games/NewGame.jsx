@@ -60,11 +60,43 @@ export default React.createClass({
         closeButton: true,
         timeOut: 50000,
         extendedTimeOut: 2000,
-        handleOnClick: function() { console.log("Undo!"); }
+        handleOnClick: () => { this.deleteGame(game) }
       }
     });
 
     this.transitionTo('leaderboard');
+  },
+
+  deleteGame(game) {
+    GamesApi.deleteGame(game)
+      .then(this.onDeleteSuccess)
+      .error(this.onDeleteFailure)
+  },
+
+  onDeleteSuccess(gameId) {
+    console.log("success; ", GameActions);
+    GameActions.delete(gameId);
+    ToastActions.newToast({
+      style: 'success',
+      body: '',
+      title: "Successfully removed game.",
+      options: {
+        timeOut: 50000,
+        extendedTimeOut: 2000
+      }
+    });
+  },
+
+  onDeleteFailure(err) {
+    ToastActions.newToast({
+      style: 'error',
+      body: err.message,
+      title: "Failed to remove game.",
+      options: {
+        timeOut: 50000,
+        extendedTimeOut: 2000
+      }
+    });
   },
 
   render: function() {
