@@ -5,21 +5,29 @@ import { Button } from 'react-bootstrap';
 
 import FontAwesome from '../shared/FontAwesome';
 import LatestRatingStore from '../stores/LatestRatingStore';
-import RatingActions from '../actions/RatingActions'
 import PlayerCard from '../shared/PlayerCard/PlayerCard';
 
 
 export default React.createClass({
-  mixins:[Navigation, Reflux.connect(LatestRatingStore, 'playerRatings')],
+  mixins:[Navigation, Reflux.listenTo(LatestRatingStore, 'onPlayerRatings')],
 
-  componentDidMount: function() {
-    RatingActions.getLatest();
+  onPlayerRatings(ratings) {
+    this.setState({
+      playerRatings: ratings
+    })
   },
 
-  goToNewGame: function() { this.transitionTo('newGame'); },
+  getInitialState() {
+    return { playerRatings: [] };
+  },
 
-  render: function () {
+  componentDidMount() {
+    LatestRatingStore.getLatestRatings();
+  },
 
+  goToNewGame() { this.transitionTo('newGame'); },
+
+  render() {
     var orderedPlayerRatings = this.state.playerRatings;
     orderedPlayerRatings.sort(function(playerRatingA, playerRatingB) {
       if (playerRatingA.rating.newRating < playerRatingB.rating.newRating) {

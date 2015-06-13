@@ -10,6 +10,16 @@ export default Reflux.createStore({
     // TODO connect to the server to receive updates
   },
 
+  getGames() {
+    this.trigger(this.recentGames);
+  },
+
+  onGetRecent() {
+    GamesApi.getRecentGames()
+      .then(this.onGetRecentCompleted)
+      .error(this.onLoadAllFailed)
+  },
+
   onGetRecentCompleted(games) {
     this.recentGames = games;
     this.trigger(games);
@@ -17,12 +27,6 @@ export default Reflux.createStore({
 
   onGetRecentFailed(err) {
     console.log("loadAllFailed: ", err);
-  },
-
-  onGetRecent() {
-    GamesApi.getRecentGames()
-      .then(this.onGetRecentCompleted)
-      .error(this.onLoadAllFailed)
   },
 
   onCreate(game) {

@@ -10,19 +10,25 @@ import GamesStore from '../stores/GamesStore';
 import GameActions from '../actions/GameActions';
 
 export default React.createClass({
-  mixins: [Navigation, Reflux.connect(GamesStore, "recentGames")],
+  mixins: [Navigation, Reflux.listenTo(GamesStore, "onNewGames")],
 
-  getInitialState: function() {
+  componentDidMount() {
+    GamesStore.getGames();
+  },
+
+  onNewGames(games) {
+    this.setState({
+      recentGames: games
+    })
+  },
+
+  getInitialState() {
     return { recentGames: [] };
   },
 
-  componentDidMount: function() {
-    GameActions.getRecent();
-  },
+  goToNewGame() { this.transitionTo('newGame'); },
 
-  goToNewGame: function() { this.transitionTo('newGame'); },
-
-  render: function() {
+  render() {
     var tableRows = this.state.recentGames.map(function(game) {
       return (
         <tr key={game.id}>

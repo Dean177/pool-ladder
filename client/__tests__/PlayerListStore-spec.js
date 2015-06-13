@@ -1,18 +1,18 @@
-jest.dontMock('../stores/PlayerListStore');
+jest.dontMock('../stores/PlayersStore');
 jest.dontMock('../actions/PlayerActions');
 
 
-describe('PlayerListStore', function() {
-  var PlayerListStore;
+describe('PlayersStore', function() {
+  var PlayersStore;
   var PlayerActions;
 
   beforeEach(function() {
-    PlayerListStore = require('../stores/PlayerListStore');
+    PlayersStore = require('../stores/PlayersStore');
     PlayerActions = require('../actions/PlayerActions');
   });
 
   it('Initialises with no players', function() {
-    var allPlayers = PlayerListStore.players;
+    var allPlayers = PlayersStore.players;
     expect(allPlayers).toEqual({});
   });
 

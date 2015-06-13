@@ -5,14 +5,25 @@ import { Button } from 'react-bootstrap';
 
 import FontAwesome from '../shared/FontAwesome';
 import PlayerList from './components/PlayerList';
-import PlayerListStore from './../stores/PlayerListStore';
-import PlayerActions from './../actions/PlayerActions';
+import PlayersStore from './../stores/PlayersStore';
 
 export default React.createClass({
-  mixins: [Navigation, Reflux.connect(PlayerListStore, "players")],
+  mixins: [Navigation, Reflux.listenTo(PlayersStore, "onPlayersUpdate")],
 
-  componentDidMount: function() {
-    PlayerActions.loadAll();
+  onPlayersUpdate(updatePlayers) {
+    this.setState({
+      players: updatePlayers
+    });
+  },
+
+  getInitialState() {
+    return {
+      players: []
+    };
+  },
+
+  componentDidMount() {
+    PlayersStore.getPlayers();
   },
 
   navigateToAddPlayerSection: function() { this.transitionTo('newPlayer'); },
@@ -22,9 +33,7 @@ export default React.createClass({
       <div>
         <Button
           className="pull-right"
-          linkButton={ true }
-          onClick={ this.navigateToAddPlayerSection }
-          primary={ true }>
+          onClick={ this.navigateToAddPlayerSection }>
           <FontAwesome icon="user-plus"/> Add Player
         </Button>
         <h2 className="page-header">Players</h2>

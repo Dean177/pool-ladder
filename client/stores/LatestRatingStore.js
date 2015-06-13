@@ -6,27 +6,26 @@ import RatingActions from '../actions/RatingActions';
 export default Reflux.createStore({
   listenables: RatingActions,
 
-  init: function() {
+  init() {
     this.playerRatings = [];
   },
 
-
-  getInitialState: function() {
-    return [];
+  getLatestRatings() {
+    this.trigger(this.playerRatings);
   },
 
-  onGetLatest: function() {
+  onGetLatest() {
     RatingsApi.getLatest()
       .then(this.onGetLatestComplete)
       .error(this.onGetLatestFailed)
   },
 
-  onGetLatestComplete: function(playerRatings) {
+  onGetLatestComplete(playerRatings) {
     this.playerRatings = playerRatings;
     this.trigger(playerRatings);
   },
 
-  onGetLatestFailed: function(err) {
+  onGetLatestFailed(err) {
     console.error("Failed to get ratings:", err)
   }
 });

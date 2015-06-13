@@ -8,16 +8,15 @@ export default Reflux.createStore({
 
   init: function() {
     this.players = {};
-    // TODO connect to the server to receive updates
   },
 
-  getInitialState: function() {
-    return {};
+  getPlayers() {
+    this.trigger(this.players);
   },
 
   onCreate: function(player) {
     this.players[player.id] = player;
-    this.trigger();
+    this.trigger(this.players);
   },
 
   onLoadAll: function() {

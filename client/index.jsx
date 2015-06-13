@@ -32,7 +32,25 @@ import NotFound from './404';
 import injectTapEventPlugin from "react-tap-event-plugin";
 injectTapEventPlugin();
 
-Object.values = obj => Object.keys(obj).map(key => obj[key]);
+// Turns out this isnt a thing until ES7
+Object.values = (obj) => Object.keys(obj).map(key => obj[key]);
+
+// Until something like listening for updates via a websocket is implemented, poll for changes
+import PlayerActions from './actions/PlayerActions';
+import GameActions from './actions/GameActions.js';
+import RatingActions from './actions/RatingActions.js';
+var shouldPoll = true;
+window.shouldPoll = shouldPoll;
+const pollForChanges = () => {
+  if (shouldPoll) {
+    console.log("polling");
+    PlayerActions.loadAll();
+    GameActions.getRecent();
+    RatingActions.getLatest();
+  }
+};
+pollForChanges();
+setInterval(pollForChanges, 10000);
 
 let routes = (
   <Route name="app" handler={App} path="/">

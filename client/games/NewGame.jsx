@@ -4,29 +4,35 @@ import { Navigation } from 'react-router';
 import { Button, ButtonToolbar, Row, Col } from 'react-bootstrap';
 
 import GameActions from '../actions/GameActions';
-import PlayerActions from '../actions/PlayerActions';
 import ToastActions from '../actions/ToastActions';
 
 import GamesApi from '../webapi/GamesApi';
-import PlayerListStore from '../stores/PlayerListStore';
+import PlayersStore from '../stores/PlayersStore';
 import PlayerPicker from './components/PlayerPicker';
 
 export default React.createClass({
   mixins: [
     Navigation,
     React.addons.LinkedStateMixin,
-    Reflux.connect(PlayerListStore, "players")
+    Reflux.listenTo(PlayersStore, "onPlayersUpdate")
   ],
 
-  getInitialState: function() {
+  onPlayersUpdate(updatePlayers) {
+    this.setState({
+      players: updatePlayers
+    });
+  },
+
+  getInitialState() {
     return {
+      players: {},
       winner: {name: ""},
       loser: {name: ""}
     };
   },
 
-  componentDidMount: function() {
-    PlayerActions.loadAll();
+  componentDidMount() {
+    PlayersStore.getPlayers();
   },
 
   onSubmit: function (e) {
@@ -74,7 +80,6 @@ export default React.createClass({
   },
 
   onDeleteSuccess(gameId) {
-    console.log("success; ", GameActions);
     GameActions.delete(gameId);
     ToastActions.newToast({
       style: 'success',
@@ -99,7 +104,9 @@ export default React.createClass({
     });
   },
 
-  render: function() {
+  render() {
+    let players = this.state.players;
+
     return (
       <div className="newGame">
         <h2 className="page-header">Add Game</h2>
@@ -109,13 +116,13 @@ export default React.createClass({
               <PlayerPicker
                 idStateLink={ this.linkState('winner')}
                 label="Winner"
-                players={ this.state.players } />
+                players={ players } />
             </Col>
             <Col md={6}>
               <PlayerPicker
                 idStateLink={ this.linkState('loser')}
                 label="Loser"
-                players={ this.state.players } />
+                players={ players } />
             </Col>
           </Row>
           <Row>

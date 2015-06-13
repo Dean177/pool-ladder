@@ -13,7 +13,6 @@ export default React.createClass({
   },
 
   render() {
-
     var playerDetailCards = Object.values(this.props.players).map(function (player) {
       return <PlayerCard key={player.id} player={player} />;
     });
