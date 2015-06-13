@@ -5,6 +5,7 @@ import { Button, Row, Col } from 'react-bootstrap';
 
 import GameActions from '../actions/GameActions';
 import PlayerActions from '../actions/PlayerActions';
+import ToastActions from '../actions/ToastActions';
 
 import PlayerListStore from '../stores/PlayerListStore';
 import PlayerPicker from './components/PlayerPicker';
@@ -28,6 +29,17 @@ export default React.createClass({
     GameActions.create({
       winnerId: parseInt(this.state.winner.id),
       loserId: parseInt(this.state.loser.id)
+    });
+
+    ToastActions.newToast({
+      style: 'success',
+      body: 'Undo',
+      title: this.state.winner.name + "beat" + this.state.loser.name,
+      options: {
+        closeButton: true,
+        timeOut: 50000,
+        extendedTimeOut: 2000
+      }
     });
 
     this.transitionTo('leaderboard');
