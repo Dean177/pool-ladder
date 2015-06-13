@@ -6,6 +6,12 @@ export default React.createClass({
     players: React.PropTypes.object
   },
 
+  getDefaultProps() {
+    return {
+      players: {}
+    }
+  },
+
   render() {
 
     var playerDetailCards = Object.values(this.props.players).map(function (player) {

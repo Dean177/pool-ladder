@@ -21,10 +21,13 @@ export default React.createClass({
     e.preventDefault();
     if (!this.isValid()) {
       this.setState({nameError: this.nameErrorMessage});
-      return;
+    } else {
+      this.createPlayer({ name: this.state.name });
     }
+  },
 
-    PlayerApi.createPlayer({ name: this.state.name })
+  createPlayer(newPlayer) {
+    PlayerApi.createPlayer(newPlayer)
       .then(this.onCreateCompleted)
       .error(this.onCreateFailed);
   },
