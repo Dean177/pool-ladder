@@ -8,13 +8,13 @@ import play.api.test._
 
 class PlayersControllerSpec extends WithDataBaseSpecification {
   "PlayersController" should {
-    "Return an array of players" in new WithApplication(WithTestData) {
+    "Return an map from id to player" in new WithApplication(WithTestData) {
       val Some(result) = route(FakeRequest(GET, "/api/players"))
 
       status(result) mustEqual OK
       contentType(result) mustEqual Some("application/json")
 
-      val players = contentAsJson(result).as[Seq[Player]]
+      val players = contentAsJson(result).as[Map[String, Player]]
       players should not be empty
     }
 
