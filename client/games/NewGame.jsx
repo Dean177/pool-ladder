@@ -4,7 +4,6 @@ import { Navigation } from 'react-router';
 import { Button, ButtonToolbar, Row, Col } from 'react-bootstrap';
 
 import GameActions from '../actions/GameActions';
-import ToastActions from '../actions/ToastActions';
 
 import GamesApi from '../webapi/GamesApi';
 import PlayersStore from '../stores/PlayersStore';
@@ -42,6 +41,7 @@ export default React.createClass({
       loserId: parseInt(this.state.loser)
     };
 
+    console.log("creating game", newGame);
     GamesApi.createGame(newGame)
       .then(this.onCreateCompleted)
       .error(this.onCreateFailed);
@@ -53,55 +53,10 @@ export default React.createClass({
   },
 
   onCreateCompleted(game) {
+    game.winner = this.state.players[game.winnerId];
+    game.loser = this.state.players[game.loserId];
     GameActions.newGame(game);
-
-    let winner = this.state.players[game.winnerId];
-    let loser = this.state.players[game.loserId];
-
-    ToastActions.newToast({
-      style: 'success',
-      body: 'Click to undo',
-      title: `${winner.name} beat ${loser.name}`,
-      options: {
-        closeButton: true,
-        timeOut: 50000,
-        extendedTimeOut: 2000,
-        handleOnClick: () => { this.deleteGame(game) }
-      }
-    });
-
     this.transitionTo('leaderboard');
-  },
-
-  deleteGame(game) {
-    GamesApi.deleteGame(game)
-      .then(this.onDeleteSuccess)
-      .error(this.onDeleteFailure)
-  },
-
-  onDeleteSuccess(gameId) {
-    GameActions.deleteGame(gameId);
-    ToastActions.newToast({
-      style: 'success',
-      body: '',
-      title: "Successfully removed game.",
-      options: {
-        timeOut: 50000,
-        extendedTimeOut: 2000
-      }
-    });
-  },
-
-  onDeleteFailure(err) {
-    ToastActions.newToast({
-      style: 'error',
-      body: err.message,
-      title: "Failed to remove game.",
-      options: {
-        timeOut: 50000,
-        extendedTimeOut: 2000
-      }
-    });
   },
 
   render() {

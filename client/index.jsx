@@ -43,7 +43,6 @@ var shouldPoll = true;
 window.shouldPoll = shouldPoll;
 const pollForChanges = () => {
   if (shouldPoll) {
-    console.log("polling");
     PlayerActions.loadAllPlayers();
     GameActions.getRecentGames();
     RatingActions.getLatestRatings();
