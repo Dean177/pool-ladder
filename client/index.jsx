@@ -32,6 +32,8 @@ import NotFound from './404';
 import injectTapEventPlugin from "react-tap-event-plugin";
 injectTapEventPlugin();
 
+Object.values = obj => Object.keys(obj).map(key => obj[key]);
+
 let routes = (
   <Route name="app" handler={App} path="/">
     <DefaultRoute name="leaderboard" handler={Leaderboard} />
