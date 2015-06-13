@@ -1,8 +1,8 @@
-var Reflux = require('reflux');
-var GameActions = require('../actions/GameActions');
-var GamesApi = require('../webapi/GamesApi');
+import Reflux from 'reflux';
+import GameActions from '../actions/GameActions';
+import GamesApi from '../webapi/GamesApi';
 
-module.exports =  Reflux.createStore({
+export default Reflux.createStore({
   listenables: GameActions,
 
   init: function() {
@@ -19,15 +19,6 @@ module.exports =  Reflux.createStore({
     console.log("loadAllFailed: ", err);
   },
 
-  onCreateCompleted: function(game) {
-    this.recentGames.push(game);
-    this.trigger();
-  },
-
-  onCreateFailed: function(err) {
-    console.log("createGameFailed: ", err)
-  },
-
   onGetRecent: function() {
     GamesApi.getRecentGames()
       .then(this.onGetRecentCompleted)
@@ -35,8 +26,7 @@ module.exports =  Reflux.createStore({
   },
 
   onCreate: function(game) {
-    GamesApi.createGame(game)
-      .then(this.onCreateCompleted)
-      .error(this.onCreateFailed)
+    this.recentGames.push(game);
+    this.trigger();
   }
 });

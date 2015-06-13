@@ -7,21 +7,17 @@ export default Reflux.createStore({
   listenables: PlayerActions,
 
   init: function() {
-    this.players = [];
+    this.players = {};
     // TODO connect to the server to receive updates
   },
 
   getInitialState: function() {
-    return [];
+    return {};
   },
 
-  onLoadAllCompleted: function(players) {
-    this.players = players;
-    this.trigger(players);
-  },
-
-  onLoadAllFailed: function(err) {
-    console.error("loadAllFailed:", err);
+  onCreate: function(player) {
+    this.players[player.id] = player;
+    this.trigger();
   },
 
   onLoadAll: function() {
@@ -30,18 +26,12 @@ export default Reflux.createStore({
       .error(this.onLoadAllFailed)
   },
 
-  onCreate: function(player) {
-    PlayerApi.createPlayer(player)
-      .then(this.onCreateCompleted)
-      .error(this.onCreateFailed)
+  onLoadAllCompleted: function(players) {
+    this.players = players;
+    this.trigger(players);
   },
 
-  onCreateCompleted: function(newPlayer) {
-    this.players.push(newPlayer);
-    this.trigger();
-  },
-
-  onCreateFailed: function(err) {
+  onLoadAllFailed: function(err) {
     console.error("loadAllFailed:", err);
   }
 });

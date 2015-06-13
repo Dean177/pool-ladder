@@ -7,6 +7,7 @@ import GameActions from '../actions/GameActions';
 import PlayerActions from '../actions/PlayerActions';
 import ToastActions from '../actions/ToastActions';
 
+import GamesApi from '../webapi/GamesApi';
 import PlayerListStore from '../stores/PlayerListStore';
 import PlayerPicker from './components/PlayerPicker';
 
@@ -19,22 +20,42 @@ export default React.createClass({
 
   getInitialState: function() {
     return {
-      winner: null,
-      loser: null
+      winner: {name: ""},
+      loser: {name: ""}
     };
+  },
+
+  componentDidMount: function() {
+    PlayerActions.loadAll();
   },
 
   onSubmit: function (e) {
     e.preventDefault();
-    GameActions.create({
-      winnerId: parseInt(this.state.winner.id),
-      loserId: parseInt(this.state.loser.id)
-    });
+    let newGame = {
+      winnerId: parseInt(this.state.winner),
+      loserId: parseInt(this.state.loser)
+    };
+
+    GamesApi.createGame(newGame)
+      .then(this.onCreateCompleted)
+      .error(this.onCreateFailed);
+  },
+
+  onCancel: function (e) {
+    e.preventDefault();
+    this.transitionTo('leaderboard');
+  },
+
+  onCreateCompleted(game) {
+    GameActions.create(game);
+
+    let winner = this.state.players[game.winnerId];
+    let loser = this.state.players[game.loserId];
 
     ToastActions.newToast({
       style: 'success',
-      body: 'Undo',
-      title: this.state.winner.name + "beat" + this.state.loser.name,
+      body: 'Click to undo',
+      title: `${winner.name} beat ${loser.name}`,
       options: {
         closeButton: true,
         timeOut: 50000,
@@ -45,15 +66,6 @@ export default React.createClass({
     this.transitionTo('leaderboard');
   },
 
-  onCancel: function (e) {
-    e.preventDefault();
-    this.transitionTo('leaderboard');
-  },
-
-  componentDidMount: function() {
-    PlayerActions.loadAll();
-  },
-
   render: function() {
     return (
       <div className="newGame">
@@ -62,13 +74,13 @@ export default React.createClass({
           <Row>
             <Col md={6}>
               <PlayerPicker
-                playerStateLink={ this.linkState('winner')}
+                idStateLink={ this.linkState('winner')}
                 label="Winner"
                 players={ this.state.players } />
             </Col>
             <Col md={6}>
               <PlayerPicker
-                playerStateLink={ this.linkState('loser')}
+                idStateLink={ this.linkState('loser')}
                 label="Loser"
                 players={ this.state.players } />
             </Col>

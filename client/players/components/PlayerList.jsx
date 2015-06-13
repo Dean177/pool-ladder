@@ -3,11 +3,12 @@ import PlayerCard from '../../shared/PlayerCard/PlayerCard';
 
 export default React.createClass({
   propTypes: {
-    players: React.PropTypes.array
+    players: React.PropTypes.object
   },
 
   render() {
-    var playerDetailCards = this.props.players.map(function (player) {
+
+    var playerDetailCards = Object.values(this.props.players).map(function (player) {
       return <PlayerCard key={player.id} player={player} />;
     });
 

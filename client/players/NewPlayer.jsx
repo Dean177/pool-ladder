@@ -2,6 +2,7 @@ import React from 'react';
 import { Navigation } from 'react-router';
 import { Button, Input } from 'react-bootstrap';
 
+import PlayerApi from '../webapi/PlayersApi';
 import PlayerActions from '../actions/PlayerActions';
 
 export default React.createClass({
@@ -23,12 +24,19 @@ export default React.createClass({
       return;
     }
 
-    PlayerActions.create({
-      name: this.state.name
-    });
+    PlayerApi.createPlayer({ name: this.state.name })
+      .then(this.onCreateCompleted)
+      .error(this.onCreateFailed);
+  },
 
+  onCreateCompleted: function(player) {
+    PlayerActions.create(player);
     this.clearForm();
     this.transitionTo('players');
+  },
+
+  onCreateFailed: function(err) {
+    console.error("loadAllFailed:", err);
   },
 
   clearForm: function() { this.setState({ name: "" }); },
