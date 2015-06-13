@@ -14,27 +14,27 @@ export default Reflux.createStore({
     this.trigger(this.recentGames);
   },
 
-  onGetRecent() {
+  onGetRecentGames() {
     GamesApi.getRecentGames()
-      .then(this.onGetRecentCompleted)
-      .error(this.onLoadAllFailed)
+      .then(this.onGetRecentGamesCompleted)
+      .error(this.onGetRecentGamesFailed)
   },
 
-  onGetRecentCompleted(games) {
+  onGetRecentGamesCompleted(games) {
     this.recentGames = games;
     this.trigger(games);
   },
 
-  onGetRecentFailed(err) {
+  onGetRecentGamesFailed(err) {
     console.log("loadAllFailed: ", err);
   },
 
-  onCreate(game) {
+  onNewGame(game) {
     this.recentGames.push(game);
     this.trigger(this.recentGames);
   },
 
-  onDelete(gameId) {
+  onDeleteGame(gameId) {
     let matchingGame = this.recentGames.filter((game) => game.id === gameId);
     if (matchingGame.length == 1) {
       var index = this.recentGames.indexOf(matchingGame[0]);

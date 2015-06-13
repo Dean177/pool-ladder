@@ -33,7 +33,7 @@ export default React.createClass({
   },
 
   onCreateCompleted: function(player) {
-    PlayerActions.create(player);
+    PlayerActions.newPlayer(player);
     this.clearForm();
     this.transitionTo('players');
   },

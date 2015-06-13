@@ -14,23 +14,23 @@ export default Reflux.createStore({
     this.trigger(this.players);
   },
 
-  onCreate: function(player) {
+  onNewPlayer: function(player) {
     this.players[player.id] = player;
     this.trigger(this.players);
   },
 
-  onLoadAll: function() {
+  onLoadAllPlayers: function() {
     PlayerApi.getPlayers()
-      .then(this.onLoadAllCompleted)
-      .error(this.onLoadAllFailed)
+      .then(this.onLoadAllPlayersCompleted)
+      .error(this.onLoadAllPlayersFailed)
   },
 
-  onLoadAllCompleted: function(players) {
+  onLoadAllPlayersCompleted: function(players) {
     this.players = players;
     this.trigger(players);
   },
 
-  onLoadAllFailed: function(err) {
+  onLoadAllPlayersFailed: function(err) {
     console.error("loadAllFailed:", err);
   }
 });

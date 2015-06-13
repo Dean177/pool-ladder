@@ -53,7 +53,7 @@ export default React.createClass({
   },
 
   onCreateCompleted(game) {
-    GameActions.create(game);
+    GameActions.newGame(game);
 
     let winner = this.state.players[game.winnerId];
     let loser = this.state.players[game.loserId];
@@ -80,7 +80,7 @@ export default React.createClass({
   },
 
   onDeleteSuccess(gameId) {
-    GameActions.delete(gameId);
+    GameActions.deleteGame(gameId);
     ToastActions.newToast({
       style: 'success',
       body: '',

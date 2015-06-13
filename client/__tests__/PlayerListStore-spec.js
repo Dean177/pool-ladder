@@ -18,8 +18,8 @@ describe('PlayersStore', function() {
 
   it('Should attempt to fetch the players when the loadAll action is called', function() {
     var playerApi = require('../webapi/PlayersApi');
-    PlayerActions.loadAll();
-    playerApi.getPlayers()
+    PlayerActions.loadAllPlayers();
+    playerApi.getPlayers();
 
     expect(playerApi.getPlayers).toBeCalled()
   });

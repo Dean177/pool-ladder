@@ -44,9 +44,9 @@ window.shouldPoll = shouldPoll;
 const pollForChanges = () => {
   if (shouldPoll) {
     console.log("polling");
-    PlayerActions.loadAll();
-    GameActions.getRecent();
-    RatingActions.getLatest();
+    PlayerActions.loadAllPlayers();
+    GameActions.getRecentGames();
+    RatingActions.getLatestRatings();
   }
 };
 pollForChanges();

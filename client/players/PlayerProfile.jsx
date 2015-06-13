@@ -31,12 +31,12 @@ export default React.createClass({
   },
 
   componentDidMount: function() {
-    PlayerActions.loadDetail(this.getParams().playerId);
+    PlayerActions.loadPlayerDetail(this.getParams().playerId);
   },
 
   // https://github.com/rackt/react-router/blob/master/docs/guides/overview.md#important-note-about-dynamic-segments
   componentWillReceiveProps: function() {
-    PlayerActions.loadDetail(this.getParams().playerId);
+    PlayerActions.loadPlayerDetail(this.getParams().playerId);
   },
 
   render: function () {

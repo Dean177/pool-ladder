@@ -14,18 +14,18 @@ export default Reflux.createStore({
     this.trigger(this.playerRatings);
   },
 
-  onGetLatest() {
+  onGetLatestRatings() {
     RatingsApi.getLatest()
-      .then(this.onGetLatestComplete)
-      .error(this.onGetLatestFailed)
+      .then(this.onGetLatestRatingsComplete)
+      .error(this.onGetLatestRatingsFailed)
   },
 
-  onGetLatestComplete(playerRatings) {
+  onGetLatestRatingsComplete(playerRatings) {
     this.playerRatings = playerRatings;
     this.trigger(playerRatings);
   },
 
-  onGetLatestFailed(err) {
+  onGetLatestRatingsFailed(err) {
     console.error("Failed to get ratings:", err)
   }
 });
