@@ -4,7 +4,6 @@ var del = require('del');
 var browserify = require('browserify');
 var watchify = require('watchify');
 var babelify = require('babelify');
-var reactify = require('reactify');
 var source = require('vinyl-source-stream');
 
 var config = require('../config');
@@ -22,11 +21,10 @@ gulp.task('watch-scripts', function () {
   return compileScripts(true);
 });
 
-function compileScripts  (watchForChanges) {
+function compileScripts (watchForChanges) {
     var bundler = browserify(browserifyConfig)
-        .transform(reactify)
-        .on('error', handleError)
         .transform(babelify)
+        .on('error', handleError)
       ;
 
     if (watchForChanges) {

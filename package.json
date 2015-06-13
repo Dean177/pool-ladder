@@ -27,7 +27,6 @@
     "jest": "^0.1.40",
     "jest-cli": "^0.4.11",
     "open": "0.0.5",
-    "reactify": "^1.1.1",
     "require-dir": "^0.3.0",
     "vinyl-source-stream": "^1.0.0",
     "watchify": "^3.2.2"
