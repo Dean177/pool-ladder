@@ -5,7 +5,7 @@ export default React.createClass({
   mixins: [React.addons.LinkedStateMixin],
 
   propTypes: {
-    idStateLink: React.PropTypes.any,
+    playerStateLink: React.PropTypes.any,
     label: React.PropTypes.string,
     players: React.PropTypes.array
   },
@@ -16,14 +16,14 @@ export default React.createClass({
       return (
         <option
           key={player.id}
-          value={player.id}>
+          value={player}>
           {player.name}
         </option>
       );
     });
 
     return (
-      <Input type='select' label={this.props.label} valueLink={this.props.idStateLink}>
+      <Input type='select' label={this.props.label} valueLink={this.props.playerStateLink}>
         <option>...</option>
         {options}
       </Input>

@@ -18,16 +18,16 @@ export default React.createClass({
 
   getInitialState: function() {
     return {
-      winnerId: null,
-      loserId: null
+      winner: null,
+      loser: null
     };
   },
 
   onSubmit: function (e) {
     e.preventDefault();
     GameActions.create({
-      winnerId: parseInt(this.state.winnerId),
-      loserId: parseInt(this.state.loserId)
+      winnerId: parseInt(this.state.winner.id),
+      loserId: parseInt(this.state.loser.id)
     });
 
     this.transitionTo('leaderboard');
@@ -43,7 +43,6 @@ export default React.createClass({
   },
 
   render: function() {
-    // TODO add a default option for these selects
     return (
       <div className="newGame">
         <h2 className="page-header">Add Game</h2>
@@ -51,13 +50,13 @@ export default React.createClass({
           <Row>
             <Col md={6}>
               <PlayerPicker
-                idStateLink={ this.linkState('winnerId')}
+                playerStateLink={ this.linkState('winner')}
                 label="Winner"
                 players={ this.state.players } />
             </Col>
             <Col md={6}>
               <PlayerPicker
-                idStateLink={ this.linkState('loserId')}
+                playerStateLink={ this.linkState('loser')}
                 label="Loser"
                 players={ this.state.players } />
             </Col>
