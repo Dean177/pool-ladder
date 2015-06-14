@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 
 export default React.createClass({
   propTypes: {
-    currentPlayerId: React.PropTypes.string,
+    currentPlayerId: React.PropTypes.number,
     games: React.PropTypes.array
   },
 
@@ -16,7 +16,7 @@ export default React.createClass({
   render() {
     let currentPlayerId = this.props.currentPlayerId;
     let gamesHistory = this.props.games.map(function(game) {
-      let isWinner = currentPlayerId == game.winnerId;
+      let isWinner = currentPlayerId === game.winnerId;
       let gameDescription = isWinner ? "Defeated" : "Lost to";
       let opponentId = isWinner ? game.loserId : game.winnerId;
       let opponentName = isWinner ? game.loserName : game.winnerName;

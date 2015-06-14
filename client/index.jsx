@@ -35,6 +35,9 @@ injectTapEventPlugin();
 // Turns out this isnt a thing until ES7
 Object.values = (obj) => Object.keys(obj).map(key => obj[key]);
 
+// And this just doesnt exist.
+Array.prototype.last = function() { return this[this.length - 1]; };
+
 // Until something like listening for updates via a websocket is implemented, poll for changes
 import PlayerActions from './actions/PlayerActions';
 import GameActions from './actions/GameActions.js';

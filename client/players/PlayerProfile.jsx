@@ -45,7 +45,8 @@ export default React.createClass({
   },
 
   render: function () {
-    let currentPlayer = this.getParams().playerId;
+    let currentPlayerId = Number.parseInt(this.getParams().playerId);
+
     let peakRating = this.state.ratings.reduce(function(lastRating, currentRating) {
       return lastRating.newRating > currentRating.newRating ? lastRating : currentRating;
     });
@@ -53,8 +54,29 @@ export default React.createClass({
       return lastRating.newRating < currentRating.newRating ? lastRating : currentRating;
     });
 
+    let gameOutcomes = this.state.games
+      .map(function(game) { return game.winnerId === currentPlayerId ? 1 : -1; });
+
+    let winLossStreaks = gameOutcomes.reduce(function(acc, currentOutcome, index, gameOutcomes) {
+          if (index === 0) {
+            return [currentOutcome];
+          } else {
+            let previousOutcome = gameOutcomes[index - 1];
+
+            if (previousOutcome === currentOutcome) {
+              acc.push(acc.last() + currentOutcome);
+              return acc;
+            } else {
+              acc.push(currentOutcome);
+              return acc;
+            }
+          }
+      }, []);
+    let bestWinStreak = Math.max.apply(null, winLossStreaks);
+    let bestLosingStreak = 0 - Math.min.apply(null, winLossStreaks);
+
     let winLoss = this.state.games.reduce(function(resultCount, game) {
-      if(game.winnerId == currentPlayer) {
+      if(game.winnerId === currentPlayerId) {
         resultCount.wins += 1;
       } else {
         resultCount.losses += 1;
@@ -81,15 +103,15 @@ export default React.createClass({
                   <dt>Total Games Played</dt><dd>{this.state.games.length}</dd>
                   <dt>Highest Rating</dt><dd>{peakRating.newRating}</dd>
                   <dt>Lowest Rating</dt><dd>{lowestRating.newRating}</dd>
-                  <dt>Longest Win Streak</dt><dd>???</dd>
-                  <dt>Longest Losing Streak</dt><dd>???</dd>
+                  <dt>Longest Win Streak</dt><dd>{bestWinStreak}</dd>
+                  <dt>Longest Losing Streak</dt><dd>{bestLosingStreak}</dd>
                 </dl>
               </Col>
             </Row>
             <Row>
               <Col md={12}>
                 <h3>Played Against</h3>
-                <OpponentGraph games={this.state.games} currentPlayerId={currentPlayer} />
+                <OpponentGraph games={this.state.games} currentPlayerId={currentPlayerId} />
               </Col>
             </Row>
           </Col>
@@ -97,7 +119,7 @@ export default React.createClass({
         <Row>
           <Col md={12}>
             <h3>Recent Games</h3>
-            <GameList games={this.state.games} currentPlayerId={currentPlayer} />
+            <GameList games={this.state.games} currentPlayerId={currentPlayerId} />
           </Col>
         </Row>
       </div>

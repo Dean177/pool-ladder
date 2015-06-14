@@ -8,7 +8,7 @@ import ColorUtil from '../../util/ColorUtil';
 
 export default React.createClass({
   propTypes: {
-    currentPlayerId: React.PropTypes.string,
+    currentPlayerId: React.PropTypes.number,
     games: React.PropTypes.array
   },
 
