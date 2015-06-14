@@ -19,7 +19,12 @@ class GamesDao extends GamesComponent with HasDatabaseConfig[JdbcProfile] {
       (game, winner, loser) <- withWinnerAndLoser
     } yield (game.id, winner.id, winner.name, loser.id, loser.name, game.playedOn)
 
-    db.run(gameWithWinnerAndLoser.result).map { _.map { (GameWithPlayers.apply _) tupled _ } }
+    db.run(
+      gameWithWinnerAndLoser
+        .sortBy(_._6.desc) // Sort by playedOn
+        .take(100)
+        .result
+    ).map { _.map { (GameWithPlayers.apply _) tupled _ } }
   }
 
   def isMostRecent(gameId: Long): Future[Boolean] = {
