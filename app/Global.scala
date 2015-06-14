@@ -28,6 +28,7 @@ object Global extends GlobalSettings {
 
     val insertedPlayers = Await.result(playersDao.count(), 3 seconds)
     if (insertedPlayers == 0 && testData._1.nonEmpty) {
+      Logger.info(s"Empty DB, inserting data.")
       Await.result(playersDao.insert(testData._1), 3 seconds)
       Await.result(gamesDao.insert(testData._2), 3 seconds)
       Await.result(eloRatingDao.insert(testData._3), 3 seconds)
@@ -36,12 +37,12 @@ object Global extends GlobalSettings {
 
   def parseTextFiles(): (Seq[Player], Seq[Game], Seq[EloRating]) = {
     try {
-      val players = getPlayersFromFile("C://Players.txt")
+      val players = getPlayersFromFile("./Players.txt")
       val playerIdRatings: util.HashMap[Id, RatingVal]  = new util.HashMap[Id, RatingVal]
       players.foreach(player => playerIdRatings.put(player.id, 1000))
       val playersByName = players.groupBy(_.name).map { case (name: String, players: List[Player]) => (name, players.head) }
 
-      val games: Seq[Game] = getGamesFromFile("C://Games.txt", playersByName)
+      val games: Seq[Game] = getGamesFromFile("./Games.txt", playersByName)
       val eloRatings: Seq[EloRating] = games.flatMap(game => ratingsForGame(game, playerIdRatings))
 
       (players, games, eloRatings)
@@ -72,6 +73,7 @@ object Global extends GlobalSettings {
   }
 
   def getGamesFromFile(filename: String, playersByName: Map[String, Player]): List[Game] = {
+    Logger.info(s"Games sourced from $filename")
     Source.fromFile(filename)
       .getLines
       .toList
