@@ -8,17 +8,17 @@ export default React.createClass({
 
   getDefaultProps() {
     return {
-      ratings: [{newRating: 1000, date: new Date().toISOString()}],
+      ratings: [{newRating: 1000, date: new Date().toISOString()}]
     };
   },
 
   render() {
     let ratingsHistory = this.props.ratings;
-    let ratingsDate = ratingsHistory.map(function(rating) {return rating.date;});
+    let ratingsLabel = ratingsHistory.map(function(rating, index) { return index + 1; });
     let ratingsValue = ratingsHistory.map(function(rating){ return rating.newRating; });
 
     let chartData = {
-      labels: ratingsDate,
+      labels: ratingsLabel,
       datasets: [
         {
           fillColor: "rgba(34,53,171,0.2)",
@@ -31,8 +31,18 @@ export default React.createClass({
         }
       ]
     };
+
+    let chartOptions = {
+      bezierCurveTension : 0.1,
+      pointDot : false,
+      pointHitDetectionRadius : 1,
+      scaleShowGridLines : false,
+      scaleShowHorizontalLines: false,
+      scaleShowVerticalLines: false
+    };
+
     return (
-      <LineChart data={chartData} redraw width="600" height="250"/>
+      <LineChart data={chartData} options={chartOptions} redraw width="770" height="400"/>
     );
   }
 

@@ -8,7 +8,7 @@ import ProfileStore from './../stores/PlayerProfileStore';
 import RatingsStore from './../stores/PlayerRatingsStore';
 import GamesStore from './../stores/PlayerGamesStore';
 
-import RatingGraph from './components/RatingGraph';
+import RatingGraph from './components/RatingsGraph';
 import OpponentGraph from './components/OpponentsGraph';
 import GameList from './components/GameList';
 
