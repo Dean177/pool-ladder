@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-import PlayerCard from '../../shared/PlayerCard/PlayerCard';
-
 export default React.createClass({
   propTypes: {
     currentPlayerId: React.PropTypes.string,

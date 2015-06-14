@@ -6,17 +6,17 @@ import PlayerApi from '../webapi/PlayersApi';
 export default Reflux.createStore({
   listenables: [PlayerActions],
 
-  onLoadDetail: function(id) {
+  onLoadPlayerDetail(id) {
     PlayerApi.getGames(id)
-      .then(this.onLoadGamesComplete)
+      .then(this.onLoadGamesCompleted)
       .error(this.onLoadGamesFailed)
   },
 
-  onLoadGamesComplete: function(playerRatings) {
+  onLoadGamesCompleted(playerRatings) {
     this.trigger(playerRatings);
   },
 
-  onLoadGamesFailed: function(err) {
+  onLoadGamesFailed(err) {
     console.log("Failed loading player games", err);
   }
 });

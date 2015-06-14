@@ -1,8 +1,7 @@
 import React from 'react';
 import {Row, Col} from 'react-bootstrap';
 import Reflux from 'reflux';
-import Router from 'react-router';
-var { State, Navigation } = Router;
+import { State, Navigation } from 'react-router';
 
 import PlayerActions from './../actions/PlayerActions';
 import ProfileStore from './../stores/PlayerProfileStore';
@@ -17,10 +16,16 @@ export default React.createClass({
   mixins: [
     State,
     Navigation,
-    Reflux.connect(ProfileStore, "player"),
+    Reflux.listenTo(ProfileStore, "onPlayerChange"),
     Reflux.connect(RatingsStore, "ratings"),
     Reflux.connect(GamesStore, "games")
   ],
+
+  onPlayerChange(updatedPlayer) {
+    this.setState({
+      player: updatedPlayer
+    });
+  },
 
   getInitialState: function() {
     return {

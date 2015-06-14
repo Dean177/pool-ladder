@@ -16,11 +16,11 @@ export default Reflux.createStore({
 
   onGetLatestRatings() {
     RatingsApi.getLatest()
-      .then(this.onGetLatestRatingsComplete)
-      .error(this.onGetLatestRatingsFailed)
+      .then(RatingActions.getLatestRatings.completed)
+      .error(RatingActions.getLatestRatings.failed)
   },
 
-  onGetLatestRatingsComplete(playerRatings) {
+  onGetLatestRatingsCompleted(playerRatings) {
     this.playerRatings = playerRatings;
     this.trigger(playerRatings);
   },

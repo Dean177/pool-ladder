@@ -7,7 +7,6 @@ export default Reflux.createStore({
 
   init() {
     this.recentGames = [];
-    // TODO connect to the server to receive updates
   },
 
   getGames() {
@@ -16,8 +15,8 @@ export default Reflux.createStore({
 
   onGetRecentGames() {
     GamesApi.getRecentGames()
-      .then(this.onGetRecentGamesCompleted)
-      .error(this.onGetRecentGamesFailed)
+      .then(GameActions.getRecentGames.completed)
+      .error(GameActions.getRecentGames.failed)
   },
 
   onGetRecentGamesCompleted(games) {

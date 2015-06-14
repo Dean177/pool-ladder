@@ -10,18 +10,18 @@ export default Reflux.createStore({
     this.player = { }
   },
 
-  onLoadPlayerDetail: function(id) {
+  onLoadPlayerDetail(id) {
     PlayerApi.getProfile(id)
-      .then(this.onLoadDetailComplete)
-      .error(this.onLoadDetailFailed)
+      .then(PlayerActions.loadPlayerDetail.completed)
+      .error(PlayerActions.loadPlayerDetail.failed)
   },
 
-  onLoadPlayerDetailComplete: function(playerDetail) {
+  onLoadPlayerDetailCompleted(playerDetail) {
     this.player = playerDetail;
     this.trigger(playerDetail);
   },
 
-  onLoadPlayerDetailFailed: function(err) {
+  onLoadPlayerDetailFailed(err) {
     console.log("Failed loading player profile", err);
   }
 });
