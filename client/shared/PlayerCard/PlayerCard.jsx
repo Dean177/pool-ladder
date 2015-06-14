@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router';
 
+import ProfileImage from '../ProfileImage/ProfileImage';
+
 export default React.createClass({
 
   propTypes: {
@@ -14,13 +16,11 @@ export default React.createClass({
 
     rating = rating || { newRating: 1000, change: 0};
 
-    var playerImageUrl = player.image || "/assets/images/players/goat.jpg";
-
     return (
       <div className="PlayerCard">
         <div className="PlayerCardContents">
           <Link to="player" className="image" params={{playerId: player.id}}>
-              <img src={ playerImageUrl } />
+              <ProfileImage playerId={this.props.player.id} />
           </Link>
           <div className="details">
               <div className="name">{ player.name }</div>

@@ -1,7 +1,7 @@
 @import "../../styles/colors";
 @import "../../styles/variables";
 
-@card-width: 500px;
+@card-width: 450px;
 
 .PlayerCard {
   margin-bottom: 25px;
@@ -13,7 +13,7 @@
     flex-wrap: nowrap;
     align-items: center;
     .image {
-      width: 45%;
+      width: 30%;
       img {
         width: 100%;
         height: 100%;
@@ -21,7 +21,7 @@
     }
     .details {
       width: 35%;
-      padding: @regular;
+      margin-left: @larger;
       font-size: 24px;
       line-height: 32px;
       .name {
@@ -29,9 +29,11 @@
       }
     }
     .rank {
+      margin-left: auto;
+      margin-right: auto;
       width: 20%;
       font-size: 34px;
-      color: red;
+      color: @red;
     }
   }
 }

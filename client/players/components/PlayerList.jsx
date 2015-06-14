@@ -1,4 +1,5 @@
 import React from 'react';
+import {Row,Col} from 'react-bootstrap';
 import PlayerCard from '../../shared/PlayerCard/PlayerCard';
 
 export default React.createClass({
@@ -17,11 +18,22 @@ export default React.createClass({
       return <PlayerCard key={player.id} player={player} />;
     });
 
-    if (!playerDetailCards.length) {
+    let middle = Math.round(playerDetailCards.length / 2);
+    let firstCol = playerDetailCards.slice(0, middle);
+    let secondCol = playerDetailCards.slice(middle, playerDetailCards.length);
+
+    if (this.props.players.length === 0) {
       return <h2 className="text-muted">No players</h2>;
     } else {
       return (
-        <div className="playerList">{ playerDetailCards }</div>
+        <Row className="PlayerList">
+          <Col md={6}>
+            {firstCol}
+          </Col>
+          <Col md={6}>
+            {secondCol}
+          </Col>
+        </Row>
       );
     }
   }

@@ -54,7 +54,7 @@ export default React.createClass({
           <FontAwesome icon="plus"/> New Game
         </Button>
         <h2 className="page-header">Leaderboard</h2>
-        <div className="leaderboard">
+        <div className="Leaderboard">
           {leaderboardRows}
         </div>
       </div>

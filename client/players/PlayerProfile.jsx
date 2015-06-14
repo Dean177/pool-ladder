@@ -8,6 +8,7 @@ import ProfileStore from './../stores/PlayerProfileStore';
 import RatingsStore from './../stores/PlayerRatingsStore';
 import GamesStore from './../stores/PlayerGamesStore';
 
+import ProfileImage from '../shared/ProfileImage/ProfileImage';
 import RatingGraph from './components/RatingsGraph';
 import OpponentGraph from './components/OpponentsGraph';
 import GameList from './components/GameList';
@@ -16,16 +17,10 @@ export default React.createClass({
   mixins: [
     State,
     Navigation,
-    Reflux.listenTo(ProfileStore, "onPlayerChange"),
+    Reflux.connect(ProfileStore, "player"),
     Reflux.connect(RatingsStore, "ratings"),
     Reflux.connect(GamesStore, "games")
   ],
-
-  onPlayerChange(updatedPlayer) {
-    this.setState({
-      player: updatedPlayer
-    });
-  },
 
   getInitialState: function() {
     return {
@@ -95,6 +90,7 @@ export default React.createClass({
             <RatingGraph ratings={this.state.ratings} />
           </Col>
           <Col md={5}>
+            <ProfileImage playerId={currentPlayerId} />
             <h3>Stats</h3>
             <Row>
               <Col md={12}>
