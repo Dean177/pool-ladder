@@ -23,10 +23,14 @@ class GamesControllerSpec extends WithDataBaseSpecification {
     "Return an error when attempting to delete a game which is not the most recent" in new WithApplication(WithTestData) {
       val Some(result) = route(FakeRequest(DELETE, "/api/games/1"))
       status(result) shouldEqual CONFLICT
-    }.pendingUntilFixed("TODO find out why this is returning ok!")
+    }
 
     "Delete the most recently added game" in new WithApplication(WithTestData) {
-      val Some(result) = route(FakeRequest(DELETE, "/api/games/4"))
+      val newGameJson = Json.toJson(NewGame(winnerId = 1, loserId = 2))
+      val Some(newGame) = route(FakeRequest(POST, "/api/games", FakeHeaders(), newGameJson))
+      val responseGame = contentAsJson(newGame).as[Game]
+
+      val Some(result) = route(FakeRequest(DELETE, s"/api/games/${responseGame.id}"))
       status(result) shouldEqual OK
     }
 
