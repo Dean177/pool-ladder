@@ -1,6 +1,6 @@
-jest.dontMock('../webapi/UrlResolver');
+jest.dontMock('../../webapi/UrlResolver');
 
-var UrlResolver = require('../webapi/UrlResolver');
+var UrlResolver = require('../../webapi/UrlResolver');
 
 describe("UrlResolver", function() {
   it('Holds the players Url', function() {
