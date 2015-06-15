@@ -1,15 +1,14 @@
 import Reflux from 'reflux';
 
-import PlayerActions from '../actions/PlayerActions.js';
-import GameActions from '../actions/GameActions.js';
+import PlayerActions from '../actions/PlayerActions';
+import GameActions from '../actions/GameActions';
 
 import GamesApi from '../webapi/GamesApi';
 
 export default Reflux.createStore({
-  listenables: [PlayerActions, GameActions],
-
   init() {
-    this.toasts = []
+    this.listenTo(PlayerActions.newPlayer, this.onNewPlayer);
+    this.listenTo(GameActions.newGame, this.onNewGame);
   },
 
   onNewPlayer(player) {
@@ -70,7 +69,6 @@ export default Reflux.createStore({
   },
 
   createToast(toast) {
-    this.toasts.push(toast);
     this.trigger(toast);
   }
 });
