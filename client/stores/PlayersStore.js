@@ -1,6 +1,6 @@
 import Reflux from 'reflux';
 import PlayerActions from './../actions/PlayerActions';
-import PlayerApi from '../webapi/PlayersApi';
+import PlayersApi from '../webapi/PlayersApi';
 
 
 export default Reflux.createStore({
@@ -20,7 +20,7 @@ export default Reflux.createStore({
   },
 
   onLoadAllPlayers() {
-    PlayerApi.getPlayers()
+    PlayersApi.getPlayers()
       .then(PlayerActions.loadAllPlayers.completed)
       .error(PlayerActions.loadAllPlayers.failed)
   },
