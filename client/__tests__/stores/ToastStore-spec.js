@@ -18,16 +18,22 @@ describe("ToastStore", () => {
   });
 
   it("Creates a toast on a new player", () => {
-    PlayerActions.newPlayer({id: 1, name: 'Badger'});
+    let playerName = "Badger";
+    PlayerActions.newPlayer({id: 1, name: playerName});
     jest.runAllTimers();
 
     expect(mockFunction.mock.calls.length).toBe(1);
+    expect(mockFunction.mock.calls[0][0].title).toBe(`Created new player: ${playerName}` );
   });
 
   it("Creates a toast on a new game", () => {
-    GameActions.newGame({id: 1, winner: {name: "Badger"}, loser: {name: "Goat"}});
+    let winnerName = "Badger";
+    let loserName = "Goat";
+    GameActions.newGame({id: 1, winner: {name: winnerName}, loser: {name: loserName}});
     jest.runAllTimers();
 
     expect(mockFunction.mock.calls.length).toBe(1);
+    expect(mockFunction.mock.calls[0][0].title).toBe(`${winnerName} beat ${loserName}` );
+    expect(mockFunction.mock.calls[0][0].options.handleOnClick).toEqual(jasmine.any(Function));
   });
 });
