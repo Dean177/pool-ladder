@@ -42,7 +42,7 @@ export default React.createClass({
     };
 
     return (
-      <LineChart data={chartData} options={chartOptions} redraw width="770" height="400"/>
+      <LineChart data={chartData} options={chartOptions} className="RatingsGraph" redraw width="300" height="320"/>
     );
   }
 

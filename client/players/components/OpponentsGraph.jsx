@@ -34,11 +34,11 @@ export default React.createClass({
     });
 
     let chartOptions = {
-      percentageInnerCutout : 40
+      percentageInnerCutout : 38
     };
 
     return (
-      <DoughnutChart data={data} options={chartOptions} redraw />
+      <DoughnutChart data={data} options={chartOptions} redraw className="OpponentsGraph"/>
     );
   }
 

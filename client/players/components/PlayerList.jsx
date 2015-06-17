@@ -2,39 +2,38 @@ import React from 'react';
 import {Row,Col} from 'react-bootstrap';
 
 import PlayerCard from '../../shared/PlayerCard/PlayerCard';
-import values from '../../util;';
+import values from '../../util';
 
 
 export default React.createClass({
-  propTypes: {
-    players: React.PropTypes.object
-  },
+  propTypes: { players: React.PropTypes.object },
 
-  getDefaultProps() {
-    return {
-      players: {}
-    }
-  },
+  getDefaultProps() { return { players: {} } },
 
   render() {
     var playerDetailCards = values(this.props.players).map(function (player) {
       return <PlayerCard key={player.id} player={player} />;
     });
 
-    let middle = Math.round(playerDetailCards.length / 2);
-    let firstCol = playerDetailCards.slice(0, middle);
-    let secondCol = playerDetailCards.slice(middle, playerDetailCards.length);
+    let firstThird = Math.round(playerDetailCards.length / 3);
+    let secondThird = Math.round((playerDetailCards.length / 3 ) * 2);
+    let firstCol = playerDetailCards.slice(0, firstThird);
+    let secondCol = playerDetailCards.slice(firstThird, secondThird);
+    let thirdCol = playerDetailCards.slice(secondThird, playerDetailCards.length);
 
     if (this.props.players.length === 0) {
-      return <h2 className="text-muted">No players</h2>;
+      return (<h2 className="text-muted">No players</h2>);
     } else {
       return (
         <Row className="PlayerList">
-          <Col md={6}>
+          <Col md={4}>
             {firstCol}
           </Col>
-          <Col md={6}>
+          <Col md={4}>
             {secondCol}
+          </Col>
+          <Col md={4}>
+            {thirdCol}
           </Col>
         </Row>
       );

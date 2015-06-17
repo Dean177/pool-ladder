@@ -85,38 +85,40 @@ export default React.createClass({
 
     return (
       <div className="PlayerProfile">
-        <h1 className="page-header">{this.state.player.name}</h1>
         <Row>
-          <Col md={8}>
-            <h3>Rating History</h3>
-            <RatingGraph ratings={this.state.ratings} />
+          <Col md={2}>
+            <div className="name-image-container">
+              <h2 className="name">{this.state.player.name}</h2>
+              <ProfileImage className="image" playerId={currentPlayerId} />
+            </div>
           </Col>
           <Col md={4}>
-            <ProfileImage playerId={currentPlayerId} />
-            <h3>Stats</h3>
-            <Row>
-              <Col md={12}>
-                <dl className="dl-horizontal">
-                  <dt>Win Rate</dt><dd>{winLossRatio} % ({winLoss.wins} / {winLoss.losses})</dd>
-                  <dt>Total Games Played</dt><dd>{this.state.games.length}</dd>
-                  <dt>Highest Rating</dt><dd>{peakRating.newRating}</dd>
-                  <dt>Lowest Rating</dt><dd>{lowestRating.newRating}</dd>
-                  <dt>Longest Win Streak</dt><dd>{bestWinStreak}</dd>
-                  <dt>Longest Losing Streak</dt><dd>{bestLosingStreak}</dd>
-                </dl>
-              </Col>
-            </Row>
-            <Row>
-              <Col md={12}>
-                <h3>Played Against</h3>
-                <OpponentGraph games={this.state.games} currentPlayerId={currentPlayerId} />
-              </Col>
-            </Row>
+            <h2 className="block-title">Stats</h2>
+            <dl className="dl-horizontal player-stats">
+              <dt>Win Rate</dt><dd>{winLossRatio} % ({winLoss.wins} / {winLoss.losses})</dd>
+              <dt>Total Games Played</dt><dd>{this.state.games.length}</dd>
+              <dt>Highest Rating</dt><dd>{peakRating.newRating}</dd>
+              <dt>Lowest Rating</dt><dd>{lowestRating.newRating}</dd>
+              <dt>Longest Win Streak</dt><dd>{bestWinStreak}</dd>
+              <dt>Longest Losing Streak</dt><dd>{bestLosingStreak}</dd>
+            </dl>
+          </Col>
+          <Col md={6}>
+            <h2 className="block-title">Rating History</h2>
+            <RatingGraph ratings={this.state.ratings} />
           </Col>
         </Row>
+
+        <Row>
+          <Col md={3}>
+            <h2 className="block-title">Plays Against</h2>
+            <OpponentGraph games={this.state.games} currentPlayerId={currentPlayerId} />
+          </Col>
+        </Row>
+
         <Row>
           <Col md={12}>
-            <h3>Recent Games</h3>
+            <h2 className="block-title">Recent Games</h2>
             <GameList games={this.state.games} currentPlayerId={currentPlayerId} />
           </Col>
         </Row>
