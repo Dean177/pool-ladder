@@ -16,7 +16,10 @@ export default React.createClass({
 
   render() {
     return (
-      <ToastContainer ref="toastMessages" toastMessageFactory={ToastMessageFactory} className="toast-bottom-left toast-messages" />
+      <ToastContainer
+        ref="toastMessages"
+        toastMessageFactory={ToastMessageFactory}
+        className="toast-bottom-left toast-messages" />
     );
   }
 });

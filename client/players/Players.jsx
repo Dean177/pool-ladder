@@ -9,6 +9,8 @@ import PlayersStore from './../stores/PlayersStore';
 
 export default React.createClass({
   mixins: [Navigation, Reflux.listenTo(PlayersStore, "onPlayersUpdate")],
+  contextTypes: { router: React.PropTypes.func },
+
 
   onPlayersUpdate(updatePlayers) {
     this.setState({

@@ -32,9 +32,6 @@ import NotFound from './404';
 import injectTapEventPlugin from "react-tap-event-plugin";
 injectTapEventPlugin();
 
-// Turns out this isnt a thing until ES7
-Object.values = (obj) => Object.keys(obj).map(key => obj[key]);
-
 // And this just doesnt exist.
 Array.prototype.last = function() { return this[this.length - 1]; };
 

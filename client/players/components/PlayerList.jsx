@@ -1,6 +1,9 @@
 import React from 'react';
 import {Row,Col} from 'react-bootstrap';
+
 import PlayerCard from '../../shared/PlayerCard/PlayerCard';
+import values from '../../util;';
+
 
 export default React.createClass({
   propTypes: {
@@ -14,7 +17,7 @@ export default React.createClass({
   },
 
   render() {
-    var playerDetailCards = Object.values(this.props.players).map(function (player) {
+    var playerDetailCards = values(this.props.players).map(function (player) {
       return <PlayerCard key={player.id} player={player} />;
     });
 

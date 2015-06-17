@@ -7,6 +7,8 @@ import PlayerActions from '../actions/PlayerActions';
 
 export default React.createClass({
   mixins: [Navigation],
+  contextTypes: { router: React.PropTypes.func },
+
   nameErrorMessage: "Please enter a name",
 
   getInitialState: function() {

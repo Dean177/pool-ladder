@@ -1,8 +1,11 @@
-import React from 'react';
+import React from 'react/addons';
 import { Input } from 'react-bootstrap';
+import values from '../../util';
+const LinkedStateMixin = React.addons.LinkedStateMixin;
+
 
 export default React.createClass({
-  mixins: [React.addons.LinkedStateMixin],
+  mixins: [LinkedStateMixin],
 
   propTypes: {
     idStateLink: React.PropTypes.any,
@@ -10,9 +13,8 @@ export default React.createClass({
     players: React.PropTypes.object
   },
 
-  render: function() {
-
-    var options = Object.values(this.props.players).map(function(player) {
+  render() {
+    var options = values(this.props.players).map(function(player) {
       return (
         <option
           key={player.id}

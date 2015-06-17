@@ -4,17 +4,15 @@ import { Navigation } from 'react-router';
 import { Button, ButtonToolbar, Row, Col } from 'react-bootstrap';
 
 import GameActions from '../actions/GameActions';
-
 import GamesApi from '../webapi/GamesApi';
 import PlayersStore from '../stores/PlayersStore';
 import PlayerPicker from './components/PlayerPicker';
 
+const LinkedStateMixin = React.addons.LinkedStateMixin;
+
 export default React.createClass({
-  mixins: [
-    Navigation,
-    React.addons.LinkedStateMixin,
-    Reflux.listenTo(PlayersStore, "onPlayersUpdate")
-  ],
+  mixins: [GamesApi, Navigation, LinkedStateMixin, Reflux.listenTo(PlayersStore, "onPlayersUpdate")],
+  contextTypes: { router: React.PropTypes.func },
 
   onPlayersUpdate(updatePlayers) {
     this.setState({
@@ -41,8 +39,7 @@ export default React.createClass({
       loserId: parseInt(this.state.loser)
     };
 
-    console.log("creating game", newGame);
-    GamesApi.createGame(newGame)
+    this.createGame(newGame)
       .then(this.onCreateCompleted)
       .error(this.onCreateFailed);
   },
@@ -65,7 +62,6 @@ export default React.createClass({
     return (
       <div className="newGame">
         <h2 className="page-header">Add Game</h2>
-        <form onSubmit={this.onSubmit}>
           <Row>
             <Col md={6}>
               <PlayerPicker
@@ -83,12 +79,11 @@ export default React.createClass({
           <Row>
             <Col md={12}>
               <ButtonToolbar>
-                <Button bsStyle='primary' type="submit">Add Game</Button>
-                <Button onClick={this.onCancel}>Cancel</Button>
+                <Button bsStyle='primary' onClick={this.onSubmit} className="submit-game">Add Game</Button>
+                <Button onClick={this.onCancel} className="cancel-game">Cancel</Button>
               </ButtonToolbar>
             </Col>
           </Row>
-        </form>
       </div>
     );
   }

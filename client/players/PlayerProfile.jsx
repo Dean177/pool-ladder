@@ -21,6 +21,8 @@ export default React.createClass({
     Reflux.connect(RatingsStore, "ratings"),
     Reflux.connect(GamesStore, "games")
   ],
+  contextTypes: { router: React.PropTypes.func },
+
 
   getInitialState: function() {
     return {
@@ -82,14 +84,14 @@ export default React.createClass({
     let winLossRatio = (100 * (winLoss.wins / (winLoss.wins + winLoss.losses))).toFixed(2);
 
     return (
-      <div>
+      <div className="PlayerProfile">
         <h1 className="page-header">{this.state.player.name}</h1>
         <Row>
-          <Col md={7}>
+          <Col md={8}>
             <h3>Rating History</h3>
             <RatingGraph ratings={this.state.ratings} />
           </Col>
-          <Col md={5}>
+          <Col md={4}>
             <ProfileImage playerId={currentPlayerId} />
             <h3>Stats</h3>
             <Row>

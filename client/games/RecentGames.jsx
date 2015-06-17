@@ -12,6 +12,8 @@ import GameActions from '../actions/GameActions';
 export default React.createClass({
   mixins: [Navigation, Reflux.listenTo(GamesStore, "onNewGames")],
 
+  contextTypes: { router: React.PropTypes.func },
+
   componentDidMount() {
     GamesStore.getGames();
   },

@@ -11,6 +11,8 @@ import PlayerCard from '../shared/PlayerCard/PlayerCard';
 export default React.createClass({
   mixins:[Navigation, Reflux.listenTo(LatestRatingStore, 'onPlayerRatings')],
 
+  contextTypes: { router: React.PropTypes.func },
+
   onPlayerRatings(ratings) {
     this.setState({
       playerRatings: ratings
