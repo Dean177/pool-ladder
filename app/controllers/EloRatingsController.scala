@@ -32,15 +32,4 @@ class EloRatingsController extends Controller {
       Ok(Json.toJson(playerRatings))
     }
   }
-
-  def maxRatings = Action.async {
-    ratings.maximumRatingsForAll().map { latestRatings: Seq[(Long, Option[Int])] =>
-      implicit val writer: Writes[(Long, Option[Int])] = (
-        (JsPath \ "playerId").write[Long] and
-          (JsPath \ "peakRating").writeNullable[Int]
-          tupled
-        )
-      Ok(Json.toJson(latestRatings))
-    }
-  }
 }

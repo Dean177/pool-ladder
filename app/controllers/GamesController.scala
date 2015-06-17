@@ -14,6 +14,9 @@ object NewGame {
 }
 
 case class ValidationException(message: String) extends Exception(message)
+object ValidationException {
+  implicit val validationFormat = Json.format[ValidationException]
+}
 
 class GamesController extends Controller {
   val gameDao = new GamesDao
@@ -37,7 +40,7 @@ class GamesController extends Controller {
         )
         Ok(gameId.toString)
       case false =>
-        Conflict("Can only delete the most recently added game")
+        Conflict(Json.toJson(ValidationException("Can only delete the most recently added game")))
     }
   }
 

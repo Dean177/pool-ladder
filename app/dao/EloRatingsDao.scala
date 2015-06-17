@@ -45,14 +45,14 @@ class EloRatingsDao extends EloRatingsComponent with HasDatabaseConfig[JdbcProfi
       EloRating(0, game.id, game.loserId, 0 - points, loserRating - points, game.playedOn)
     )
   }
-  
+
   def create(rating: EloRating): Future[EloRating] = {
     val ratingsReturningId = (ratings returning ratings.map(_.id)) into ((rating, newId) => rating.copy(id =newId))
     db.run(ratingsReturningId += rating)
   }
 
   def latest(): Future[Seq[(Player, EloRating)]] = {
-    val innerQuery = ratings.groupBy(_.playerId).map { case (playerId, eloRatings: EloRatingsQuery) =>
+    val innerQuery = ratingsByPlayerId.map { case (playerId, eloRatings: EloRatingsQuery) =>
       playerId -> eloRatings.map(_.date).max
     }
 
@@ -88,10 +88,16 @@ class EloRatingsDao extends EloRatingsComponent with HasDatabaseConfig[JdbcProfi
   }
 
   def maximumRatingsForAll(): Future[Seq[(Long, Option[Int])]] = {
-    val ratingsByPlayerId = ratings.groupBy(_.playerId)
-
     val latestRatingForPlayer = ratingsByPlayerId.map { case (playerId, playerRatings) =>
       (playerId, playerRatings.map(_.newRating).max)
+    }
+
+    db.run(latestRatingForPlayer.result)
+  }
+
+  def minimumRatingsForAll(): Future[Seq[(Long, Option[Int])]] = {
+    val latestRatingForPlayer = ratingsByPlayerId.map { case (playerId, playerRatings) =>
+      (playerId, playerRatings.map(_.newRating).min)
     }
 
     db.run(latestRatingForPlayer.result)
@@ -100,6 +106,8 @@ class EloRatingsDao extends EloRatingsComponent with HasDatabaseConfig[JdbcProfi
   def getRatingsByPlayer(playerId: Long): Future[Seq[EloRating]] = {
     db.run(ratings.filter(_.playerId === playerId).result)
   }
+
+  def ratingsByPlayerId = ratings.groupBy(_.playerId)
 
 }
 

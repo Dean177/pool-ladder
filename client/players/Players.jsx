@@ -35,7 +35,7 @@ export default React.createClass({
         <Button
           className="pull-right"
           onClick={ this.navigateToAddPlayerSection }>
-          <FontAwesome icon="user-plus"/> Add Player
+          <FontAwesome icon="user-plus"/> New Player
         </Button>
         <h2 className="page-header">Players</h2>
         <PlayerList players={ this.state.players }/>
