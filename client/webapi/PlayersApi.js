@@ -3,7 +3,6 @@ import UrlResolver from './UrlResolver';
 
 export default {
   getPlayers() {
-    console.log("PlayersApi", Http);
     return Http.get(UrlResolver.players.all);
   },
 
