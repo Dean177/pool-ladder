@@ -8,15 +8,15 @@ export default Reflux.createStore({
 
   onLoadPlayerDetail(id) {
     PlayerApi.getRatingHistory(id)
-      .then(this.onLoadGamesCompleted)
-      .error(this.onLoadGamesFailed)
+      .then(this.onLoadRatingsCompleted)
+      .error(this.onLoadRatingsFailed)
   },
 
-  onLoadGamesCompleted(playerRatings) {
+  onLoadRatingsCompleted(playerRatings) {
     this.trigger(playerRatings);
   },
 
-  onLoadGamesFailed(err) {
+  onLoadRatingsFailed(err) {
     console.log("Failed loading player ratings", err);
   }
 });
