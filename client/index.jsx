@@ -22,7 +22,7 @@ import NewGame from './games/NewGame';
 import Leaderboard from './leaderboard/Leaderboard';
 import Rules from './rules/Rules';
 import Live from './live/live';
-import Records from './records/records';
+import Records from './records/Records';
 import NotFound from './404';
 
 //Needed for onTouchTap

@@ -12,7 +12,7 @@ export default Reflux.createStore({
   },
 
   onLoadPlayerDetail(id) {
-    if (id === this.playerId && games.length > 0) {
+    if (id === this.playerId && this.games.length > 0) {
       this.trigger(this.games);
     } else {
       this.playerId = id;
