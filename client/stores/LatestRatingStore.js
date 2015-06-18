@@ -30,9 +30,16 @@ export default Reflux.createStore({
         return 0;
       }
     });
-    this.playerRatings = orderedPlayerRatings;
 
-    this.trigger(orderedPlayerRatings);
+    let playersWithRating = orderedPlayerRatings.map(({player, rating}, index) => {
+      rating = rating || { newRating: 1000, change: 0};
+      player.rating = rating.newRating;
+      player.rank = index + 1;
+      return player;
+    });
+
+    this.playerRatings = playersWithRating;
+    this.trigger(playersWithRating);
   },
 
   onGetLatestRatingsFailed(err) {

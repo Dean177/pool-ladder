@@ -2,31 +2,28 @@ import React from 'react';
 import { Link } from 'react-router';
 
 import ProfileImage from '../ProfileImage/ProfileImage';
+import PlayerRank from '../PlayerRank';
 
 export default React.createClass({
 
   propTypes: {
-    player: React.PropTypes.object,
-    rating: React.PropTypes.object,
-    rank: React.PropTypes.number
+    player: React.PropTypes.object
   },
 
   render: function () {
-    var { player, rating, rank } = this.props;
-
-    rating = rating || { newRating: 1000, change: 0};
+    let player = this.props.player;
 
     return (
       <div className="PlayerCard">
         <div className="PlayerCardContents">
           <Link to="player" className="image" params={{playerId: player.id}}>
-              <ProfileImage playerId={this.props.player.id} />
+              <ProfileImage playerId={player.id} />
           </Link>
           <div className="details">
               <div className="name">{ player.name }</div>
-              <div className="rating">rating: { rating.newRating }</div>
+              <div className="rating">{ player.rating }</div>
           </div>
-          <div className="rank">{'#'} {rank}</div>
+          <div className="rank">#{player.rank}</div>
         </div>
       </div>
     );

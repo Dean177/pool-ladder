@@ -1,7 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 
-import RankingsStore from '../../stores/RankingsStore';
+import RankingsStore from '../stores/RankingsStore';
 
 
 export default React.createClass({

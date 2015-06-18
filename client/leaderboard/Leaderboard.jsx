@@ -5,11 +5,11 @@ import { Button } from 'react-bootstrap';
 
 import FontAwesome from '../shared/FontAwesome';
 import LatestRatingStore from '../stores/LatestRatingStore';
-import PlayerCard from '../shared/PlayerCard/PlayerCard';
+import PlayerList from '../shared/PlayerList';
 
 
 export default React.createClass({
-  mixins:[Navigation, Reflux.connect(LatestRatingStore, 'playerRatings')],
+  mixins:[Navigation, Reflux.connect(LatestRatingStore, 'players')],
   contextTypes: { router: React.PropTypes.func },
 
   getInitialState() {
@@ -23,12 +23,6 @@ export default React.createClass({
   goToNewGame() { this.transitionTo('newGame'); },
 
   render() {
-    var leaderboardRows = this.state.playerRatings.map(function({ player, rating }, index) {
-      return (
-        <PlayerCard key={player.id} player={player} rating={rating} rank={index + 1}/>
-      );
-    });
-
     return (
       <div>
         <Button
@@ -39,7 +33,7 @@ export default React.createClass({
         </Button>
         <h2 className="page-header">Leaderboard</h2>
         <div className="Leaderboard">
-          {leaderboardRows}
+          <PlayerList players={ this.state.players }/>
         </div>
       </div>
     );

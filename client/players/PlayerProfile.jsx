@@ -12,7 +12,7 @@ import RankingsStore from './../stores/RankingsStore';
 import GamesStore from './../stores/PlayerGamesStore';
 
 import ProfileImage from '../shared/ProfileImage/ProfileImage';
-import PlayerRank from './components/PlayerRank';
+import PlayerRank from './../shared/PlayerRank';
 import PlayerStats from './components/PlayerStats';
 import RatingGraph from './components/RatingsGraph';
 import OpponentGraph from './components/OpponentsGraph';

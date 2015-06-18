@@ -10,9 +10,9 @@ export default Reflux.createStore({
   },
 
   onLatestRankings(ratings) {
-    this.rankingsByPlayerId = ratings.reduce((acc, rating, index) => {
+    this.rankingsByPlayerId = ratings.reduce((acc, player, index) => {
       let ranking = index + 1;
-      acc[rating.player.id] = ranking;
+      acc[player.id] = ranking;
 
       return acc;
     }, {});
