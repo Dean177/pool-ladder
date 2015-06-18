@@ -7,6 +7,8 @@ import FontAwesome from '../shared/FontAwesome';
 import PlayerList from './components/PlayerList';
 import PlayersStore from './../stores/PlayersStore';
 
+import values from '../util';
+
 export default React.createClass({
   mixins: [Navigation, Reflux.listenTo(PlayersStore, "onPlayersUpdate")],
   contextTypes: { router: React.PropTypes.func },
@@ -30,6 +32,17 @@ export default React.createClass({
   navigateToAddPlayerSection: function() { this.transitionTo('newPlayer'); },
 
   render: function() {
+    var orderedPlayers = values(this.state.players);
+    orderedPlayers.sort(function(playerA, playerB) {
+      if (playerA.name < playerB.name) {
+        return -1
+      } else if (playerA.name > playerB.name) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+
     return (
       <div>
         <Button
@@ -38,7 +51,7 @@ export default React.createClass({
           <FontAwesome icon="user-plus"/> New Player
         </Button>
         <h2 className="page-header">Players</h2>
-        <PlayerList players={ this.state.players }/>
+        <PlayerList players={ orderedPlayers }/>
       </div>
     );
   }
