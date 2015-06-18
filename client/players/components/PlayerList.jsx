@@ -6,12 +6,12 @@ import values from '../../util';
 
 
 export default React.createClass({
-  propTypes: { players: React.PropTypes.object },
+  propTypes: { players: React.PropTypes.array },
 
-  getDefaultProps() { return { players: {} } },
+  getDefaultProps() { return { players: [] } },
 
   render() {
-    var playerDetailCards = values(this.props.players).map(function (player) {
+    var playerDetailCards = this.props.players.map(function (player) {
       return <PlayerCard key={player.id} player={player} />;
     });
 
