@@ -4,7 +4,7 @@ import RatingActions from '../actions/RatingActions';
 
 
 export default Reflux.createStore({
-  listenables: RatingActions,
+  listenables: [RatingActions],
 
   init() {
     this.playerRatings = [];
@@ -21,8 +21,18 @@ export default Reflux.createStore({
   },
 
   onGetLatestRatingsCompleted(playerRatings) {
-    this.playerRatings = playerRatings;
-    this.trigger(playerRatings);
+    let orderedPlayerRatings = playerRatings.sort(function(playerRatingA, playerRatingB) {
+      if (playerRatingA.rating.newRating < playerRatingB.rating.newRating) {
+        return 1
+      } else if (playerRatingA.rating.newRating > playerRatingB.rating.newRating) {
+        return -1;
+      } else {
+        return 0;
+      }
+    });
+    this.playerRatings = orderedPlayerRatings;
+
+    this.trigger(orderedPlayerRatings);
   },
 
   onGetLatestRatingsFailed(err) {

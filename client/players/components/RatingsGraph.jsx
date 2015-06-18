@@ -13,9 +13,17 @@ export default React.createClass({
   },
 
   render() {
-    let ratingsHistory = this.props.ratings;
-    let ratingsLabel = ratingsHistory.map(function(rating, index) { return index + 1; });
-    let ratingsValue = ratingsHistory.map(function(rating){ return rating.newRating; });
+    let ratings = this.props.ratings;
+
+    var last30Ratings;
+    if (ratings.length <= 30) {
+      last30Ratings = ratings;
+    } else {
+      last30Ratings = ratings.slice(ratings.length - 30, ratings.length)
+    }
+
+    let ratingsLabel = last30Ratings.map(function(rating, index) { return index + 1; });
+    let ratingsValue = last30Ratings.map(function(rating){ return rating.newRating; });
 
     let chartData = {
       labels: ratingsLabel,
@@ -34,7 +42,7 @@ export default React.createClass({
 
     let chartOptions = {
       bezierCurveTension : 0.1,
-      pointDot : false,
+      pointDot : true,
       pointHitDetectionRadius : 1,
       scaleShowGridLines : false,
       scaleShowHorizontalLines: false,

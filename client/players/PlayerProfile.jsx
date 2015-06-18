@@ -4,16 +4,24 @@ import Reflux from 'reflux';
 import { State, Navigation } from 'react-router';
 
 import PlayerActions from './../actions/PlayerActions';
+import RatingActions from './../actions/RatingActions';
+
 import ProfileStore from './../stores/PlayerProfileStore';
 import RatingsStore from './../stores/PlayerRatingsStore';
+import RankingsStore from './../stores/RankingsStore';
 import GamesStore from './../stores/PlayerGamesStore';
 
 import ProfileImage from '../shared/ProfileImage/ProfileImage';
+import PlayerRank from './components/PlayerRank';
+import PlayerStats from './components/PlayerStats';
 import RatingGraph from './components/RatingsGraph';
 import OpponentGraph from './components/OpponentsGraph';
 import GameList from './components/GameList';
 
+const defaultRating = {newRating: 1000, date: new Date().toISOString()};
+
 export default React.createClass({
+  contextTypes: { router: React.PropTypes.func },
   mixins: [
     State,
     Navigation,
@@ -21,13 +29,11 @@ export default React.createClass({
     Reflux.connect(RatingsStore, "ratings"),
     Reflux.connect(GamesStore, "games")
   ],
-  contextTypes: { router: React.PropTypes.func },
-
 
   getInitialState: function() {
     return {
       player: {},
-      ratings: [{newRating: 1000, date: new Date().toISOString()}],
+      ratings: [defaultRating],
       games: []
     };
   },
@@ -44,55 +50,6 @@ export default React.createClass({
   render: function () {
     let currentPlayerId = Number.parseInt(this.getParams().playerId);
 
-    let peakRating = this.state.ratings.reduce(function(lastRating, currentRating) {
-      return lastRating.newRating > currentRating.newRating ? lastRating : currentRating;
-    });
-    let lowestRating = this.state.ratings.reduce(function(lastRating, currentRating) {
-      return lastRating.newRating < currentRating.newRating ? lastRating : currentRating;
-    });
-
-    let gameOutcomes = this.state.games
-      .map(function(game) { return game.winnerId === currentPlayerId ? 1 : -1; });
-
-    let winLossStreaks = gameOutcomes.reduce(function(acc, currentOutcome, index, gameOutcomes) {
-          if (index === 0) {
-            return [currentOutcome];
-          } else {
-            let previousOutcome = gameOutcomes[index - 1];
-
-            if (previousOutcome === currentOutcome) {
-              acc.push(acc.last() + currentOutcome);
-              return acc;
-            } else {
-              acc.push(currentOutcome);
-              return acc;
-            }
-          }
-      }, []);
-    let bestWinStreak = Math.max.apply(null, winLossStreaks);
-    let bestLosingStreak = 0 - Math.min.apply(null, winLossStreaks);
-
-    let winLoss = this.state.games.reduce(function(resultCount, game) {
-      if(game.winnerId === currentPlayerId) {
-        resultCount.wins += 1;
-      } else {
-        resultCount.losses += 1;
-      }
-      return resultCount;
-    }, {wins: 0 , losses:0});
-
-    let winLossRatio = (100 * (winLoss.wins / (winLoss.wins + winLoss.losses))).toFixed(2);
-
-    var last30Ratings;
-    if (this.state.ratings.length <= 30) {
-      last30Ratings = this.state.ratings;
-    } else {
-      let ratings = this.state.ratings;
-      last30Ratings = ratings.slice(ratings.length - 30, ratings.length)
-    }
-
-    let mostRecentRating = this.state.ratings.last();
-
     return (
       <div className="PlayerProfile">
         <Row>
@@ -100,7 +57,7 @@ export default React.createClass({
             <Row>
               <Col md={8}>
                 <h2 className="">Rating History</h2>
-                <RatingGraph ratings={last30Ratings} />
+                <RatingGraph ratings={this.state.ratings} />
               </Col>
               <Col md={4}>
                 <h2 className="">Plays Against</h2>
@@ -117,38 +74,11 @@ export default React.createClass({
           <Col lg={3} className="PlayerColumn">
             <div className="image-container">
               <ProfileImage className="image" playerId={currentPlayerId} />
-              <h1 className="Ranking">#15</h1>
+              <h1 className="Ranking">#<PlayerRank playerId={currentPlayerId} /></h1>
             </div>
             <div className="PlayerStats">
               <h1 className="Name">{this.state.player.name}</h1>
-              <dl className="Stats">
-                <dt>Rating</dt>
-                <dd>{mostRecentRating.newRating}</dd>
-
-                <dt>Win Rate</dt>
-                <dd>{winLossRatio} %</dd>
-
-                <dt>Total Games Played</dt>
-                <dd>{this.state.games.length}</dd>
-
-                <dt>Total Wins</dt>
-                <dd>{winLoss.wins}</dd>
-
-                <dt>Total Losses</dt>
-                <dd>{winLoss.losses}</dd>
-
-                <dt>Longest Win Streak</dt>
-                <dd>{bestWinStreak}</dd>
-
-                <dt>Longest Losing Streak</dt>
-                <dd>{bestLosingStreak}</dd>
-
-                <dt>Highest Rating</dt>
-                <dd>{peakRating.newRating}</dd>
-
-                <dt>Lowest Rating</dt>
-                <dd>{lowestRating.newRating}</dd>
-              </dl>
+              <PlayerStats playerId={currentPlayerId} games={this.state.games} ratings={this.state.ratings} />
             </div>
           </Col>
         </Row>
