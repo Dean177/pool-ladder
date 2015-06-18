@@ -1,6 +1,7 @@
 @import "../styles/variables";
 
 .PlayerColumn {
+  margin-top: -@bootstrap-container-padding;
   background-color: @blue;
   position: relative;
   bottom: 0;
@@ -9,81 +10,55 @@
   padding-right: 0;
 }
 
-  .image-container {
-    position: relative;
-    .Ranking {
-      background-color: @orange;
-      color: white;
-      border-radius: 30px;
-      padding: 19px;
-      box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
-
-      position: absolute;
-      bottom:0;
-      right:0;
-      margin-right: 15px;
-      margin-bottom: 15px;
-    }
-  }
-
-  .PlayerStats {
-    height: 100%;
+.image-container {
+  position: relative;
+  .Ranking {
+    background-color: @orange;
     color: white;
+    border-radius: 30px;
+    padding: 19px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
 
-    padding: @larger;
-    .Name {
-      
-      margin-bottom: @larger;
-    }
-    .Stats {
-      dt {
-        font-size: @large;
-        font-weight: 500;
-      }
-
-      dd {
-        font-size: @larger;
-        font-weight: bold;
-
-        margin-bottom: @regular;
-      }
-    }
+    position: absolute;
+    bottom:0;
+    right:0;
+    margin-right: 15px;
+    margin-bottom: 15px;
   }
+}
 
+.PlayerStats {
+  height: 100%;
+  color: white;
 
+  padding: @larger;
+  .Name {
 
-  .block-title {
-    margin-top: 0;
-    letter-spacing: 1px;
-    padding: @large @larger;
-    background-color: @blue;
-    color: white;
+    margin-bottom: @larger;
   }
-
-  .player-stats {
-    padding-top: @regular;
-    font-size: 22px;
-    @width: 240px;
-    @dd-offset: @width + @regular;
+  .Stats {
     dt {
-      width: @width;
+      font-size: @large;
+      font-weight: 500;
     }
-    dd{
-      margin-left: @dd-offset;
-    }
-    dt, dd {
-      line-height: 1.8;
-    }
-  }
 
-  .OpponentsGraph {
-    padding-top: @regular;
-    width: 100%;
-    height: 250px;
-  }
+    dd {
+      font-size: @larger;
+      font-weight: bold;
 
-  .RatingsGraph {
-    width: 100%;
-    height: 300px;
+      margin-bottom: @regular;
+    }
   }
+}
+
+.OpponentsGraph {
+  padding-top: @regular;
+  width: 100%;
+  height: 250px;
+}
+
+.RatingsGraph {
+  width: 100%;
+  height: 300px;
+}
 

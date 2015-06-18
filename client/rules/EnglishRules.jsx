@@ -53,7 +53,7 @@ export default React.createClass({
                   </li>
                   <li>Match:  A Match is a predetermined number of frames of Eight-Ball Pool between two players, two pairs of players or two teams of players.</li>
                   <li>Player in Control:  A player (and the player's partner in doubles) is deemed to be "In Control" of the frame from the time that the balls stop moving from the final shot of an opponent's turn until the balls stop moving from the final shot of the player's turn.  There can be no instance, once a frame has commenced, that someone is not in control.</li>
-              </ul>
+            </ul>
           </RuleCard>
 
           <RuleCard>
@@ -65,20 +65,26 @@ export default React.createClass({
           </RuleCard>
 
           <RuleCard>
-              <h2>Playing from Baulk</h2>
-              <img className="rack-image" src="/assets/images/balls/english-rack.png" />
-              <ol type="1">
+            <h2>Playing from Baulk</h2>
+            <Row>
+              <Col md={9}>
+                <ol type="1">
                   <li>Baulk is the rectangular area of the table that is bordered by the Baulk Line and the three cushions at that end of the table.</li>
                   <li>When playing from Baulk:-
-                      <ol type="a">
-                          <li>The centre point of the Cue Ball must be in Baulk when a shot is played. (If the centre point of the Cue Ball is directly on the Baulk Line it is not deemed to be in Baulk.)</li>
-                          <li>The Cue Ball can be moved into position by hand or with the shaft of the cue, but when touched by the tip of the cue, a shot is deemed to have been played.</li>
-                          <li>The Cue Ball may be played in any direction.</li>
-                          <li>If a player wishes to play from Baulk after a “Foul Snooker”, “Foul Jaw Snooker” or "Time Foul":- The player must verbally advise the referee of this choice and the referee will then recover the Cue Ball and hand it to the player or place it on top of, and in the centre of, the cushion at the Baulk end of the table for the player to retrieve by hand.</li>
-                          <li>After an "In Off", “Foul Snooker”, “Foul Jaw Snooker” or "Time Foul" the player must endeavour to position the Cue Ball so as not to create a Foul Snooker.  If the player claims a Foul Snooker from Baulk, the referee may choose to move the Cue Ball around to determine if there is any position in Baulk where the player would not be Foul Snookered. Whether such a position is found or not, the referee will announce the result and hand the Cue Ball back to the player or place it on top of, and in the centre of, the cushion at the Baulk end of the table for the player to retrieve by hand.</li>
-                      </ol>
+                    <ol type="a">
+                      <li>The centre point of the Cue Ball must be in Baulk when a shot is played. (If the centre point of the Cue Ball is directly on the Baulk Line it is not deemed to be in Baulk.)</li>
+                      <li>The Cue Ball can be moved into position by hand or with the shaft of the cue, but when touched by the tip of the cue, a shot is deemed to have been played.</li>
+                      <li>The Cue Ball may be played in any direction.</li>
+                      <li>If a player wishes to play from Baulk after a “Foul Snooker”, “Foul Jaw Snooker” or "Time Foul":- The player must verbally advise the referee of this choice and the referee will then recover the Cue Ball and hand it to the player or place it on top of, and in the centre of, the cushion at the Baulk end of the table for the player to retrieve by hand.</li>
+                      <li>After an "In Off", “Foul Snooker”, “Foul Jaw Snooker” or "Time Foul" the player must endeavour to position the Cue Ball so as not to create a Foul Snooker.  If the player claims a Foul Snooker from Baulk, the referee may choose to move the Cue Ball around to determine if there is any position in Baulk where the player would not be Foul Snookered. Whether such a position is found or not, the referee will announce the result and hand the Cue Ball back to the player or place it on top of, and in the centre of, the cushion at the Baulk end of the table for the player to retrieve by hand.</li>
+                    </ol>
                   </li>
-              </ol>
+                </ol>
+              </Col>
+              <Col md={3}>
+                <img className="rack-image" src="/assets/images/balls/english-rack.png" />
+              </Col>
+              </Row>
           </RuleCard>
 
           <RuleCard>

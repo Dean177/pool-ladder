@@ -9,7 +9,7 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="rule-tabs">
+      <div className="Rules">
         <TabbedArea defaultActiveKey={1}>
           <TabPane tab="Softwire" eventKey={1}>
             <div className="rule-content"><SoftwireRules /></div>

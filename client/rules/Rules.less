@@ -1,0 +1,50 @@
+@import "../styles/variables";
+@import "../styles/mixins";
+
+.Rules {
+  margin-left: -@bootstrap-container-padding;
+  margin-top: -@bootstrap-container-padding;
+  margin-right: -@bootstrap-container-padding;
+  .rule-content {
+    padding: @bootstrap-container-padding;
+    background-color: @grey;
+  }
+  .rack-image {
+    width: 100%;
+    display: block;
+    padding: @regular-gap;
+    .centered();
+  }
+
+  .nav-tabs {
+    border: none;
+    background-color: @blue;
+
+    li {
+      margin-bottom: 0;
+      background-color: @blue;
+      color: white;
+      font-size: @large;
+      font-weight: bold;
+
+
+      a {
+        border: none;
+        border-radius: 0;
+        padding: 15px 20px;
+        margin-right: 0;
+      }
+
+      &.active {
+        a {
+          background-color: @blue;
+          color: white;
+          border: none;
+          margin-bottom: 0;
+          @underline-height: 5px;
+          border-bottom: @underline-height solid @orange;
+        }
+      }
+    }
+  }
+}
