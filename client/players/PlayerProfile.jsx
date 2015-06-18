@@ -1,5 +1,5 @@
 import React from 'react';
-import {Row, Col} from 'react-bootstrap';
+import {Button, Row, Col} from 'react-bootstrap';
 import Reflux from 'reflux';
 import { State, Navigation } from 'react-router';
 
@@ -83,43 +83,73 @@ export default React.createClass({
 
     let winLossRatio = (100 * (winLoss.wins / (winLoss.wins + winLoss.losses))).toFixed(2);
 
+    var last30Ratings;
+    if (this.state.ratings.length <= 30) {
+      last30Ratings = this.state.ratings;
+    } else {
+      let ratings = this.state.ratings;
+      last30Ratings = ratings.slice(ratings.length - 30, ratings.length)
+    }
+
+    let mostRecentRating = this.state.ratings.last();
+
     return (
       <div className="PlayerProfile">
         <Row>
-          <Col md={2}>
-            <div className="name-image-container">
-              <h2 className="name">{this.state.player.name}</h2>
+          <Col lg={9}>
+            <Row>
+              <Col md={8}>
+                <h2 className="">Rating History</h2>
+                <RatingGraph ratings={last30Ratings} />
+              </Col>
+              <Col md={4}>
+                <h2 className="">Plays Against</h2>
+                <OpponentGraph games={this.state.games} currentPlayerId={currentPlayerId} />
+              </Col>
+            </Row>
+            <Row>
+              <Col md={12}>
+                <h2 className="">Recent Games</h2>
+                <GameList games={this.state.games} currentPlayerId={currentPlayerId} />
+              </Col>
+            </Row>
+          </Col>
+          <Col lg={3} className="PlayerColumn">
+            <div className="image-container">
               <ProfileImage className="image" playerId={currentPlayerId} />
+              <h1 className="Ranking">#15</h1>
             </div>
-          </Col>
-          <Col md={4}>
-            <h2 className="block-title">Stats</h2>
-            <dl className="dl-horizontal player-stats">
-              <dt>Win Rate</dt><dd>{winLossRatio} % ({winLoss.wins} / {winLoss.losses})</dd>
-              <dt>Total Games Played</dt><dd>{this.state.games.length}</dd>
-              <dt>Highest Rating</dt><dd>{peakRating.newRating}</dd>
-              <dt>Lowest Rating</dt><dd>{lowestRating.newRating}</dd>
-              <dt>Longest Win Streak</dt><dd>{bestWinStreak}</dd>
-              <dt>Longest Losing Streak</dt><dd>{bestLosingStreak}</dd>
-            </dl>
-          </Col>
-          <Col md={6}>
-            <h2 className="block-title">Rating History</h2>
-            <RatingGraph ratings={this.state.ratings} />
-          </Col>
-        </Row>
+            <div className="PlayerStats">
+              <h1 className="Name">{this.state.player.name}</h1>
+              <dl className="Stats">
+                <dt>Rating</dt>
+                <dd>{mostRecentRating.newRating}</dd>
 
-        <Row>
-          <Col md={3}>
-            <h2 className="block-title">Plays Against</h2>
-            <OpponentGraph games={this.state.games} currentPlayerId={currentPlayerId} />
-          </Col>
-        </Row>
+                <dt>Win Rate</dt>
+                <dd>{winLossRatio} %</dd>
 
-        <Row>
-          <Col md={12}>
-            <h2 className="block-title">Recent Games</h2>
-            <GameList games={this.state.games} currentPlayerId={currentPlayerId} />
+                <dt>Total Games Played</dt>
+                <dd>{this.state.games.length}</dd>
+
+                <dt>Total Wins</dt>
+                <dd>{winLoss.wins}</dd>
+
+                <dt>Total Losses</dt>
+                <dd>{winLoss.losses}</dd>
+
+                <dt>Longest Win Streak</dt>
+                <dd>{bestWinStreak}</dd>
+
+                <dt>Longest Losing Streak</dt>
+                <dd>{bestLosingStreak}</dd>
+
+                <dt>Highest Rating</dt>
+                <dd>{peakRating.newRating}</dd>
+
+                <dt>Lowest Rating</dt>
+                <dd>{lowestRating.newRating}</dd>
+              </dl>
+            </div>
           </Col>
         </Row>
       </div>

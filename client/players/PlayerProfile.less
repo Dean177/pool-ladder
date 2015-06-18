@@ -1,46 +1,88 @@
 @import "../styles/variables";
 
-
-.name-image-container {
-  .name {
-    .block-title();
-    margin-bottom: 0;
-  }
-  .image {
-
-  }
-}
-
-.block-title {
-  margin-top: 0;
-  letter-spacing: 1px;
-  padding: @large @larger;
+.PlayerColumn {
   background-color: @blue;
-  color: white;
+  position: relative;
+  bottom: @bootstrap-col-padding + @bootstrap-gap;
+  left: @bootstrap-col-padding;
+  padding-left: 0;
+  padding-right: 0;
 }
 
-.player-stats {
-  padding-top: @regular;
-  font-size: 22px;
-  @width: 240px;
-  @dd-offset: @width + @regular;
-  dt {
-    width: @width;
-  }
-  dd{
-    margin-left: @dd-offset;
-  }
-  dt, dd {
-    line-height: 1.8;
-  }
-}
+  .image-container {
+    position: relative;
+    .Ranking {
+      background-color: @orange;
+      color: white;
+      border-radius: 30px;
+      padding: 19px;
+      box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
 
-.OpponentsGraph {
-  width: 450px;
-  height: 225px;
-}
+      position: absolute;
+      bottom:0;
+      right:0;
+      margin-right: 15px;
+      margin-bottom: 15px;
+    }
+  }
 
-.RatingsGraph {
-  width: 100%;
-  height: 300px;
-}
+  .PlayerStats {
+    height: 100%;
+    color: white;
+
+    padding: @larger;
+    .Name {
+
+    }
+    .Stats {
+      dt {
+        font-size: @large;
+        font-weight: 500;
+      }
+
+      dd {
+        font-size: @larger;
+        font-weight: bold;
+
+        margin-bottom: @regular;
+      }
+    }
+  }
+
+
+
+  .block-title {
+    margin-top: 0;
+    letter-spacing: 1px;
+    padding: @large @larger;
+    background-color: @blue;
+    color: white;
+  }
+
+  .player-stats {
+    padding-top: @regular;
+    font-size: 22px;
+    @width: 240px;
+    @dd-offset: @width + @regular;
+    dt {
+      width: @width;
+    }
+    dd{
+      margin-left: @dd-offset;
+    }
+    dt, dd {
+      line-height: 1.8;
+    }
+  }
+
+  .OpponentsGraph {
+    padding-top: @regular;
+    width: 100%;
+    height: 250px;
+  }
+
+  .RatingsGraph {
+    width: 100%;
+    height: 300px;
+  }
+
