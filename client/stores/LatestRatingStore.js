@@ -1,13 +1,17 @@
 import Reflux from 'reflux';
 import RatingsApi from '../webapi/RatingsApi';
 import RatingActions from '../actions/RatingActions';
-
+import GameActions from '../actions/GameActions';
 
 export default Reflux.createStore({
-  listenables: [RatingActions],
+  listenables: [RatingActions, GameActions],
 
   init() {
     this.playerRatings = [];
+  },
+
+  onNewGame() {
+    this.onGetLatestRatings();
   },
 
   getLatestRatings() {
@@ -17,18 +21,14 @@ export default Reflux.createStore({
   onGetLatestRatings() {
     RatingsApi.getLatest()
       .then(RatingActions.getLatestRatings.completed)
-      .error(RatingActions.getLatestRatings.failed)
+      .error(RatingActions.getLatestRatings.failed);
   },
 
   onGetLatestRatingsCompleted(playerRatings) {
     let orderedPlayerRatings = playerRatings.sort(function(playerRatingA, playerRatingB) {
-      if (playerRatingA.rating.newRating < playerRatingB.rating.newRating) {
-        return 1
-      } else if (playerRatingA.rating.newRating > playerRatingB.rating.newRating) {
-        return -1;
-      } else {
-        return 0;
-      }
+      let ratingA = playerRatingA.rating.newRating;
+      let ratingB = playerRatingB.rating.newRating;
+      return ratingA < ratingB ? 1 : ratingA > ratingB ? -1 : 0;
     });
 
     let playersWithRating = orderedPlayerRatings.map(({player, rating}, index) => {
