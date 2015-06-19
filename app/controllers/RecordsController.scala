@@ -8,28 +8,33 @@ import play.api.mvc.{Action, Controller}
 
 import scala.language.postfixOps
 
+
 class RecordsController extends Controller {
+  type RatingRecord = (Long, Option[Int])
+
+  case class RecordCollection(maxRatingByPlayer: Seq[RatingRecord], minRatingsByPlayer: Seq[RatingRecord])
+
   val ratings = new EloRatingsDao
 
-  def highestRatingsByPlayers() = Action.async {
-    ratings.maximumRatingsForAll().map { latestRatings: Seq[(Long, Option[Int])] =>
-      implicit val writer: Writes[(Long, Option[Int])] = (
-        (JsPath \ "playerId").write[Long] and
-        (JsPath \ "peakRating").writeNullable[Int]
-        tupled
-      )
-      Ok(Json.toJson(latestRatings))
-    }
-  }
+  def records() = Action.async {
+    for {
+      idToMaxRating: Seq[RatingRecord] <- ratings.maximumRatingsForAll()
+      idToMinRating: Seq[RatingRecord] <- ratings.minimumRatingsForAll()
+    } yield {
 
-  def lowestRatingsByPlayer() = Action.async {
-    ratings.minimumRatingsForAll().map { latestRatings: Seq[(Long, Option[Int])] =>
-      implicit val writer: Writes[(Long, Option[Int])] = (
+
+      implicit val ratingRecordWrites: Writes[RatingRecord] = (
         (JsPath \ "playerId").write[Long] and
-        (JsPath \ "peakRating").writeNullable[Int]
+        (JsPath \ "rating").writeNullable[Int]
         tupled
       )
-      Ok(Json.toJson(latestRatings))
+
+      implicit val recordsWrites: Writes[RecordCollection] = (
+        (JsPath \ "maxRatings").write[Seq[RatingRecord]] and
+        (JsPath \ "minRatings").write[Seq[RatingRecord]]
+      )(unlift(RecordCollection.unapply))
+
+      Ok(Json.toJson(RecordCollection(idToMaxRating, idToMinRating)))
     }
   }
 }

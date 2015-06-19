@@ -15,5 +15,6 @@ export default {
   },
   ratings: {
     latest: `${ window.location.origin }/api/ratings/latest`
-  }
+  },
+  records: `${ window.location.origin }/api/records`
 };
