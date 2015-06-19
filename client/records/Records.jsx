@@ -1,14 +1,22 @@
 import React from 'react';
 import Reflux from 'reflux';
+import { Link } from 'react-router';
 import {TabbedArea, TabPane, Row, Col, Table} from 'react-bootstrap';
 
 import RecordsStore from '../stores/RecordsStore';
+import PlayersStore from '../stores/PlayersStore';
+
 
 export default React.createClass({
-  mixins: [Reflux.connect(RecordsStore, "records")],
+  contextTypes: { router: React.PropTypes.func },
+  mixins: [
+    Reflux.connect(RecordsStore, "records"),
+    Reflux.connect(PlayersStore, "players")
+  ],
 
   getInitialState() {
     return {
+      players: {},
       records: {
         maxRatings: [],
         minRatings: []
@@ -17,20 +25,28 @@ export default React.createClass({
   },
 
   componentDidMount() {
+    PlayersStore.getPlayers();
     RecordsStore.getRecords();
   },
 
   render() {
+    let players = this.state.players;
     let records = this.state.records;
 
-    let highestRatingRows = records.maxRatings.map((record) => {
-      return (<tr key={record.playerId}><td>{record.playerId}</td><td>{record.rating}</td></tr>);
-    });
+    const getRecordRow = (record) => {
+      let player = players[record.playerId] || {name: ""};
+      return (
+        <tr key={record.playerId}>
+          <td>
+            <Link to="player" className="image" params={{playerId: record.playerId}}>{player.name}</Link>
+          </td>
+          <td>{record.rating}</td>
+        </tr>
+      );
+    };
 
-    let lowestRatingRows = records.minRatings.map((record) => {
-      return (<tr key={record.playerId}><td>{record.playerId}</td><td>{record.rating}</td></tr>);
-    });
-
+    let highestRatingRows = records.maxRatings.map(getRecordRow);
+    let lowestRatingRows = records.minRatings.map(getRecordRow);
 
     return (
       <div className="Records">

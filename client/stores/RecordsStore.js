@@ -13,7 +13,6 @@ export default Reflux.createStore({
   },
 
   getRecords() {
-    console.log("Get Records called", this.records);
     if (this.records.maxRatings.length > 0) {
       this.trigger(this.records);
     } else {
@@ -36,17 +35,8 @@ export default Reflux.createStore({
   },
 
   onLoadRatingsCompleted(records) {
-    console.log(records);
-
-    //if (records != records) {
-    //  this.records = records;
-    //  this.trigger(records);
-    //}
-
     this.records = records;
     this.trigger(records);
-
-    console.log(this.records);
   },
 
   onLoadRatingsFailed(err) {
