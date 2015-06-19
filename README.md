@@ -1,5 +1,5 @@
-# README #
-
+# Pool Ladder #
+[![Circle CI](https://circleci.com/gh/Dean177/pool-ladder/tree/master.svg?style=svg)](https://circleci.com/gh/Dean177/pool-ladder/tree/master)
 
 
 ### Zero to hero ###
