@@ -10,8 +10,7 @@ GET         /api/games                      @controllers.GamesController.recentG
 DELETE      /api/games/:id                  @controllers.GamesController.removeGame(id: Long)
 
 GET         /api/ratings/latest             @controllers.EloRatingsController.latestRatings
-GET         /api/ratings/max                @controllers.RecordsController.highestRatingsByPlayers
-GET         /api/ratings/min                @controllers.RecordsController.lowestRatingsByPlayer
+GET         /api/records                    @controllers.RecordsController.records
 
 GET         /assets/*file                   controllers.Assets.at(path="/public", file)
 

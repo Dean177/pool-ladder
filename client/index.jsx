@@ -39,10 +39,9 @@ Array.prototype.last = function() { return this[this.length - 1]; };
 import PlayerActions from './actions/PlayerActions';
 import GameActions from './actions/GameActions.js';
 import RatingActions from './actions/RatingActions.js';
-var shouldPoll = true;
-window.shouldPoll = shouldPoll;
+window.shouldPoll = true;
 const pollForChanges = () => {
-  if (shouldPoll) {
+  if (window.shouldPoll) {
     PlayerActions.loadAllPlayers();
     GameActions.getRecentGames();
     RatingActions.getLatestRatings();
