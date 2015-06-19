@@ -29,7 +29,6 @@ export default Reflux.createStore({
       body: 'Click to undo',
       title: `${game.winner.name} beat ${game.loser.name}`,
       options: {
-        closeButton: true,
         timeOut: 10000,
         extendedTimeOut: 2000,
         handleOnClick: () => { this.deleteGame(game) }
