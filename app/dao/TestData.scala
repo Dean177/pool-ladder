@@ -18,23 +18,23 @@ object TestData {
     Player(5, "Boar", isActive = false, DateTimeHelpers.now())
   )
   val testGames = Seq(
-    Game(1, 1, 2, DateTimeHelpers.now()),
-    Game(2, 2, 3, DateTimeHelpers.now()),
-    Game(3, 1, 3, DateTimeHelpers.now()),
-    Game(4, 4, 2, DateTimeHelpers.now())
+    Game(1, 1, 2, new Timestamp(1427842800000l)),
+    Game(2, 2, 3, new Timestamp(1430434800000l)),
+    Game(3, 1, 3, new Timestamp(1433113200000l)),
+    Game(4, 4, 2, new Timestamp(1434754283310l))
   )
   val testRatings = Seq(
-    EloRating(1, 1, 1, 15, 1015, new Timestamp(1431799802051l)),
-    EloRating(2, 1, 2, -15, 985, new Timestamp(1431799802051l)),
+    EloRating(1, 1, 1, 15, 1015, new Timestamp(1427842800000l)),
+    EloRating(2, 1, 2, -15, 985, new Timestamp(1427842800000l)),
 
-    EloRating(3, 2, 2, 16, 1001, new Timestamp(1431799802031l)),
-    EloRating(4, 2, 3, -16, 984, new Timestamp(1431799802031l)),
+    EloRating(3, 2, 2, 16, 1001, new Timestamp(1430434800000l)),
+    EloRating(4, 2, 3, -16, 984, new Timestamp(1430434800000l)),
 
-    EloRating(5, 3, 1, 13, 1028, new Timestamp(1431799702031l)),
-    EloRating(6, 3, 3, -13, 987, new Timestamp(1431799702031l)),
+    EloRating(5, 3, 1, 13, 1028, new Timestamp(1433113200000l)),
+    EloRating(6, 3, 3, -13, 987, new Timestamp(1433113200000l)),
 
-    EloRating(7, 4, 4, 14, 1014, new Timestamp(1431799602031l)),
-    EloRating(8, 4, 2, -14, 970, new Timestamp(1431799602031l))
+    EloRating(7, 4, 4, 14, 1014, new Timestamp(1434754283310l)),
+    EloRating(8, 4, 2, -14, 970, new Timestamp(1434754283310l))
   )
 
   def insertTestDataIfNotPresent() = {
