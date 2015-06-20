@@ -22,7 +22,8 @@ export default React.createClass({
       last30Ratings = ratings.slice(ratings.length - 30, ratings.length)
     }
 
-    let ratingsLabel = last30Ratings.map(function(rating, index) { return index + 1; });
+    let firstRatingLabel = ratings.length - last30Ratings.length;
+    let ratingsLabel = last30Ratings.map(function(rating, index) { return firstRatingLabel + index; });
     let ratingsValue = last30Ratings.map(function(rating){ return rating.newRating; });
 
     let chartData = {
