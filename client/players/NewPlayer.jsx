@@ -6,8 +6,8 @@ import PlayerApi from '../webapi/PlayersApi';
 import PlayerActions from '../actions/PlayerActions';
 
 export default React.createClass({
-  mixins: [Navigation],
   contextTypes: { router: React.PropTypes.func },
+  mixins: [Navigation],
 
   nameErrorMessage: "Please enter a name",
 
@@ -35,6 +35,7 @@ export default React.createClass({
   },
 
   onCreateCompleted: function(player) {
+    console.log("completedCalled");
     PlayerActions.newPlayer(player);
     this.clearForm();
     this.transitionTo('players');
@@ -72,13 +73,14 @@ export default React.createClass({
         <form onSubmit={this.onSubmit}>
           <Input
               label="Name"
+              className="player-name"
               type="text"
               value={this.state.name}
               errorText={this.state.nameError}
               floatingLabelText="Name"
               onChange={this._validateName} />
 
-            <Button bsStyle="primary" onClick={this.onSubmit}>Save</Button>
+            <Button bsStyle="primary" className="submit-player" onClick={this.onSubmit}>Save</Button>
         </form>
       </div>
     );

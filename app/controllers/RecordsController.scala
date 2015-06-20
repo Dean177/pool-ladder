@@ -1,7 +1,6 @@
 package controllers
 
 import dao.EloRatingsDao
-import models.{EloRating, Player}
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import play.api.libs.functional.syntax._
 import play.api.libs.json._

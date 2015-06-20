@@ -2,25 +2,23 @@ jest.dontMock('../../games/NewGame');
 
 describe('NewGame', () => {
 
-  var React, TestUtils, NewGame, GamesApi, view;
+  var React, TestUtils, NewGame, view;
 
   beforeEach(() => {
     NewGame = require('../../games/NewGame');
-    GamesApi = require('../../webapi/GamesApi');
     React = require('react/addons');
     TestUtils = React.addons.TestUtils;
     view = TestUtils.renderIntoDocument(<NewGame />);
     view.transitionTo = jest.genMockFunction();
     view.createGame = jest.genMockFunction().mockImplementation((game) => {
-        return {
-          then: (resolve) => {
-            game.id = 1;
-            resolve(game);
-            return { error: function() {}}
-          }
-        };
-      }
-    );
+      return {
+        then: (resolve) => {
+          game.id = 1;
+          resolve(game);
+          return { error: function() {}}
+         }
+      };
+    });
   });
 
   it('should navigate to the leaderboard when the cancel button is clicked', () => {
