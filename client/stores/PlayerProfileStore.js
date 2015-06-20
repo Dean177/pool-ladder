@@ -6,7 +6,7 @@ import PlayerApi from '../webapi/PlayersApi';
 export default Reflux.createStore({
   listenables: [PlayerActions],
 
-  init: function () {
+  init() {
     this.player = { }
   },
 

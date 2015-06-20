@@ -25,7 +25,7 @@ export default Reflux.createStore({
   },
 
   onGetLatestRatingsCompleted(playerRatings) {
-    let orderedPlayerRatings = playerRatings.sort(function(playerRatingA, playerRatingB) {
+    let orderedPlayerRatings = playerRatings.sort((playerRatingA, playerRatingB) => {
       let ratingA = playerRatingA.rating.newRating;
       let ratingB = playerRatingB.rating.newRating;
       return ratingA < ratingB ? 1 : ratingA > ratingB ? -1 : 0;

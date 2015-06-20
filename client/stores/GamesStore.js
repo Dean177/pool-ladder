@@ -39,6 +39,8 @@ export default Reflux.createStore({
       var index = this.recentGames.indexOf(matchingGame[0]);
       this.recentGames.splice(index, 1);
       this.trigger(this.recentGames);
+    } else {
+      console.error("Multiple games present with same Id");
     }
   }
 });

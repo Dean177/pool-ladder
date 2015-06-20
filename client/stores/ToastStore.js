@@ -17,7 +17,7 @@ export default Reflux.createStore({
       body: "",
       title: `Created new player: ${player.name}`,
       options: {
-        timeOut: 50000,
+        timeOut: 10000,
         extendedTimeOut: 2000
       }
     });
