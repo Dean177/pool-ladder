@@ -2,7 +2,7 @@ package controllers
 
 import helpers.WithDataBaseSpecification
 import models.Player
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json.{JsString, JsValue, Json}
 import play.api.test.Helpers._
 import play.api.test._
 
@@ -19,7 +19,7 @@ class PlayersControllerSpec extends WithDataBaseSpecification {
     }
 
     "Can create a new player with only a name" in new WithApplication {
-      val newPlayerJson: JsValue = Json.toJson(NewPlayer(name = "Dave"))
+      val newPlayerJson: JsValue = Json.obj("name" -> JsString("Dave"))
       val Some(responseJson)  = route(FakeRequest(POST, "/api/players", FakeHeaders(), newPlayerJson))
 
       status(responseJson) mustEqual OK

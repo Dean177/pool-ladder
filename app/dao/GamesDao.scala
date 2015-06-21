@@ -36,7 +36,7 @@ class GamesDao extends GamesComponent with HasDatabaseConfig[JdbcProfile] {
   }
 
   def create(game: Game): Future[Game] = {
-    val gamesReturningId = (games returning games.map(_.id)) into ((game, newId) => game.copy(id= newId))
+    val gamesReturningId = (games returning games.map(_.id)) into ((game, newId) => game.copy(id = newId))
     db.run( gamesReturningId += game )
   }
 
@@ -51,7 +51,10 @@ class GamesDao extends GamesComponent with HasDatabaseConfig[JdbcProfile] {
       (game, winner, loser) <- withWinnerAndLoser if game.winnerId === id || game.loserId === id
     } yield (game.id, winner.id, winner.name, loser.id, loser.name, game.playedOn)
 
-    db.run(query.result).map { _.map { GameWithPlayers.apply _ tupled _ } }
+    // Need to transform the Future[Seq[(Long, Long, String ...)]] to a case class
+    db.run(query.result).map {
+      _.map { GameWithPlayers.apply _ tupled _ }
+    }
   }
 }
 

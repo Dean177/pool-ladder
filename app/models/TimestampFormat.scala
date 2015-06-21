@@ -13,5 +13,4 @@ trait TimestampFormat {
     }
     def writes(timestamp: Timestamp): JsValue = JsString(format.format(timestamp))
   }
-
 }

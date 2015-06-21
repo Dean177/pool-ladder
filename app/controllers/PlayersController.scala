@@ -8,11 +8,6 @@ import play.api.mvc.{Action, Controller}
 
 import play.api.libs.json._
 
-case class NewPlayer(name: String)
-object NewPlayer {
-  implicit val newPlayerFormat = Json.format[NewPlayer]
-}
-
 class PlayersController extends Controller {
   val playerDao = new PlayerDAO
 
@@ -32,8 +27,8 @@ class PlayersController extends Controller {
   }
 
   def create = Action.async(parse.json) { request =>
-    val newPlayer = request.body.as[NewPlayer]
-    val playerToCreate = Player(0, newPlayer.name, isActive = true, DateTimeHelpers.now())
+    val name = (request.body \ "name").as[String]
+    val playerToCreate = Player(0, name, isActive = true, DateTimeHelpers.now())
     playerDao.create(playerToCreate).map { createdPlayer =>
       Ok(Json.toJson(createdPlayer))
     }

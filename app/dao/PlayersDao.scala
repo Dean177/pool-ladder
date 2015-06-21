@@ -10,7 +10,7 @@ import play.api.db.slick.HasDatabaseConfig
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import slick.driver.JdbcProfile
 
-class PlayerDAO extends PlayersComponent with HasDatabaseConfig[JdbcProfile] {
+class PlayersRepo extends PlayersComponent with HasDatabaseConfig[JdbcProfile] {
   protected val dbConfig = DatabaseConfigProvider.get[JdbcProfile](Play.current)
 
   import driver.api._
@@ -41,7 +41,9 @@ trait PlayersComponent { self: HasDatabaseConfig[JdbcProfile] =>
   import driver.api._
 
   val players = TableQuery[PlayersTable]
+
   type PlayersQuery = Query[PlayersTable, Player, Seq]
+
   class PlayersTable(tag: Tag) extends Table[Player](tag, "Player") {
     def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
     def name = column[String]("name")

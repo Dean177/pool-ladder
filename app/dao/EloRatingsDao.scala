@@ -13,7 +13,7 @@ import slick.driver.JdbcProfile
 
 class EloRatingsDao extends EloRatingsComponent with HasDatabaseConfig[JdbcProfile] {
   protected val dbConfig = DatabaseConfigProvider.get[JdbcProfile](Play.current)
-  
+
   import driver.api._
 
   val ratingSystem = new EloRatingSystem
