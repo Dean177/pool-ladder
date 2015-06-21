@@ -1,6 +1,6 @@
 package controllers
 
-import dao.EloRatingsDao
+import dao.{GamesDao, EloRatingsDao}
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
@@ -11,7 +11,8 @@ import scala.language.postfixOps
 
 
 class RecordsController extends Controller {
-  type RatingRecord = (Long, Option[Int])
+  type Id = Long
+  type RatingRecord = (Id, Option[Int])
 
   case class RecordCollection(maxRatingByPlayer: Seq[RatingRecord], minRatingsByPlayer: Seq[RatingRecord])
 
