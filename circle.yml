@@ -11,6 +11,7 @@ machine:
 dependencies:
   cache_directories:
     - "~/.sbt"
+    - "~/.ivy2"
     - "node_modules"
 
   pre:
