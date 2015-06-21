@@ -35,7 +35,6 @@ export default React.createClass({
   },
 
   onCreateCompleted: function(player) {
-    console.log("completedCalled");
     PlayerActions.newPlayer(player);
     this.clearForm();
     this.transitionTo('players');

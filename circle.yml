@@ -28,3 +28,6 @@ test:
   override:
     - sbt test
     - npm test
+  post:
+    - mkdir -p $CIRCLE_TEST_REPORTS/junit/
+    - find . -type f -regex ".*/test-output/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
