@@ -80,17 +80,6 @@ export default React.createClass({
             </Row>
           </TabPane>
 
-          <TabPane eventKey={2} tab='Winning Streaks'>
-            <Row>
-              <Col md={6}>
-                <h3>Winning Streak</h3>
-              </Col>
-              <Col md={6}>
-                <h3>Losing Streak</h3>
-              </Col>
-            </Row>
-          </TabPane>
-
         </TabbedArea>
       </div>
     );
