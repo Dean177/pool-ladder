@@ -1,4 +1,4 @@
-package dao
+package repositories
 
 import java.sql.Timestamp
 
@@ -11,7 +11,7 @@ import play.api.db.slick.HasDatabaseConfig
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import slick.driver.JdbcProfile
 
-class EloRatingsDao extends EloRatingsComponent with HasDatabaseConfig[JdbcProfile] {
+class EloRatingsRepo extends EloRatingsComponent with HasDatabaseConfig[JdbcProfile] {
   protected val dbConfig = DatabaseConfigProvider.get[JdbcProfile](Play.current)
 
   import driver.api._

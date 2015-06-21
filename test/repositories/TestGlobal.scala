@@ -1,4 +1,4 @@
-package dao
+package repositories
 
 import play.api.{Application, GlobalSettings}
 

@@ -1,6 +1,6 @@
 package controllers
 
-import dao.{GamesDao, EloRatingsDao}
+import repositories.{GamesRepo, EloRatingsRepo}
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
@@ -16,7 +16,8 @@ class RecordsController extends Controller {
 
   case class RecordCollection(maxRatingByPlayer: Seq[RatingRecord], minRatingsByPlayer: Seq[RatingRecord])
 
-  val ratings = new EloRatingsDao
+  val ratings = new EloRatingsRepo
+  val games = new GamesRepo
 
   def records() = Action.async {
     for {

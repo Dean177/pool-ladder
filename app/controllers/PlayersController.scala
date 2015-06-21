@@ -1,6 +1,6 @@
 package controllers
 
-import dao.PlayerDAO
+import repositories.PlayersRepo
 import lib.DateTimeHelpers
 import models.Player
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
@@ -9,10 +9,10 @@ import play.api.mvc.{Action, Controller}
 import play.api.libs.json._
 
 class PlayersController extends Controller {
-  val playerDao = new PlayerDAO
+  val playersRepo = new PlayersRepo
 
   def all = Action.async { request =>
-    playerDao.all().map { players: Seq[Player] =>
+    playersRepo.all().map { players: Seq[Player] =>
       val playersById: Map[String, Player] = players.groupBy(_.id).map { case(id, playerSeq) => (id.toString, playerSeq.head) }
 
       Ok(Json.toJson(playersById))
@@ -20,7 +20,7 @@ class PlayersController extends Controller {
   }
 
   def get(id: Long) = Action.async { request =>
-    playerDao.find(id).map {
+    playersRepo.find(id).map {
       case Some(player) => Ok(Json.toJson(player))
       case None => NotFound(s"No player found with playerId: $id")
     }
@@ -29,7 +29,7 @@ class PlayersController extends Controller {
   def create = Action.async(parse.json) { request =>
     val name = (request.body \ "name").as[String]
     val playerToCreate = Player(0, name, isActive = true, DateTimeHelpers.now())
-    playerDao.create(playerToCreate).map { createdPlayer =>
+    playersRepo.create(playerToCreate).map { createdPlayer =>
       Ok(Json.toJson(createdPlayer))
     }
   }

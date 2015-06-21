@@ -1,4 +1,4 @@
-package dao
+package repositories
 
 import helpers.WithDataBaseSpecification
 import lib.DateTimeHelpers
@@ -7,23 +7,23 @@ import play.api.test.WithApplication
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 
 
-class EloRatingsDaoSpec extends WithDataBaseSpecification {
-  "EloRatingsDao" should {
+class EloRatingsRepoSpec extends WithDataBaseSpecification {
+  "EloRatingsRepo" should {
     "Return the eloRatings created for a new game" in new WithApplication(WithTestData) {
       val winnerId = 1
       val loserId = 2
       val game = Game(3, winnerId, loserId, DateTimeHelpers.now())
-      val eloRatingsDao = new EloRatingsDao
+      val eloRatingsRepo = new EloRatingsRepo
 
-      eloRatingsDao.createForGame(game).map { eloRatings =>
+      eloRatingsRepo.createForGame(game).map { eloRatings =>
         eloRatings should have length 2
         eloRatings.head.change shouldNotEqual 0
       }
     }
 
     "List the players and ratings" in new WithApplication(WithTestData) {
-      val eloRatingsDao = new EloRatingsDao
-      eloRatingsDao.latest().map { playerRatings: Seq[(Player, EloRating)] =>
+      val eloRatingsRepo = new EloRatingsRepo
+      eloRatingsRepo.latest().map { playerRatings: Seq[(Player, EloRating)] =>
         val playerIds: Seq[Long] = playerRatings.map { case (player, rating) => player.id }
 
         playerRatings should not be empty
@@ -32,15 +32,15 @@ class EloRatingsDaoSpec extends WithDataBaseSpecification {
     }
 
     "Get a players current rating" in new WithApplication(WithTestData){
-      val eloRatingsDao = new EloRatingsDao
-      eloRatingsDao.getLatestRating(1).map { rating =>
+      val eloRatingsRepo = new EloRatingsRepo
+      eloRatingsRepo.getLatestRating(1).map { rating =>
         rating.change should be > 0
       }
     }
 
     "Return the default rating when getting the current rating for an unrated player" in new WithApplication(WithTestData){
-      val eloRatingsDao = new EloRatingsDao
-      eloRatingsDao.getLatestRating(5).map { rating =>
+      val eloRatingsRepo = new EloRatingsRepo
+      eloRatingsRepo.getLatestRating(5).map { rating =>
         rating.change shouldEqual 0
         rating.newRating shouldEqual 1000
       }

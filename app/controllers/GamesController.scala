@@ -1,6 +1,6 @@
 package controllers
 
-import dao.{EloRatingsDao, GamesDao}
+import repositories.{EloRatingsRepo, GamesRepo}
 import lib.DateTimeHelpers
 import models.{GameWithPlayers, Game}
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
@@ -19,24 +19,24 @@ object ValidationException {
 }
 
 class GamesController extends Controller {
-  val gameDao = new GamesDao
-  val eloRatingsDao = new EloRatingsDao
+  val gamesRepo = new GamesRepo
+  val eloRatingsRepo = new EloRatingsRepo
 
   def create = Action.async(parse.json) { request =>
     val newGame = request.body.as[NewGame]
 
-    gameDao.create(Game(0, newGame.winnerId, newGame.loserId, DateTimeHelpers.now())).map { createdGame =>
-      eloRatingsDao.createForGame(createdGame)
+    gamesRepo.create(Game(0, newGame.winnerId, newGame.loserId, DateTimeHelpers.now())).map { createdGame =>
+      eloRatingsRepo.createForGame(createdGame)
       Ok(Json.toJson(createdGame))
     }
   }
 
   def removeGame(gameId: Long) = Action.async {
-    gameDao.isMostRecent(gameId).map {
+    gamesRepo.isMostRecent(gameId).map {
       case true =>
         Seq(
-          eloRatingsDao.deleteRatingsForGame(gameId),
-          gameDao.delete(gameId)
+          eloRatingsRepo.deleteRatingsForGame(gameId),
+          gamesRepo.delete(gameId)
         )
         Ok(gameId.toString)
       case false =>
@@ -45,13 +45,13 @@ class GamesController extends Controller {
   }
 
   def gamesByPlayer(id: Long) = Action.async { session =>
-    gameDao.withPlayer(id).map { games: Seq[GameWithPlayers] =>
+    gamesRepo.withPlayer(id).map { games: Seq[GameWithPlayers] =>
       Ok(Json.toJson(games))
     }
   }
 
   def recentGames = Action.async {
-    gameDao.recent().map { games: Seq[GameWithPlayers] =>
+    gamesRepo.recent().map { games: Seq[GameWithPlayers] =>
       Ok(Json.toJson(games))
     }
   }

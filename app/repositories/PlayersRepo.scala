@@ -1,4 +1,4 @@
-package dao
+package repositories
 
 import java.sql.Timestamp
 import scala.concurrent.Future

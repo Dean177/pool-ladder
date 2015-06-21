@@ -2,7 +2,7 @@ import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.util
 
-import dao.{EloRatingsDao, GamesDao, PlayerDAO}
+import repositories.{PlayersRepo, EloRatingsRepo, GamesRepo}
 import lib.EloRatingSystem
 import models.{EloRating, Game, Player}
 import play.api.Logger
@@ -22,16 +22,16 @@ object Global extends GlobalSettings {
   override def onStart(app: Application) = {
     val testData: (Seq[Player], Seq[Game], Seq[EloRating]) = parseTextFiles()
 
-    def playersDao = new PlayerDAO
-    def gamesDao = new GamesDao
-    def eloRatingDao = new EloRatingsDao
+    def playersRepo = new PlayersRepo
+    def gamesRepo = new GamesRepo
+    def eloRatingsRepo = new EloRatingsRepo
 
-    val insertedPlayers = Await.result(playersDao.count(), 3 seconds)
+    val insertedPlayers = Await.result(playersRepo.count(), 3 seconds)
     if (insertedPlayers == 0 && testData._1.nonEmpty) {
       Logger.info(s"Empty DB, inserting data.")
-      Await.result(playersDao.insert(testData._1), 3 seconds)
-      Await.result(gamesDao.insert(testData._2), 3 seconds)
-      Await.result(eloRatingDao.insert(testData._3), 3 seconds)
+      Await.result(playersRepo.insert(testData._1), 3 seconds)
+      Await.result(gamesRepo.insert(testData._2), 3 seconds)
+      Await.result(eloRatingsRepo.insert(testData._3), 3 seconds)
     }
   }
 

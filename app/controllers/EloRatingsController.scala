@@ -1,6 +1,6 @@
 package controllers
 
-import dao.EloRatingsDao
+import repositories.EloRatingsRepo
 import models.{EloRating, Player}
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
@@ -8,7 +8,7 @@ import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import play.api.mvc.{Action, Controller}
 
 class EloRatingsController extends Controller {
-  val ratings = new EloRatingsDao
+  val ratings = new EloRatingsRepo
 
   def ratingsByPlayer(id: Long) = Action.async {
     ratings.getRatingsByPlayer(id).map { ratings =>

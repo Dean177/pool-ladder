@@ -1,6 +1,6 @@
 package helpers
 
-import dao.TestGlobal
+import repositories.TestGlobal
 import org.specs2.mutable.Specification
 import play.api.test._
 

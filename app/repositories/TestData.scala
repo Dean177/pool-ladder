@@ -1,4 +1,4 @@
-package dao
+package repositories
 
 import java.sql.Timestamp
 
@@ -38,15 +38,15 @@ object TestData {
   )
 
   def insertTestDataIfNotPresent() = {
-    def playersDao = new PlayerDAO
-    def gamesDao = new GamesDao
-    def eloRatingDao = new EloRatingsDao
+    def playersRepo = new PlayersRepo
+    def gamesRepo = new GamesRepo
+    def eloRatingsRepo = new EloRatingsRepo
 
-    val insertedPlayers = Await.result(playersDao.count(), 3 seconds)
+    val insertedPlayers = Await.result(playersRepo.count(), 3 seconds)
     if (insertedPlayers == 0) {
-      Await.result(playersDao.insert(testPlayers), 3 seconds)
-      Await.result(gamesDao.insert(testGames), 3 seconds)
-      Await.result(eloRatingDao.insert(testRatings), 3 seconds)
+      Await.result(playersRepo.insert(testPlayers), 3 seconds)
+      Await.result(gamesRepo.insert(testGames), 3 seconds)
+      Await.result(eloRatingsRepo.insert(testRatings), 3 seconds)
     }
   }
 }
