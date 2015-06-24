@@ -46,7 +46,7 @@ export default React.createClass({
         </Button>
         <h2 className="page-header">Players</h2>
         <Row>
-          <Col md = {12} className="PlayerListContainer">
+          <Col md = {12} className="PlayerGrid">
             <PlayerList players={players} />
           </Col>
         </Row>

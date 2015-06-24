@@ -1,10 +1,12 @@
 @import "../styles/variables";
 
-.PlayerList {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-.PlayerCard {
-  margin-left: 20px;
+.PlayerGrid{
+  .PlayerList {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .PlayerCard {
+    margin-left: @regular-gap;
+  }
 }
