@@ -13,7 +13,9 @@ export default React.createClass({
   contextTypes: { router: React.PropTypes.func },
 
   getInitialState() {
-    return { playerRatings: [] };
+    return {
+      players: []
+    }
   },
 
   componentDidMount() {
@@ -22,7 +24,19 @@ export default React.createClass({
 
   goToNewGame() { this.transitionTo('newGame'); },
 
-  render() {
+  render: function() {
+    let players = this.state.players;
+
+    players.sort(function(playerA, playerB) {
+      if (playerA.rank < playerB.rank) {
+        return -1
+      } else if (playerA.rank > playerB.rank) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+
     return (
       <div>
         <Button
@@ -33,7 +47,7 @@ export default React.createClass({
         </Button>
         <h2 className="page-header">Leaderboard</h2>
         <div className="Leaderboard">
-          <PlayerList players={ this.state.players }/>
+          <PlayerList players={ players }/>
         </div>
       </div>
     );
