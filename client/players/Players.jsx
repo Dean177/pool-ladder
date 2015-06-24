@@ -36,11 +36,6 @@ export default React.createClass({
       }
     });
 
-    let firstThird = Math.round(players.length / 3);
-    let secondThird = Math.round((players.length / 3 ) * 2);
-    let firstCol = players.slice(0, firstThird);
-    let secondCol = players.slice(firstThird, secondThird);
-    let thirdCol = players.slice(secondThird, players.length);
 
     return (
       <div>
@@ -50,15 +45,9 @@ export default React.createClass({
           <FontAwesome icon="user-plus"/> New Player
         </Button>
         <h2 className="page-header">Players</h2>
-        <Row >
-          <Col md={4}>
-            <PlayerList players={firstCol}/>
-          </Col>
-          <Col md={4}>
-            <PlayerList players={secondCol} />
-          </Col>
-          <Col md={4}>
-            <PlayerList players={thirdCol} />
+        <Row>
+          <Col md = {12} className="PlayerListContainer">
+            <PlayerList players={players} />
           </Col>
         </Row>
 
