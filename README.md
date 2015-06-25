@@ -24,7 +24,7 @@ Continuous integration is run at (https://circleci.com/gh/Dean177/pool-ladder)
 [Specs2](https://www.playframework.com/documentation/2.4.x/ScalaTestingWithSpecs2)
 
 [React](https://facebook.github.io/react/docs/getting-started.html)
-[React-Router](https://github.com/rackt/react-router/blob/master/docs/guides/overview.md)
+[React-Router](http://rackt.github.io/react-router/)
 [Reflux](https://github.com/spoike/refluxjs)
 [Jest](https://facebook.github.io/jest/docs/tutorial.html#content)
 [React-Bootstrap](http://react-bootstrap.github.io/components.html)
