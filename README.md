@@ -1,5 +1,7 @@
 # Pool Ladder #
 [![Circle CI](https://circleci.com/gh/Dean177/pool-ladder/tree/master.svg?style=svg)](https://circleci.com/gh/Dean177/pool-ladder/tree/master)
+[![dependency status](https://david-dm.org/dean177/pool-ladder.svg)](https://david-dm.org/dean177/pool-ladder)
+
 
 
 ### Zero to hero ###
