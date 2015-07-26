@@ -39,6 +39,7 @@
     "chart.js": "^1.0.2",
     "font-awesome": "^4.3.0",
     "react": "^0.13.2",
+    "react-autosuggest": "^1.18.3",
     "react-bootstrap": "^0.23.2",
     "react-chartjs": "^0.6.0",
     "react-router": "^0.13.2",
